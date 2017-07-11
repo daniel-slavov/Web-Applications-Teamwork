@@ -2,8 +2,8 @@ const db = require('./db');
 const data = require('./data').init(db);
 const app = require('./app').init(data);
 
-const port = 3001;
+const config = require('./config');
 
-app.listen(port, () => {
-    console.log(`Server listening at: ${port}`);
+app.listen(config.port, () => {
+    console.log(`Server listening at: ${config.port}`);
 });
