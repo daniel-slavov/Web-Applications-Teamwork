@@ -1,0 +1,13 @@
+{
+  "name": "eventsbox",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/daniel-slavov/Web-Applications-Teamwork",
+  "license": "MIT",
+  "dependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.2.0",
+    "eslint-config-google": "^0.9.1",
+    "express": "^4.15.3"
+  }
+}
