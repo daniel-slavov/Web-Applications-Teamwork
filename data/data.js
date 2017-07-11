@@ -1,5 +1,5 @@
 const init = (db) => {
-
+    
 };
 
 module.exports = {

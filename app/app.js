@@ -9,9 +9,9 @@ const init = (data) => {
         return res.render('home');
     });
 
-    return Promise.resolve(app);
+    return app;
 };
 
 module.exports = {
-    init,
+    init, 
 };
