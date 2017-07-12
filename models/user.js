@@ -19,32 +19,32 @@ class User {
 
     getEvents(username) {
         return this.collection
-                .find({ username: username })
-                .then((user) => {
-                    if (!user) {
-                        throw new Error('Ivalid user!');
-                    } else {
-                        return user.events;
-                    }
-                });
+            .find({ username: username })
+            .toArray((err, user) => {
+                if (user.length === 0) {
+                    throw new Error('Invalid user!');
+                } else {
+                    return user.events;
+                }
+            });
     }
 
     addEvent(username, event) {
         this.collection.find({ username: username })
-        .then((user) => {
-            if (!user) {
-                throw new Error('Ivalid user!');
-            } else {
-                user.events.push(event);
-            }
-        });
+            .toArray((err, user) => {
+                if (user.length === 0) {
+                    throw new Error('Invalid user!');
+                } else {
+                    user.events.push(event);
+                }
+            });
     }
 
     login(username, password) {
         return this.collection
             .find({ username: username, password: password })
-            .then((user) => {
-                if (!user) {
+            .toArray((err, user) => {
+                if (user.length === 0) {
                     throw new Error('Invalid user!');
                 } else {
                     return user;
@@ -55,8 +55,8 @@ class User {
     getProfile(username) {
         return this.collection
             .find({ username: username })
-            .then((user) => {
-                if (!user) {
+            .toArray((err, user) => {
+                if (user.length === 0) {
                     throw new Error('Invalid user!');
                 } else {
                     return user;

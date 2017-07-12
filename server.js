@@ -13,3 +13,4 @@ require('./db').init(config.connectionString)
         });
     });
 
+
