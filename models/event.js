@@ -1,7 +1,7 @@
 class Event {
     constructor(db) {
         this.db = db;
-        this.collection = db.collection('Events');
+        this.collection = this.db.collection('Events');
     }
 
     create() {
@@ -33,3 +33,4 @@ class Event {
     }
 }
 
+module.exports = Event;

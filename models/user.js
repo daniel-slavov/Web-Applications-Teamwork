@@ -1,7 +1,7 @@
-class User{
+class User {
     constructor(db) {
         this.db = db;
-        this.collection = db.collection('Users');
+        this.collection = this.db.collection('Users');
     }
 
     create(username, password, firstName, lastName, email, age) {
