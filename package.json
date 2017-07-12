@@ -9,6 +9,7 @@
     "eslint": "^4.2.0",
     "eslint-config-google": "^0.9.1",
     "express": "^4.15.3",
-    "mongodb": "^2.2.30"
+    "mongodb": "^2.2.30",
+    "pug": "^2.0.0-rc.2"
   }
 }
