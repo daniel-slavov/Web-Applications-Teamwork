@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 
 const config = require('./config');
+const { ObjectId } = require('./db');
+
 
 require('./db').init(config.connectionString)
     .then((db) => {

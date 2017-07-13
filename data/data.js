@@ -1,10 +1,12 @@
-const Users = require('../models/user');
-const Events = require('../models/event');
+const UsersData = require('./users.data');
+const EventsData = require('./events.data');
+const CategoriesData = require('./categories.data');
 
 const init = (db) => {
     return Promise.resolve({
-        users: new Users(db),
-        events: new Events(db),
+        users: new UsersData(db),
+        events: new EventsData(db),
+        categories: new CategoriesData(db),
     });
 };
 

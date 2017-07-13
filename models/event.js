@@ -1,35 +1,15 @@
 class Event {
-    constructor(db) {
-        this.db = db;
-        this.collection = this.db.collection('Events');
-    }
-
-    create() {
-
-    }
-
-    getByDate(date) {
-
-    }
-
-    getById(id) {
-
-    }
-
-    getByCategory(category) {
-
-    }
-
-    getUpcoming() {
-
-    }
-
-    getCategories() {
-
-    }
-
-    update() {
-
+    constructor(title, date, time, place, categories,
+        likes, user, details, photo) {
+        this.title = title;
+        this.date = date;
+        this.time = time;
+        this.place = place;
+        this.likes = likes;
+        this.user = user;
+        this.details = details;
+        this.photo = photo;
+        this.categories = categories;
     }
 }
 
