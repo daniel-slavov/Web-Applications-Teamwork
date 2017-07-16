@@ -1,9 +1,12 @@
+/* eslint-disable no-console */
+const { Validator } = require('../../utils/validator');
+
 module.exports = (data) => {
     return {
-        getLogin: () => {
-
+        getLogin: (req, res) => {
+            return res.render('login');
         },
-        postLogin: () => {
+        postLogin: (req, res) => {
 
         },
         getSignup: () => {
@@ -12,11 +15,18 @@ module.exports = (data) => {
         postSignup: () => {
 
         },
-        logout: () => {
-
+        logout: (req, res) => {
+            req.logout();
+            return res.redirect('/');
         },
-        getUserProfile: () => {
-
+        getUserProfile: (req, res) => {
+            const username = req.params.username;
+            data.users.getUser(username)
+            .then((user) => {
+                res.render('profile', {
+                    context: user.username,
+                });
+            });
         },
         getUpdateUserProfile: () => {
 

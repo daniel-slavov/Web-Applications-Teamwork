@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 const config = require('./config');
-const { ObjectId } = require('./db');
 
 require('./db').init(config.connectionString)
     .then((db) => {
@@ -11,7 +10,7 @@ require('./db').init(config.connectionString)
         return require('./app').init(data);
     })
     .then((app) => {
-        app.listen(config.port, () => {
+            app.listen(config.port, () => {
             console.log(`Server listening at: ${config.port}`);
         });
     });

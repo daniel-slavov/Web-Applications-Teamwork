@@ -9,6 +9,7 @@
     "eslint": "^4.2.0",
     "eslint-config-google": "^0.9.1",
     "express": "^4.15.3",
+    "express-validator": "^3.2.1",
     "mongodb": "^2.2.30",
     "nodemon": "^1.11.0",
     "pug": "^2.0.0-rc.2"
