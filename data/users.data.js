@@ -8,7 +8,7 @@ class UsersData {
     }
 
     create(userObj) {
-        if (this.validator.isValidUser) {
+        if (this.validator.isValidUser(userObj)) {
             const newUser = new User(userObj);
             this.collection.insertOne(newUser);
         }

@@ -8,7 +8,7 @@ class EventsData {
     }
 
     create(eventObj) {
-        if (this.validator.isValidEvent) {
+        if (this.validator.isValidEvent(eventObj)) {
             const newEvent = new Event(eventObj);
             this.collection.insert(newEvent);
         }
