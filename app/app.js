@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 
 const init = (data) => {
     const app = express();
@@ -7,12 +8,18 @@ const init = (data) => {
     const homeController = require('./controllers/home.controller')();
     const eventsController = require('./controllers/events.controller')(data);
     const usersController = require('./controllers/users.controller')(data);
+    require('../config/auth.config')(app, data, passport);
 
     app.get('/', homeController.index);
     app.get('/login', usersController.getLogin);
-    app.post('/login', usersController.postLogin);
+    app.post('/login', passport.authenticate('local', {
+        failureRedirect: 'login',
+    }), (req, res) => {
+        res.send('success');
+    });
+
     app.get('/signup', usersController.getSignup);
-    app.get('/signup', usersController.postSignup);
+    app.post('/signup', usersController.postSignup);
     app.get('/logout', usersController.logout);
 
     app.get('/events/create', eventsController.getCreateEvent);

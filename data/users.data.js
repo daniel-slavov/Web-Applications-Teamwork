@@ -30,14 +30,17 @@ class UsersData {
 
     login(username, password) {
         return this.collection
-            .find({ username: username, password: password })
-            .toArray();
+            .findOne({ username: username, password: password });
     }
 
     getUser(username) {
         return this.collection
-            .find({ username: username })
-            .toArray();
+            .findOne({ username: username });
+    }
+
+    getUserById(id) {
+        return this.collection
+            .findOne({ _id: id });
     }
 
     updateProfile(username, firstName, lastName, age, email, avatar) {
