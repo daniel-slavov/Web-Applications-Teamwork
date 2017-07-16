@@ -1,6 +1,6 @@
 class Category {
-    constructor(name) {
-        this.name = name;
+    constructor(object) {
+        this.name = object.name;
         this.events = [];
     }
 }

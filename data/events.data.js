@@ -1,23 +1,22 @@
 const Event = require('../models/event');
 
 class EventsData {
-    constructor(db) {
+    constructor(db, validator) {
         this.db = db;
         this.collection = this.db.collection('events');
+        this.validator = validator;
     }
 
-    create(title, date, time, place, categories,
-        likes, user, details, photo) {
-            const newEvent = new Event(title, date, time, place, categories,
-                            likes, user, details, photo);
+    create(eventObj) {
+        if (this.validator.isValidEvent) {
+            const newEvent = new Event(eventObj);
             this.collection.insert(newEvent);
+        }
     }
 
     getByDate(date) {
         return this.collection.find({ date: date })
-                    .toArray((err, events) => {
-                        return events;
-                    });
+            .toArray();
     }
 
     getById(id) {
@@ -25,11 +24,35 @@ class EventsData {
     }
 
     getUpcoming() {
-
+        return this.collection.aggregate([
+            { $sort: { date: -1 } },
+            { $limit: 2 },
+        ]).toArray();
     }
 
-    update() {
+    update(eventTitle, date, time, place, details, photo) {
+        this.collection.update(
+            { title: eventTitle },
+            { $set: { date: date,
+                time: time,
+                place: place,
+                details: details,
+                photo: photo,
+            } }
+        );
+    }
 
+    updateLikes(eventTitle, likes) {
+        this.collection.update(
+           { title: eventTitle },
+            { $set: { likes: likes } }
+        );
+    }
+
+    remove(eventTitle) {
+        this.collection.remove(
+            { title: eventTitle }
+        );
     }
 }
 

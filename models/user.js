@@ -1,12 +1,12 @@
 class User {
-    constructor(username, password, firstName, lastName, email, age, avatar) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.age = age;
-        this.avatar = avatar;
+    constructor(object) {
+        this.username = object.username;
+        this.password = object.password;
+        this.firstName = object.firstName;
+        this.lastName = object.lastName;
+        this.email = object.email;
+        this.age = object.age;
+        this.avatar = object.avatar;
         this.events = [];
     }
 }

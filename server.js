@@ -3,7 +3,6 @@
 const config = require('./config');
 const { ObjectId } = require('./db');
 
-
 require('./db').init(config.connectionString)
     .then((db) => {
         return require('./data').init(db);

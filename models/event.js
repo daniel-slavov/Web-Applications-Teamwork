@@ -1,15 +1,14 @@
 class Event {
-    constructor(title, date, time, place, categories,
-        likes, user, details, photo) {
-        this.title = title;
-        this.date = date;
-        this.time = time;
-        this.place = place;
-        this.likes = likes;
-        this.user = user;
-        this.details = details;
-        this.photo = photo;
-        this.categories = categories;
+    constructor(object) {
+        this.title = object.title;
+        this.date = object.date;
+        this.time = object.time;
+        this.place = object.place;
+        this.likes = object.likes;
+        this.user = object.user;
+        this.details = object.details;
+        this.photo = object.photo;
+        this.categories = object.categories;
     }
 }
 
