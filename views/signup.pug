@@ -1,0 +1,19 @@
+extends ./layout
+
+block content
+    h1
+        | Signup
+
+    form(action="/signup", method="post")
+        div
+            div
+                label Username:
+                input(type="text", name="username", id="username")
+            div
+                label Password:
+                input(type="password", name="password", id="password")
+            div
+                label Confirm password:
+                input(type="password", name="repeat-password", id="repeat-password")
+            div
+                input(class="btn btn-info", type="submit", value="Submit")

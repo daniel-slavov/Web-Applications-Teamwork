@@ -6,6 +6,10 @@ const bodyParser = require('body-parser');
 module.exports = (data) => {
     return {
         getLogin: (req, res) => {
+            if (req.user) {
+                return res.redirect('/');
+            }
+
             return res.render('login');
         },
         postLogin: (req, res) => {
@@ -14,8 +18,12 @@ module.exports = (data) => {
                 failureRedirect: '/login',
             });
         },
-        getSignup: () => {
+        getSignup: (req, res) => {
+            if (req.user) {
+                return res.redirect('/');
+            }
 
+            return res.render('signup');
         },
         postSignup: () => {
 
