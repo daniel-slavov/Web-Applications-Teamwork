@@ -10,6 +10,15 @@ const init = (data) => {
     const eventsController = require('./controllers/events.controller')(data);
     const usersController = require('./controllers/users.controller')(data);
     require('../config/auth.config')(app, data, passport);
+    app.use((req, res, next) => {
+        res.locals.user = req.user;
+        next();
+    });
+    app.use(require('connect-flash')());
+    app.use((req, res, next) => {
+        res.locals.messages = require('express-messages')(req, res);
+        next();
+});
 
     app.get('/', homeController.index);
     app.get('/login', usersController.getLogin);
@@ -40,7 +49,7 @@ const init = (data) => {
     app.post('/users/:username/edit', usersController.postUpdateUserProfile);
     app.get('/users/:username/myEvents', usersController.getUserEvents);
 
-    return app;
+    return Promise.resolve(app);
 };
 
 module.exports = {

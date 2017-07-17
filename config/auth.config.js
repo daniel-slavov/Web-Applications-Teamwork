@@ -3,20 +3,24 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const LocalStrategy = require('passport-local');
+const MongoStore = require('connect-mongo')(session);
+const config = require('./config');
 
-const configAuth = (app, { users }, passport) => {
-    app.use(cookieParser());
-    app.use(bodyParser.json());
+const configAuth = (app, { users }, passport, db) => {
+    app.use(cookieParser('keyboard cat'));
     app.use(bodyParser.urlencoded({
         extended: true,
     }));
+    app.use(bodyParser.json());
     app.use(session({
-        secret: 'Pesho',
+        store: new MongoStore({ url: config.connectionString }),
+        secret: 'Purple Unicorn',
         resave: true,
         saveUninitialized: true,
     }));
     app.use(passport.initialize());
     app.use(passport.session());
+
     passport.use(new LocalStrategy((username, password, done) => {
         return users.login(username, password)
             .then((user) => {
@@ -41,6 +45,13 @@ const configAuth = (app, { users }, passport) => {
 
                 done(null, false);
             });
+    });
+
+    app.use((req, res, next) => {
+        res.locals = {
+            user: req.user,
+        };
+        next();
     });
 };
 

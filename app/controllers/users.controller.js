@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 module.exports = (data, passport) => {
     return {
         getLogin: (req, res) => {
+            //console.log(req.user);
             if (req.user) {
                 return res.redirect('/');
             }

@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const { ObjectID } = require('mongodb');
 
 class UsersData {
     constructor(db, validator) {
@@ -40,7 +41,7 @@ class UsersData {
 
     getUserById(id) {
         return this.collection
-            .findOne({ _id: id });
+            .findOne({ _id: new ObjectID(id) });
     }
 
     updateProfile(username, firstName, lastName, age, email, avatar) {
