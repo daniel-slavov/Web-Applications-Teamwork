@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const { Validator } = require('../../utils/validator');
 const bodyParser = require('body-parser');
 

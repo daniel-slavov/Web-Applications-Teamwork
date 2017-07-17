@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+    h1
+        | All categories
+    each cat in categories
+        button(type="button", class="btn btn-success btn-lg btn-block") #{cat.name}       

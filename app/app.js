@@ -24,16 +24,16 @@ const init = (data) => {
 
     app.get('/events/create', eventsController.getCreateEvent);
     app.post('/events/create', eventsController.postCreateEvent);
-    app.get('/events/:eventId', eventsController.getEventById);
+    app.get('/api/events/:title', eventsController.getEventByTitle);
 
     // Get events by category name
     app.get('/categories', eventsController.getAllCategories);
-    app.get('/categories/:categoryName',
+    app.get('/categories/:name',
         eventsController.getAllEventsByCategory);
 
     // Get events by date
-    app.get('/date', eventsController.getCalendar);
-    app.get('/date/:selectedDate', eventsController.getAllEventsByDate);
+    app.get('/events-calendar', eventsController.getCalendar);
+    app.get('/events-calendar/:date', eventsController.getAllEventsByDate);
 
     app.get('/users/:username', usersController.getUserProfile);
     app.get('/users/:username/edit', usersController.getUpdateUserProfile);
