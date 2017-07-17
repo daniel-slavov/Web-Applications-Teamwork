@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 const { Validator } = require('../../utils/validator');
-const passport = require('passport');
 const bodyParser = require('body-parser');
 
-module.exports = (data) => {
+module.exports = (data, passport) => {
     return {
         getLogin: (req, res) => {
             if (req.user) {
@@ -13,10 +12,7 @@ module.exports = (data) => {
             return res.render('login');
         },
         postLogin: (req, res) => {
-            passport.authenticate('login', {
-                successRedirect: '/',
-                failureRedirect: '/login',
-            });
+
         },
         getSignup: (req, res) => {
             if (req.user) {

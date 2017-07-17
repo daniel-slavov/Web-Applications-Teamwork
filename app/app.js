@@ -13,10 +13,9 @@ const init = (data) => {
     app.get('/', homeController.index);
     app.get('/login', usersController.getLogin);
     app.post('/login', passport.authenticate('local', {
-        failureRedirect: 'login',
-    }), (req, res) => {
-        res.send('success');
-    });
+        successRedirect: '/',
+        failureRedirect: '/login',
+    }));
 
     app.get('/signup', usersController.getSignup);
     app.post('/signup', usersController.postSignup);
