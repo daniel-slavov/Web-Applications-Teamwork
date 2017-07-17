@@ -7,6 +7,7 @@
   "dependencies": {
     "babel-eslint": "^7.2.3",
     "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
     "cookie-parser": "^1.4.3",
     "crypto-js": "^3.1.9-1",
     "eslint": "^4.2.0",
@@ -14,6 +15,7 @@
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "express-validator": "^3.2.1",
+    "jquery": "^3.2.1",
     "mongodb": "^2.2.30",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",

@@ -4,6 +4,7 @@ const passport = require('passport');
 const init = (data) => {
     const app = express();
     app.set('view engine', 'pug');
+    app.use('/libs', express.static('node_modules'));
 
     const homeController = require('./controllers/home.controller')();
     const eventsController = require('./controllers/events.controller')(data);

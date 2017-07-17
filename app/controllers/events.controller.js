@@ -1,7 +1,11 @@
 module.exports = (data) => {
     return {
-        getCreateEvent: () => {
+        getCreateEvent: (req, res) => {
+            if (!req.user) {
+                return res.redirect('/');
+            }
 
+            return res.redirect('create.event');
         },
         postCreateEvent: () => {
 
