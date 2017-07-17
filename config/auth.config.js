@@ -1,10 +1,15 @@
-const LocalStrategy = require('passport-local').Strategy;
-const cookieParser = require('cookie-parser');
+const express = require('express');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const LocalStrategy = require('passport-local');
 
 const configAuth = (app, { users }, passport) => {
     app.use(cookieParser());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({
+        extended: true,
+    }));
     app.use(session({
         secret: 'Pesho',
         resave: true,
@@ -12,21 +17,13 @@ const configAuth = (app, { users }, passport) => {
     }));
     app.use(passport.initialize());
     app.use(passport.session());
-
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({
-        extended: true,
-    }));
-
     passport.use(new LocalStrategy((username, password, done) => {
         return users.login(username, password)
             .then((user) => {
-                if (!user) {
-                    return done(null, false,
-                        { message: 'Incorrect username or password.' });
+                if (user) {
+                    return done(null, user);
                 }
-
-                return done(null, user);
+                return done(null, false);
             });
     }
     ));
@@ -36,9 +33,14 @@ const configAuth = (app, { users }, passport) => {
     });
 
     passport.deserializeUser((id, done) => {
-        users.getUserById(id, (err, user) => {
-            done(err, user);
-        });
+        users.getUserById(id)
+            .then((user) => {
+                if (user) {
+                    done(null, user);
+                }
+
+                done(null, false);
+            });
     });
 };
 
