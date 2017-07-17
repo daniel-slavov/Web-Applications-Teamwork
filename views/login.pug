@@ -1,13 +1,16 @@
-h1
-    | Login
+extends ./layout
 
-form(action="/login", method="post")
-    div
+block content
+    h1
+        | Login
+
+    form(action="/login", method="post")
         div
-            label Username :
-            input(type="text", name="username", id="username")
-        div
-            label Password :
-            input(type="password", name="password", id="password")
-        div
-            input(type="submit", value="Submit")
+            div
+                label Username
+                input(type="text", name="username", id="username")
+            div
+                label Password
+                input(type="password", name="password", id="password")
+            div
+                input(class="btn btn-success", type="submit", value="Submit")
