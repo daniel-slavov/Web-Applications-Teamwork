@@ -8,10 +8,17 @@ class EventsData {
     }
 
     create(eventObj) {
-        if (this.validator.isValidEvent(eventObj)) {
-            const newEvent = new Event(eventObj);
-            this.collection.insert(newEvent);
-        }
+        const newEvent = new Event(eventObj);
+        this.collection.insert(newEvent);
+
+        // if (this.validator.isValidEvent(eventObj)) {
+
+        // }
+    }
+
+    getByTitle(title) {
+        return this.collection.find({ title: title })
+            .toArray();
     }
 
     getByDate(date) {
