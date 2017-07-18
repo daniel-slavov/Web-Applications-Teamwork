@@ -3,6 +3,8 @@ extends ../layout
 block content
     h1
         | Event details
+    p#p
+        | user
     ul#messages
     form(action='')
         input#m(autocomplete='off')
@@ -13,11 +15,11 @@ block content
         $(function () {
         var socket = io();
         $('form').submit(function () {
-        socket.emit('chat message', $('#m').val());
+        socket.emit('chat message', {user: $('#p').text(),content: $('#m').val(), time: new Date()});
         $('#m').val('');
         return false;
         });
         socket.on('chat message', function (msg) {
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li>').text(`${msg.user} (${msg.time}): ${msg.content}`));
         });
         });
