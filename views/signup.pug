@@ -4,16 +4,28 @@ block content
     h1
         | Signup
 
-    form(action="/signup", method="post")
+    form(action="/signup", method="POST")
         div
             div
-                label Username:
-                input(type="text", name="username", id="username")
+                label Username
+                input(class="form-control", type="text", name="username", id="username")
             div
-                label Password:
-                input(type="password", name="password", id="password")
+                label Password
+                input(class="form-control", type="password", name="password", id="password")
             div
-                label Confirm password:
-                input(type="password", name="repeat-password", id="repeat-password")
+                label Confirm password
+                input(class="form-control", type="password", name="passwordConfirm", id="password-confirm")
+            div 
+                label First name
+                input(class="form-control", type="text", name="firstName", id="firstname")
             div
-                input(class="btn btn-info", type="submit", value="Submit")
+                label Last name
+                input(class="form-control", type="text", name="lastName", id="lastname")         
+            div
+                label Email
+                input(class="form-control", type="email", value="johndoe@example.com", name="email", id="email")
+            div    
+                label Age
+                input(class="form-control", type="number", value="18", name="age", id="age")
+            div
+                input(class="btn btn-success", type="submit", value="Sign up")

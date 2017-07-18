@@ -47,7 +47,7 @@ const init = (data) => {
     app.get('/users/:username', usersController.getUserProfile);
     app.get('/users/:username/edit', usersController.getUpdateUserProfile);
     app.post('/users/:username/edit', usersController.postUpdateUserProfile);
-    app.get('/users/:username/myEvents', usersController.getUserEvents);
+    app.get('/users/:username/my-events', usersController.getUserEvents);
 
     return Promise.resolve(app);
 };

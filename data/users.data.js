@@ -17,8 +17,8 @@ class UsersData {
 
     getEvents(username) {
         return this.getUser(username)
-            .then((users) => {
-                return users[0].events;
+            .then((user) => {
+                return user.events;
             });
     }
 
