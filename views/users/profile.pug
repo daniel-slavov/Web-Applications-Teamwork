@@ -1,5 +1,23 @@
-h1
-    | My profile information
-div
-    | Username:
-    span=context
+extends ../layout
+
+block content
+    h1
+        | My profile information
+    div
+        label Username:
+        span=context.username
+    div
+        label First name:
+        span=context.firstName
+    div
+        label Last name:
+        span=context.lastName
+    div
+        label Email:
+        span=context.email
+    div
+        label Age:
+        span=context.age
+    div
+        button(type="button", class="btn btn-success btn-lg btn-block") Show my events
+

@@ -30,9 +30,16 @@ module.exports = (data) => {
 
                     data.events.create(event);
 
-                    event.categories.forEach((category) => {
+                    if (typeof event.categories === 'string') {
+                        const category = event.categories;
                         data.categories.addEventToCategory(category, event);
-                    });
+                    } else {
+                        event.categories.forEach((category) => {
+                            data.categories.addEventToCategory(category, event);
+                        });
+                    }
+
+                    data.users.addEventToUser(event.user, event);
 
                     return res.redirect('/');
                 });
