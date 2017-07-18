@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+    h1
+        | Update profile
+
+    form(action="/users/" + context.username + "/edit", method="POST")
+        div
+            div
+                label Avatar
+                img(src=context.avatar, width="120px", height="120px")
+            div
+                label Link to new avatar
+                input(class="form-control", type="text", name="avatar", value=context.avatar, id="lastname")            
+            div 
+                label First name
+                input(class="form-control", type="text", name="firstName", value=context.firstName, id="firstname")
+            div
+                label Last name
+                input(class="form-control", type="text", name="lastName", value=context.lastName, id="lastname")         
+            div
+                label Email
+                input(class="form-control", type="email", value=context.email, name="email", id="email")
+            div    
+                label Age
+                input(class="form-control", type="number", value=context.age, name="age", id="age")
+            div
+                input(class="btn btn-success", type="submit", value="Edit")

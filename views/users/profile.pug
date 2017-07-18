@@ -4,6 +4,9 @@ block content
     h1
         | My profile information
     div
+        label Avatar
+        img(src=context.avatar, width="120px", height="120px")
+    div
         label Username:
         span=context.username
     div

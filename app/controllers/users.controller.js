@@ -60,10 +60,31 @@ module.exports = (data, passport) => {
                 });
         },
         getUpdateUserProfile: (req, res) => {
+            if (!req.user) {
+                return res.redirect('/');
+            }
 
+            const username = req.user.username;
+
+            return data.users.getUser(username)
+                .then((user) => {
+                    return res.render('users/edit', {
+                        context: user,
+                    });
+                });
         },
         postUpdateUserProfile: (req, res) => {
+            if (!req.user) {
+                return res.redirect('/');
+            }
 
+            const newUser = req.body;
+            newUser.username = req.user.username;
+
+            data.users.updateProfile(newUser.username, newUser.firstName,
+                newUser.lastName, newUser.age, newUser.email, newUser.avatar);
+
+            return res.redirect('/users/' + newUser.username);
         },
         getUserEvents: (req, res) => {
             if (!req.user) {
