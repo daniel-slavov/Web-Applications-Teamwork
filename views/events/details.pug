@@ -1,9 +1,13 @@
 extends ../layout
 
 block content
-    h1
-        | Event details
+    h1#title
+        | #{event.title}
+    p#p
+        | user
     ul#messages
+        each message in chat
+            li #{message.user} (#{message.time}): #{message.content}
     form(action='')
         input#m(autocomplete='off')
         button Send
@@ -13,11 +17,11 @@ block content
         $(function () {
         var socket = io();
         $('form').submit(function () {
-        socket.emit('chat message', $('#m').val());
+        socket.emit('chat message', {user: $('#p').text(),content: $('#m').val(), time: new Date(), room: $('#title').text()});
         $('#m').val('');
         return false;
         });
         socket.on('chat message', function (msg) {
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li>').text(`${msg.user} (${msg.time}): ${msg.content}`));
         });
         });

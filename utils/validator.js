@@ -30,6 +30,18 @@ const Validator = {
 
         return true;
     },
+    isValidMessage(msgObj) {
+        const props = ['room', 'content', 'time',
+            'user'];
+
+        for (const prop in props) {
+            if (!msgObj.hasOwnProperty(props[prop])) {
+                return false;
+            }
+        }
+
+        return true;
+    },
 };
 
 module.exports = { Validator };

@@ -1,6 +1,7 @@
 const UsersData = require('./users.data');
 const EventsData = require('./events.data');
 const CategoriesData = require('./categories.data');
+const ChatsData = require('./chats.data');
 const { Validator } = require('../utils/validator');
 
 const init = (db) => {
@@ -8,6 +9,7 @@ const init = (db) => {
         users: new UsersData(db, Validator),
         events: new EventsData(db, Validator),
         categories: new CategoriesData(db, Validator),
+        chats: new ChatsData(db, Validator),
     });
 };
 

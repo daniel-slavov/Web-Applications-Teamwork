@@ -40,7 +40,15 @@ const configAuth = (app, { users }, passport, db) => {
         users.getUserById(id)
             .then((user) => {
                 if (user) {
-                    return done(null, user);
+                    const withoutPass = { _id: user._id,
+                        username: user.username,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        age: user.age,
+                        avatar: user.avatar };
+
+                    return done(null, withoutPass);
                 }
 
                 return done(null, false);

@@ -47,9 +47,14 @@ module.exports = (data) => {
         getEventByTitle: (req, res) => {
             const title = req.params.title;
 
-            return data.events.getByTitle(title)
-                .then((event) => {
-                    return res.json(event);
+            let event;
+            data.events.getByTitle(title)
+                .then((eventInformation) => {
+                    event = eventInformation;
+                    return data.chats.getLatestMessages(event.title);
+                })
+                .then((messages) => {
+                    return res.render('events/details', { event: event, chat: messages });
                 });
         },
         getAllCategories: (req, res) => {

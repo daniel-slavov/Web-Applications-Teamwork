@@ -17,8 +17,7 @@ class EventsData {
     }
 
     getByTitle(title) {
-        return this.collection.find({ title: title })
-            .toArray();
+        return this.collection.findOne({ title: title });
     }
 
     getByDate(date) {
