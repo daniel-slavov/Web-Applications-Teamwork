@@ -12,6 +12,10 @@ module.exports = (data) => {
                 });
         },
         postCreateEvent: (req, res) => {
+            if (!req.user) {
+                return res.redirect('/');
+            }
+
             const event = req.body;
 
             return data.events.getByTitle(event.title)
@@ -22,7 +26,7 @@ module.exports = (data) => {
 
                     event.likes = 0;
                     event.photo = 'photo.jpg';
-                    event.user = 'simona';
+                    event.user = req.user.username;
 
                     data.events.create(event);
 
