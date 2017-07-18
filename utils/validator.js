@@ -4,7 +4,7 @@ const Validator = {
             'lastName', 'email', 'age', 'avatar'];
 
         for (const prop in props) {
-            if (!userObj.hasOwnProperty(prop)) {
+            if (!userObj.hasOwnProperty(props[prop])) {
                 return false;
             }
         }
@@ -16,7 +16,7 @@ const Validator = {
             'place', 'likes', 'user', 'details', 'photo'];
 
         for (const prop in props) {
-            if (!eventObj.hasOwnProperty(prop)) {
+            if (!eventObj.hasOwnProperty(props[prop])) {
                 return false;
             }
         }
