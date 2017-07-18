@@ -3,6 +3,9 @@ const passport = require('passport');
 
 const init = (data) => {
     const app = express();
+    const server = require('http').Server(app);
+    const io = require('socket.io')(server);
+
     app.set('view engine', 'pug');
     app.use('/libs', express.static('node_modules'));
 
@@ -18,7 +21,7 @@ const init = (data) => {
     app.use((req, res, next) => {
         res.locals.messages = require('express-messages')(req, res);
         next();
-});
+    });
 
     app.get('/', homeController.index);
     app.get('/login', usersController.getLogin);
@@ -49,7 +52,18 @@ const init = (data) => {
     app.post('/users/:username/edit', usersController.postUpdateUserProfile);
     app.get('/users/:username/my-events', usersController.getUserEvents);
 
-    return Promise.resolve(app);
+    io.on('connection', (socket) => {
+        socket.on('chat message', (msg) => {
+            console.log(msg);
+            io.emit('chat message', msg);
+        });
+        console.log('a user connected');
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+        });
+    });
+
+    return Promise.resolve(server);
 };
 
 module.exports = {
