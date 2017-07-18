@@ -58,14 +58,19 @@ module.exports = (data) => {
 
             return data.categories.getEventsByCategory(category)
                 .then((events) => {
-                    return res.send(events);
+                    return res.json(events);
                 });
         },
         getCalendar: () => {
 
         },
-        getAllEventsByDate: () => {
+        getAllEventsByDate: (req, res) => {
+            const date = req.params.date;
 
+            return data.events.getByDate(date)
+                .then((events) => {
+                    return res.json(events);
+                });
         },
     };
 };

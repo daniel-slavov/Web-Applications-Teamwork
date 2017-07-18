@@ -8,12 +8,12 @@ class EventsData {
     }
 
     create(eventObj) {
-        const newEvent = new Event(eventObj);
-        this.collection.insert(newEvent);
+        // console.log(eventObj);
 
-        // if (this.validator.isValidEvent(eventObj)) {
-
-        // }
+        if (this.validator.isValidEvent(eventObj)) {
+            const newEvent = new Event(eventObj);
+            this.collection.insert(newEvent);
+        }
     }
 
     getByTitle(title) {

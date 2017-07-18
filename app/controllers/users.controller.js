@@ -28,13 +28,13 @@ module.exports = (data, passport) => {
             return res.redirect('/');
         },
         getUserProfile: (req, res) => {
-            const username = req.params.username;
-            data.users.getUser(username)
-                .then((user) => {
-                    res.render('profile', {
-                        context: user.username,
-                    });
-                });
+            // const username = req.params.username;
+            // data.users.getUser(username)
+            //     .then((user) => {
+            //         res.render('users/profile', {
+            //             context: user.username,
+            //         });
+            //     });
         },
         getUpdateUserProfile: () => {
 
