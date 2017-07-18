@@ -1,9 +1,9 @@
 module.exports = (data) => {
     return {
         getCreateEvent: (req, res) => {
-            // if (!req.user) {
-            //     return res.redirect('/');
-            // }
+            if (!req.user) {
+                return res.redirect('/');
+            }
             return data.categories.getAll()
                 .then((categories) => {
                     return res.render('events/create', {
