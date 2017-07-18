@@ -8,6 +8,7 @@ const init = (data) => {
 
     app.set('view engine', 'pug');
     app.use('/libs', express.static('node_modules'));
+    app.use(express.static('public'));
 
     const homeController = require('./controllers/home.controller')();
     const eventsController = require('./controllers/events.controller')(data);

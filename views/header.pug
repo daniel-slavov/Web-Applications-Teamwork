@@ -1,1 +1,45 @@
 header
+
+nav.navbar.navbar-default(role='navigation')
+  // Brand and toggle get grouped for better mobile display
+  .navbar-header
+    button.navbar-toggle(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+      span.sr-only Toggle navigation
+      span.icon-bar
+      span.icon-bar
+      span.icon-bar
+    a.navbar-brand(href='/') EventsBox
+  // Collect the nav links, forms, and other content for toggling
+  .navbar-collapse
+    ul.nav.navbar-nav
+      li.active
+        a(href='/') Home
+      li.dropdown
+        a.dropdown-toggle(href='#', data-toggle='dropdown')
+          | Categories 
+          b.caret
+        ul.dropdown-menu
+          li
+            a(href='#') Concerts
+          li
+            a(href='#') Parties
+          li
+            a(href='#') Sports
+      li
+        a(href='/events-calendar') Calendar
+    .col-sm-3.col-md-3
+      form.navbar-form(role='search')
+        .input-group
+          input#pattern.form-control(type='text', placeholder='Search', name='q')
+          #search-btn.input-group-btn
+            button.btn.btn-default(type='submit')
+              i.glyphicon.glyphicon-search
+    ul.nav.navbar-nav.navbar-right
+      li#username
+        a(href='#') username
+      li#logout
+        a(href='/logout') Logout 
+      li#login
+        a(href='/login') Login
+      li#signup
+        a(href='/signup') Signup
