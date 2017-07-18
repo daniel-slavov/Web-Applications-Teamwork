@@ -40,18 +40,11 @@ const configAuth = (app, { users }, passport, db) => {
         users.getUserById(id)
             .then((user) => {
                 if (user) {
-                    done(null, user);
+                    return done(null, user);
                 }
 
-                done(null, false);
+                return done(null, false);
             });
-    });
-
-    app.use((req, res, next) => {
-        res.locals = {
-            user: req.user,
-        };
-        next();
     });
 };
 
