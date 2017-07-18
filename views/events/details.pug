@@ -17,11 +17,11 @@ block content
         $(function () {
         var socket = io();
         $('form').submit(function () {
-        socket.emit('chat message', {user: $('#p').text(),content: $('#m').val(), time: new Date(), room: $('#title').text()});
+        socket.emit('chat message', {user: $('#p').text(),content: $('#m').val(), time: (new Date).toLocaleTimeString(), room: $('#title').text()});
         $('#m').val('');
         return false;
         });
         socket.on('chat message', function (msg) {
-        $('#messages').append($('<li>').text(`${msg.user} (${msg.time}): ${msg.content}`));
+        $('#messages').append($('<li>').text(`${msg.time}  ${msg.user}:  ${msg.content}`));
         });
         });
