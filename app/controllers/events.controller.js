@@ -20,7 +20,7 @@ module.exports = (data) => {
 
             return data.events.getByTitle(event.title)
                 .then((result) => {
-                    if (result.length > 0) {
+                    if (result !== null) {
                         return res.redirect('/events/create');
                     }
 
@@ -54,7 +54,8 @@ module.exports = (data) => {
                     return data.chats.getLatestMessages(event.title);
                 })
                 .then((messages) => {
-                    return res.render('events/details', { event: event, chat: messages });
+                    return res.render('events/details', {
+                        event: event, chat: messages });
                 });
         },
         getAllCategories: (req, res) => {
@@ -82,6 +83,62 @@ module.exports = (data) => {
             return data.events.getByDate(date)
                 .then((events) => {
                     return res.json(events);
+                });
+        },
+        getUpdateEvent: (req, res) => {
+            if (!req.user) {
+                return res.redirect('/');
+            }
+
+            const title = req.params.title;
+
+            return data.events.getByTitle(title)
+                .then((event) => {
+                    const user = event.user;
+
+                    if (user !== req.user.username) {
+                        return res.redirect('/');
+                    }
+
+                    return res.render('events/edit', {
+                            context: event,
+                        });
+                });
+        },
+        postUpdateEvent: (req, res) => {
+            if (!req.user) {
+                return res.redirect('/');
+            }
+
+            const newEvent = req.body;
+            const title = req.params.title;
+
+            data.events.update(title, newEvent.date, newEvent.time,
+                newEvent.place, newEvent.details, newEvent.photo);
+
+            // IMPLEMENT - update event in user's collection
+
+            return res.redirect('/api/events/' + title);
+        },
+        deleteEvent: (req, res) => {
+            if (!req.user) {
+                return res.redirect('/');
+            }
+
+            const title = req.params.title;
+
+            return data.events.getEventByTitle(title)
+                .then((event) => {
+                    if (event.user !== req.user.username) {
+                        return res.redirect('/');
+                    }
+
+                    data.events.remove(title);
+
+                    data.users.removeEvent(req.user.username, title);
+
+                    return res.redirect(
+                        '/users/' + req.user.username + 'my-events');
                 });
         },
     };

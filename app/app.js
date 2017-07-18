@@ -37,6 +37,9 @@ const init = (data) => {
     app.get('/events/create', eventsController.getCreateEvent);
     app.post('/events/create', eventsController.postCreateEvent);
     app.get('/api/events/:title', eventsController.getEventByTitle);
+    app.get('/events/:title/edit', eventsController.getUpdateEvent);
+    app.post('/events/:title/edit', eventsController.postUpdateEvent);
+    app.post('/events/:id/delete', eventsController.deleteEvent);
 
     // Get events by category name
     app.get('/categories', eventsController.getAllCategories);

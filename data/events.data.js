@@ -1,4 +1,5 @@
 const Event = require('../models/event');
+const { ObjectID } = require('mongodb');
 
 class EventsData {
     constructor(db, validator) {
@@ -26,7 +27,7 @@ class EventsData {
     }
 
     getById(id) {
-        return this.collection.findOne({ _id: id });
+        return this.collection.findOne({ _id: new ObjectID(id) });
     }
 
     getUpcoming() {

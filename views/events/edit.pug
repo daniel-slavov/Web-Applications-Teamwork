@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+    h1
+        | Update event
+
+    form(action="/events/" + context.title + "/edit", method="POST")
+        div
+            div 
+                label Title
+                span=context.title
+            div
+                label Event photo
+                img(src=context.photo, width="120px", height="120px")
+            div
+                label Link to new event photo
+                input(class="form-control", type="text", name="photo", value=context.photo, id="photo")            
+            div
+                label Date
+                input(class="form-control", type="date", name="date", value=context.date, id="date")         
+            div
+                label Time
+                input(class="form-control", type="time", value=context.time, name="time", id="time")
+            div    
+                label Place
+                input(class="form-control", type="text", value=context.place, name="place", id="place")
+            div    
+                label Details
+                input(class="form-control", type="text", value=context.details, name="details", id="details")
+            div
+                input(class="btn btn-success", type="submit", value="Edit")
