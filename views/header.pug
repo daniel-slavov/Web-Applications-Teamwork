@@ -35,10 +35,12 @@ nav.navbar.navbar-default(role='navigation')
             button.btn.btn-default(type='submit')
               i.glyphicon.glyphicon-search
     ul.nav.navbar-nav.navbar-right
+    if user
       li#username
-        a(href='#') username
+        a(href='#') #{user.username}
       li#logout
         a(href='/logout') Logout 
+    else
       li#login
         a(href='/login') Login
       li#signup
