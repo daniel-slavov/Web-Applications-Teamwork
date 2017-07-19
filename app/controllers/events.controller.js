@@ -122,7 +122,7 @@ module.exports = (data) => {
         },
         deleteEvent: (req, res) => {
             if (!req.user) {
-                return res.redirect('/');
+                return res.redirect('/login');
             }
 
             const title = req.params.title;
