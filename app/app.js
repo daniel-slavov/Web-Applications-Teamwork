@@ -13,6 +13,8 @@ const init = (data) => {
     const homeController = require('./controllers/home.controller')(data);
     const eventsController = require('./controllers/events.controller')(data);
     const usersController = require('./controllers/users.controller')(data);
+    const errorsController = require('./controllers/errors.controller')();
+
     require('../config/auth.config')(app, data, passport);
     app.use((req, res, next) => {
         res.locals.user = req.user;
@@ -55,6 +57,8 @@ const init = (data) => {
     app.get('/users/:username/edit', usersController.getUpdateUserProfile);
     app.post('/users/:username/edit', usersController.postUpdateUserProfile);
     app.get('/users/:username/my-events', usersController.getUserEvents);
+
+    app.get('/error', errorsController.show);
 
     io.on('connection', (socket) => {
         socket.on('chat message', (msg) => {

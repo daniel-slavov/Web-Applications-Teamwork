@@ -2,7 +2,7 @@ module.exports = (data) => {
     return {
         getCreateEvent: (req, res) => {
             if (!req.user) {
-                return res.redirect('/');
+                return res.redirect('/login');
             }
             return data.categories.getAll()
                 .then((categories) => {
@@ -13,7 +13,7 @@ module.exports = (data) => {
         },
         postCreateEvent: (req, res) => {
             if (!req.user) {
-                return res.redirect('/');
+                return res.redirect('/login');
             }
 
             const event = req.body;
@@ -21,7 +21,7 @@ module.exports = (data) => {
             return data.events.getByTitle(event.title)
                 .then((result) => {
                     if (result !== null) {
-                        return res.redirect('/events/create');
+                        return res.redirect('/error');
                     }
 
                     event.likes = 0;
@@ -87,17 +87,21 @@ module.exports = (data) => {
         },
         getUpdateEvent: (req, res) => {
             if (!req.user) {
-                return res.redirect('/');
+                return res.redirect('/login');
             }
 
             const title = req.params.title;
 
             return data.events.getByTitle(title)
                 .then((event) => {
+                    if (event === null) {
+                        return res.redirect('/error');
+                    }
+
                     const user = event.user;
 
                     if (user !== req.user.username) {
-                        return res.redirect('/');
+                        return res.redirect('/error');
                     }
 
                     return res.render('events/edit', {
@@ -107,7 +111,7 @@ module.exports = (data) => {
         },
         postUpdateEvent: (req, res) => {
             if (!req.user) {
-                return res.redirect('/');
+                return res.redirect('/login');
             }
 
             const newEvent = req.body;
@@ -115,8 +119,12 @@ module.exports = (data) => {
 
             return data.events.getByTitle(title)
                 .then((event) => {
+                    if (event === null) {
+                        return res.redirect('/error');
+                    }
+
                     if (event.user !== req.user.username) {
-                        return res.redirect('/');
+                        return res.redirect('/error');
                     }
 
                     data.events.update(title, newEvent.date, newEvent.time,
@@ -154,8 +162,12 @@ module.exports = (data) => {
 
             return data.events.getEventByTitle(title)
                 .then((event) => {
+                    if (event === null) {
+                        return res.redirect('/error');
+                    }
+
                     if (event.user !== req.user.username) {
-                        return res.redirect('/');
+                        return res.redirect('/error');
                     }
 
                     data.events.remove(title);
@@ -172,7 +184,7 @@ module.exports = (data) => {
                     }
 
                     return res.redirect(
-                        '/users/' + req.user.username + 'my-events');
+                        '/users/' + req.user.username + '/my-events');
                 });
         },
     };
