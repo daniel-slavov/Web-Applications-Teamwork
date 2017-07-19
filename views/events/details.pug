@@ -25,6 +25,9 @@ block content
     script(src='https://code.jquery.com/jquery-1.11.1.js')
     script.
         $(function () {
+        if(!document.getElementById('username')) {
+            $('#input').hide();
+        }
         var socket = io();
         $('#send').click(function () {
         socket.emit('chat message', {user: $('#username').text(),content: $('#new-message').val(), time: (new Date).toLocaleTimeString(), room: $('#title').text()});
