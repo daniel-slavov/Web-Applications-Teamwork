@@ -30,6 +30,16 @@ class EventsData {
         return this.collection.findOne({ _id: new ObjectID(id) });
     }
 
+    getByCity(city) {
+        return this.collection.find({ 'place': { $regex: city } })
+            .toArray();
+    }
+
+    getByTitlePattern(pattern) {
+        return this.collection.find({ 'title': { $regex: pattern } })
+            .toArray();
+    }
+
     getUpcoming() {
         return this.collection.aggregate([
             { $sort: { date: -1 } },

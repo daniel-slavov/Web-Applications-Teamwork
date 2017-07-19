@@ -39,6 +39,12 @@ class UsersData {
             .findOne({ username: username });
     }
 
+    getUserByPattern(pattern) {
+        return this.collection
+            .find({ 'username': { '$regex': pattern } })
+            .toArray();
+    }
+
     getUserById(id) {
         return this.collection
             .findOne({ _id: new ObjectID(id) });
