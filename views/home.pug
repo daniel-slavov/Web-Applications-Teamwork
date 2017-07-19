@@ -3,3 +3,16 @@ extends ./layout
 block content
     h1
         | Welcome
+
+    h1
+        | Upcoming events
+    div
+        each event in events
+            div
+                b=event.title
+                div
+                    img(src=event.photo)
+                p=event.details
+                p=event.date
+                p=event.time
+
