@@ -58,6 +58,28 @@ class UsersData {
                 });
     }
 
+    updateEvent(username, eventTitle, date, time, place, details,
+            categories, likes, photo) {
+        this.collection.update({
+            username: username,
+            'events.title': eventTitle,
+        }, {
+            $set: {
+                'events.$': {
+                title: eventTitle,
+                date: date,
+                time: time,
+                place: place,
+                details: details,
+                categories: categories,
+                likes: likes,
+                photo: photo,
+                user: username,
+                },
+            },
+        });
+    }
+
     removeEvent(username, eventTitle) {
         this.collection.update(
             { username: username },

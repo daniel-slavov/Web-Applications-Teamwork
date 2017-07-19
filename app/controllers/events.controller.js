@@ -113,12 +113,37 @@ module.exports = (data) => {
             const newEvent = req.body;
             const title = req.params.title;
 
-            data.events.update(title, newEvent.date, newEvent.time,
-                newEvent.place, newEvent.details, newEvent.photo);
+            return data.events.getByTitle(title)
+                .then((event) => {
+                    if (event.user !== req.user.username) {
+                        return res.redirect('/');
+                    }
 
-            // IMPLEMENT - update event in user's collection
+                    data.events.update(title, newEvent.date, newEvent.time,
+                        newEvent.place, newEvent.details, newEvent.photo);
 
-            return res.redirect('/api/events/' + title);
+                    data.users.updateEvent(
+                        event.user, title, newEvent.date,
+                        newEvent.time, newEvent.place, newEvent.details,
+                        event.categories, event.likes, newEvent.photo);
+
+                    if (typeof event.categories === 'string') {
+                        const category = event.categories;
+                        data.categories.updateEvent(
+                            category, title, newEvent.date, newEvent.time,
+                            newEvent.place, newEvent.details, event.categories,
+                            event.likes, newEvent.photo, event.user);
+                    } else {
+                        event.categories.forEach((category) => {
+                            data.categories.updateEvent(category, title,
+                                newEvent.date, newEvent.time, newEvent.place,
+                                newEvent.details, event.categories,
+                                event.likes, newEvent.photo, event.user);
+                        });
+                    }
+
+                    return res.redirect('/api/events/' + title);
+                });
         },
         deleteEvent: (req, res) => {
             if (!req.user) {
@@ -136,6 +161,15 @@ module.exports = (data) => {
                     data.events.remove(title);
 
                     data.users.removeEvent(req.user.username, title);
+
+                    if (typeof event.categories === 'string') {
+                        const category = event.categories;
+                        data.categories.removeEvent(category, event);
+                    } else {
+                        event.categories.forEach((category) => {
+                            data.categories.removeEvent(category, event);
+                        });
+                    }
 
                     return res.redirect(
                         '/users/' + req.user.username + 'my-events');
