@@ -39,7 +39,7 @@ const init = (data) => {
 
     app.get('/events/create', eventsController.getCreateEvent);
     app.post('/events/create', eventsController.postCreateEvent);
-    app.get('/api/events/:title', eventsController.getEventByTitle);
+    app.get('/events/:title', eventsController.getEventByTitle);
     app.get('/events/:title/edit', eventsController.getUpdateEvent);
     app.post('/events/:title/edit', eventsController.postUpdateEvent);
     app.post('/events/:title/delete', eventsController.deleteEvent);
@@ -51,12 +51,16 @@ const init = (data) => {
 
     // Get events by date
     app.get('/events-calendar', eventsController.getCalendar);
-    app.get('/events-calendar/:date', eventsController.getAllEventsByDate);
+    app.get('/api/events-calendar/:date', eventsController.getAllEventsByDate);
 
     app.get('/users/:username', usersController.getUserProfile);
     app.get('/users/:username/edit', usersController.getUpdateUserProfile);
     app.post('/users/:username/edit', usersController.postUpdateUserProfile);
-    app.get('/users/:username/my-events', usersController.getUserEvents);
+    app.get('/api/users/:username/events', usersController.getUserEvents);
+
+    app.get('api/events/search/:pattern', eventsController.searchEvent);
+    app.get('api/events/search/:pattern', usersController.searchUser);
+    app.get('api/events/cities/search/:pattern', eventsController.searchEventByCity);
 
     app.get('/error', errorsController.show);
 

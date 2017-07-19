@@ -101,5 +101,8 @@ module.exports = (data, passport) => {
                     return res.json(events);
                 });
         },
+        searchUser: (req, res) => {
+
+        },
     };
 };

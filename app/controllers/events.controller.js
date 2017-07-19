@@ -184,8 +184,15 @@ module.exports = (data) => {
                     }
 
                     return res.redirect(
-                        '/users/' + req.user.username + '/my-events');
+                        '/users/' + req.user.username + '/events');
                 });
+        },
+
+        searchEvent: (req, res) => {
+
+        },
+        searchEventByCity: (req, res) => {
+
         },
     };
 };
