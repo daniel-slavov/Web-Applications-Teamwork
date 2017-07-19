@@ -1,7 +1,13 @@
-module.exports = () => {
+module.exports = (data) => {
     return {
         index: (req, res) => {
-            return res.render('home', { user: req.user });
+            return data.events.getUpcoming()
+                .then((events) => {
+                    res.render('home', {
+                        user: req.user,
+                        events: events,
+                     });
+                });
         },
     };
 };

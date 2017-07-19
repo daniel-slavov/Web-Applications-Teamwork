@@ -10,7 +10,7 @@ const init = (data) => {
     app.use('/libs', express.static('node_modules'));
     app.use(express.static('public'));
 
-    const homeController = require('./controllers/home.controller')();
+    const homeController = require('./controllers/home.controller')(data);
     const eventsController = require('./controllers/events.controller')(data);
     const usersController = require('./controllers/users.controller')(data);
     require('../config/auth.config')(app, data, passport);

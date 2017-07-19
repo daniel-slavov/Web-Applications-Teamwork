@@ -15,16 +15,7 @@ nav.navbar.navbar-default(role='navigation')
       li.active
         a(href='/') Home
       li.dropdown
-        a.dropdown-toggle(href='#', data-toggle='dropdown')
-          | Categories 
-          b.caret
-        ul.dropdown-menu
-          li
-            a(href='#') Concerts
-          li
-            a(href='#') Parties
-          li
-            a(href='#') Sports
+        a(href='/categories') Categories
       li
         a(href='/events-calendar') Calendar
     .col-sm-3.col-md-3
@@ -34,14 +25,18 @@ nav.navbar.navbar-default(role='navigation')
           #search-btn.input-group-btn
             button.btn.btn-default(type='submit')
               i.glyphicon.glyphicon-search
+    ul.nav.navbar-nav
+        if user
+            li
+                a(href='/events/create') Create event
     ul.nav.navbar-nav.navbar-right
-    if user
-      li#username
-        a(href='#') #{user.username}
-      li#logout
-        a(href='/logout') Logout 
-    else
-      li#login
-        a(href='/login') Login
-      li#signup
-        a(href='/signup') Signup
+      if user
+        li#username
+            a(href='users/' + user.username) Hello, #{user.username}
+        li#logout
+            a(href='/logout') Logout 
+      else
+        li#login
+            a(href='/login') Login
+        li#signup
+            a(href='/signup') Signup

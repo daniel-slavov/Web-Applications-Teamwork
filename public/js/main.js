@@ -4,4 +4,10 @@ $(document).ready(() => {
   } catch (error) {
 
   }
+
+  try {
+    navigation();
+  } catch (error) {
+
+  }
 });

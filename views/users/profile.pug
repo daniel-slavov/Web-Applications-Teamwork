@@ -22,5 +22,8 @@ block content
         label Age:
         span=context.age
     div
-        button(type="button", class="btn btn-success btn-lg btn-block") Show my events
+        button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show my events
+    div#my-events.hidden
+        | My Events:
+        div.event-items
 
