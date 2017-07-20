@@ -9,6 +9,10 @@ module.exports = (data) => {
                      });
                 });
         },
+
+        search: (req, res) => {
+            return res.render('search/search');
+        },
     };
 };
 

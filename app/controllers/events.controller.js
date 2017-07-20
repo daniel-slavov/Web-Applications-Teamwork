@@ -189,10 +189,20 @@ module.exports = (data) => {
         },
 
         searchEvent: (req, res) => {
+            const pattern = req.query.pattern;
 
+            return data.events.getByTitlePattern(pattern)
+                .then((events) => {
+                    return res.json(events);
+                });
         },
         searchEventByCity: (req, res) => {
+            const pattern = req.query.pattern;
 
+            return data.events.getByCity(pattern)
+                .then((events) => {
+                    return res.json(events);
+                });
         },
     };
 };

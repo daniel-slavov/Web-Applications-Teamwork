@@ -102,7 +102,12 @@ module.exports = (data, passport) => {
                 });
         },
         searchUser: (req, res) => {
+            const pattern = req.query.pattern;
 
+            return data.users.getUserByPattern(pattern)
+                .then((users) => {
+                    return res.json(users);
+                });
         },
     };
 };

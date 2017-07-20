@@ -58,9 +58,10 @@ const init = (data) => {
     app.post('/users/:username/edit', usersController.postUpdateUserProfile);
     app.get('/api/users/:username/events', usersController.getUserEvents);
 
-    app.get('api/events/search/:pattern', eventsController.searchEvent);
-    app.get('api/events/search/:pattern', usersController.searchUser);
-    app.get('api/events/cities/search/:pattern', eventsController.searchEventByCity);
+    app.get('/search', homeController.search);
+    app.get('/api/events/search', eventsController.searchEvent);
+    app.get('/api/events/cities/search', eventsController.searchEventByCity);
+    app.get('/api/users/search', usersController.searchUser);
 
     app.get('/error', errorsController.show);
 
