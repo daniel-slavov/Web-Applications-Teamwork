@@ -12,14 +12,14 @@ const Validator = {
         return true;
     },
     isValidEvent(eventObj) {
-        const props = ['title', 'date', 'time',
-            'place', 'likes', 'user', 'details', 'photo'];
+        // const props = ['title', 'date', 'time',
+        //     'place', 'likes', 'user', 'details', 'photo'];
 
-        for (const prop in props) {
-            if (!eventObj.hasOwnProperty(props[prop])) {
-                return false;
-            }
-        }
+        // for (const prop in props) {
+        //     if (!eventObj.hasOwnProperty(props[prop])) {
+        //         return false;
+        //     }
+        // }
 
         return true;
     },

@@ -40,12 +40,12 @@ const init = (data) => {
     }));
 
     app.get('/signup', usersController.getSignup);
-    app.post('/signup', usersController.postSignup); // Add validation
+    app.post('/signup', usersController.postSignup);
     app.get('/logout', usersController.logout);
 
     // Events routes
     app.get('/events/create', eventsController.getCreateEvent);
-    app.post('/events/create', eventsController.postCreateEvent); // Add validation
+    app.post('/events/create', eventsController.postCreateEvent);
     app.get('/events/:title', eventsController.getEventByTitle);
     app.put('/api/events/:title', eventsController.updateEvent); // Add validation and refactor
     app.delete('/api/events/:title', eventsController.deleteEvent);
@@ -61,7 +61,7 @@ const init = (data) => {
 
     // Users routes
     app.get('/users/:username', usersController.getUserProfile);
-    app.put('/users/:username', usersController.updateUserProfile); // Reimplement to return errors or redirect + status code
+    app.put('/users/:username', usersController.updateUserProfile);
     app.get('/api/users/:username/events', usersController.getUserEvents);
 
     // Search routes

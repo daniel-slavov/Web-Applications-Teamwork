@@ -17,41 +17,77 @@ module.exports = (data) => {
                 return res.redirect('/login');
             }
 
+            req.assert('title',
+                'Title must be at least 6 symbols.').len(6);
+            req.assert('date', 'Date is required').isDate();
+            req.assert('time', 'Time is required').notEmpty();
+            req.assert('place', 'Place must contain only letters.').isAlpha();
+            req.assert('categories', 'Category is required').notEmpty();
+
             const event = req.body;
 
-            return data.events.getByTitle(event.title)
+            return req.getValidationResult()
                 .then((result) => {
-                    if (result !== null) {
-                        return res.redirect('/error');
+                    if (!result.isEmpty()) {
+                        return data.categories.getAll()
+                            .then((categories) => {
+                                return res.render('events/create', {
+                                    event: event,
+                                    categories: categories,
+                                    errors: result.array(),
+                                });
+                            });
                     }
 
-                    event.likes = 0;
-                    event.photo = 'photo.jpg';
-                    event.user = req.user.username;
+                    return data.events.getByTitle(event.title)
+                        .then((existing) => {
+                            if (existing !== null) {
+                                const errors = [];
+                                errors.push({ msg: `Event with that 
+                                    title already exists.` });
 
-                    data.events.create(event);
+                                return data.categories.getAll()
+                                    .then((categories) => {
+                                        return res.render('events/create', {
+                                            event: event,
+                                            categories: categories,
+                                            errors: errors,
+                                        });
+                                    });
+                            }
 
-                    if (typeof event.categories === 'string') {
-                        const category = event.categories;
-                        data.categories.addEventToCategory(category, event);
-                    } else {
-                        event.categories.forEach((category) => {
-                            data.categories.addEventToCategory(category, event);
+                            event.likes = 0;
+                            event.photo = 'photo.jpg';
+                            event.user = req.user.username;
+
+                            data.events.create(event);
+
+                            if (typeof event.categories === 'string') {
+                                const category = event.categories;
+                                data.categories
+                                    .addEventToCategory(category, event);
+                            } else {
+                                event.categories.forEach((category) => {
+                                    data.categories
+                                        .addEventToCategory(category, event);
+                                });
+                            }
+
+                            data.users.addEventToUser(event.user, event);
+
+                            return res.redirect('/events/' + event.title);
                         });
-                    }
-
-                    data.users.addEventToUser(event.user, event);
-
-                    return res.redirect('/');
                 });
         },
-        getEventByTitle: (req, res) => {
+        getEventByTitle: (req, res) => { // ERROR
+            console.log(req.params);
             const title = req.params.title;
 
             let event;
             data.events.getByTitle(title)
                 .then((eventInformation) => {
                     event = eventInformation;
+                    console.log(event);
                     return data.chats.getLatestMessages(event.title);
                 })
                 .then((messages) => {
