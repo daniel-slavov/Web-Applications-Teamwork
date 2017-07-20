@@ -1,11 +1,11 @@
 const search = () => {
-    $('#search-btn').click(() => {
+    $('#search-button').click(() => {
         let pattern = $('#pattern').val;
-        console.log(url);
+        console.log(pattern);
 
         if (pattern.length > 0) {
             let url = `/api/events/${pattern}`;
-            // console.log(url);
+            console.log(url);
 
              requester.get(url)
                  .then(response => {
@@ -13,4 +13,8 @@ const search = () => {
                  });
          }
     })
+
+    // document.getElementById('search-btn').addEventListener('click', function() {
+    //     console.log('search button');
+    // });
 };
