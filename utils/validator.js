@@ -1,13 +1,13 @@
 const Validator = {
     isValidUser(userObj) {
-        const props = ['username', 'password', 'firstName',
-            'lastName', 'email', 'age', 'avatar'];
+        // const props = ['username', 'password', 'firstName',
+        //     'lastName', 'email', 'age', 'avatar'];
 
-        for (const prop in props) {
-            if (!userObj.hasOwnProperty(props[prop])) {
-                return false;
-            }
-        }
+        // for (const prop in props) {
+        //     if (!userObj.hasOwnProperty(props[prop])) {
+        //         return false;
+        //     }
+        // }
 
         return true;
     },

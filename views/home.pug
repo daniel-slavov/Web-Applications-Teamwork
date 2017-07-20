@@ -6,13 +6,14 @@ block content
 
     h1
         | Upcoming events
-    div
+    div(class="row text-center")
         each event in events
-            div
-                b=event.title
-                div
-                    img(src=event.photo)
-                p=event.details
-                p=event.date
-                p=event.time
-
+            div(class="col-md-3 col-sm-6 hero-feature")
+                div(class="thumbnail")
+                    img(src=event.photo alt="")
+                    div(class="caption")
+                        h3=event.title
+                        p
+                            | #{event.date} #{event.time} #{event.place}
+                        p
+                            a(href="/events/" + event.title, class="btn btn-primary") Show

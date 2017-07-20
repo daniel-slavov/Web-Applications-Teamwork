@@ -3,8 +3,10 @@ extends ../layout
 block content
     h1#title
         | #{event.title}
+    if user && user.username == event.user
+        button(class="btn btn-danger") Delete event
     div#details.col-md-7
-        img()
+        img(src=event.photo)
         br
 
     div#chat.col-md-5

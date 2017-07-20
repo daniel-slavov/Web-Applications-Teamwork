@@ -3,7 +3,7 @@
    height: 400px;
   overflow: auto;
 }
-img {
+img.media-object {
   width: 50px; 
   height: 50px;
 }

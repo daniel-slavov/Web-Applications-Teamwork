@@ -22,20 +22,45 @@ module.exports = (data, passport) => {
                 return res.redirect('/');
             }
 
+            req.assert('username',
+                'Username must be between 6 and 25 symbols.').len(6, 25);
+            req.assert('password',
+                'Passsword must be at least 6 symbols.').len(6);
+            req.assert('passwordConfirm', 'Passwords do not match')
+                .equals(req.body.password);
+            req.assert('email', 'Email is not valid').isEmail();
+
             const user = req.body;
 
-            return data.users.getUser(user.username)
-                .then((existingUser) => {
-                    if (existingUser !== null) {
-                        return res.redirect('/signup');
+            return req.getValidationResult()
+                .then((result) => {
+                    if (!result.isEmpty()) {
+                        return res.status(400).render('signup', {
+                            user: user,
+                            errors: result.array(),
+                        });
                     }
 
-                    user.avatar = 'photo.jpg';
-                    user.events = [];
+                    return data.users.getUser(user.username)
+                        .then((existingUser) => {
+                            if (existingUser !== null) {
+                                const errors = [];
+                                errors.push({ msg: `User with that 
+                                    username already exists.` });
 
-                    data.users.create(user);
+                                return res.render('signup', {
+                                    user: user,
+                                    errors: errors,
+                                });
+                            }
 
-                    return res.redirect('/login');
+                            user.avatar = 'photo.jpg';
+                            user.events = [];
+
+                            data.users.create(user);
+
+                            return res.redirect('/login');
+                        });
                 });
         },
         logout: (req, res) => {
@@ -59,22 +84,8 @@ module.exports = (data, passport) => {
                     });
                 });
         },
-        getUpdateUserProfile: (req, res) => {
-            if (!req.user) {
-                return res.redirect('/');
-            }
-
-            const username = req.user.username;
-
-            return data.users.getUser(username)
-                .then((user) => {
-                    return res.render('users/edit', {
-                        context: user,
-                    });
-                });
-        },
-        postUpdateUserProfile: (req, res) => {
-            if (!req.user) {
+        updateUserProfile: (req, res) => {
+            if (!req.user && req.user.username !== req.params.username) {
                 return res.redirect('/');
             }
 
@@ -84,7 +95,7 @@ module.exports = (data, passport) => {
             data.users.updateProfile(newUser.username, newUser.firstName,
                 newUser.lastName, newUser.age, newUser.email, newUser.avatar);
 
-            return res.redirect('/users/' + newUser.username);
+            return res.redirect(201, '/users/' + newUser.username); // Return status code and redirect
         },
         getUserEvents: (req, res) => {
             if (!req.user) {
@@ -102,11 +113,24 @@ module.exports = (data, passport) => {
                 });
         },
         searchUser: (req, res) => {
-            const pattern = req.query.pattern;
+            const pattern = req.query.name;
+            const partial = req.query.isPartial;
+
+            if (partial) {
+                return data.events.getByTitlePattern(pattern)
+                .then((events) => {
+                    return res.render('partials/users', {
+                        events: events,
+                    });
+                });
+            }
 
             return data.users.getUserByPattern(pattern)
                 .then((users) => {
-                    return res.json(users);
+                    return res.render('users/users', {
+                        title: 'Search: ' + pattern,
+                        users: users,
+                    });
                 });
         },
     };

@@ -1,0 +1,15 @@
+div(class="row text-center")
+if events
+    each event in events
+        div(class="col-md-3 col-sm-6 hero-feature")
+            div(class="thumbnail")
+                img(src=event.photo alt="")
+                div(class="caption")
+                    h3=event.title
+                    p
+                        | #{event.date} #{event.time} #{event.place}
+                    p
+                        a(href="/events/" + event.title, class="btn btn-primary") Show
+else
+    h3
+        | No events were found

@@ -1,0 +1,17 @@
+extends ../layout
+
+block content
+    h1
+        | #{title}
+    div
+        if users.length > 0
+            each user in users
+                div
+                    b=user.username
+                    div
+                        img(src=user.avatar, width="300px", height="240px")
+                    p
+                        | #{user.firstName} #{user.lastName}                    
+        else
+            h3
+                | No users were found

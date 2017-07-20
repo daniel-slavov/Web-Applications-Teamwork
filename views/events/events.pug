@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+    h1
+        | #{title}
+    div
+        if events.length > 0
+            each event in events
+                div
+                    b=event.title
+                    div
+                        img(src=event.photo, width="300px", height="240px")
+                    p=event.details
+                    p=event.date
+                    p=event.time
+                    p=event.place
+        else
+            h3
+                | No events were found

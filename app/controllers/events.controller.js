@@ -4,6 +4,7 @@ module.exports = (data) => {
             if (!req.user) {
                 return res.redirect('/login');
             }
+
             return data.categories.getAll()
                 .then((categories) => {
                     return res.render('events/create', {
@@ -55,7 +56,10 @@ module.exports = (data) => {
                 })
                 .then((messages) => {
                     return res.render('events/details', {
-                        event: event, chat: messages });
+                        event: event,
+                        chat: messages,
+                        user: req.user,
+                    });
                 });
         },
         getAllCategories: (req, res) => {
@@ -66,12 +70,27 @@ module.exports = (data) => {
                     });
                 });
         },
-        getAllEventsByCategory: (req, res) => {
+        getEventsByCategory: (req, res) => { // Error here
             const category = req.params.name;
 
             return data.categories.getEventsByCategory(category)
                 .then((events) => {
-                    return res.json(events);
+                    events = events.slice(0, 4);
+                    return res.render('partials/events', {
+                        events: events,
+                    });
+                });
+        },
+        getAllEventsByCategory: (req, res) => { // Error here
+            const category = req.params.name;
+
+            return data.categories.getEventsByCategory(category)
+                .then((events) => {
+                    // console.log(events); // OK
+                    res.render('events/events', {
+                        title: category,
+                        events: events,
+                    });
                 });
         },
         getCalendar: () => {
@@ -82,34 +101,12 @@ module.exports = (data) => {
 
             return data.events.getByDate(date)
                 .then((events) => {
-                    return res.json(events);
+                    return res.render('partials/events', {
+                        events: events,
+                    });
                 });
         },
-        getUpdateEvent: (req, res) => {
-            if (!req.user) {
-                return res.redirect('/login');
-            }
-
-            const title = req.params.title;
-
-            return data.events.getByTitle(title)
-                .then((event) => {
-                    if (event === null) {
-                        return res.redirect('/error');
-                    }
-
-                    const user = event.user;
-
-                    if (user !== req.user.username) {
-                        return res.redirect('/error');
-                    }
-
-                    return res.render('events/edit', {
-                            context: event,
-                        });
-                });
-        },
-        postUpdateEvent: (req, res) => {
+        updateEvent: (req, res) => {
             if (!req.user) {
                 return res.redirect('/login');
             }
@@ -183,25 +180,29 @@ module.exports = (data) => {
                         });
                     }
 
-                    return res.redirect(
-                        '/users/' + req.user.username + '/events');
+                    return res.redirect('/');
                 });
         },
 
         searchEvent: (req, res) => {
-            const pattern = req.query.pattern;
+            const pattern = req.query.title;
+            const partial = req.query.isPartial;
+
+            if (partial) {
+                return data.events.getByTitlePattern(pattern)
+                .then((events) => {
+                    return res.render('partials/events', {
+                        events: events,
+                    });
+                });
+            }
 
             return data.events.getByTitlePattern(pattern)
                 .then((events) => {
-                    return res.json(events);
-                });
-        },
-        searchEventByCity: (req, res) => {
-            const pattern = req.query.pattern;
-
-            return data.events.getByCity(pattern)
-                .then((events) => {
-                    return res.json(events);
+                    return res.render('events/events', {
+                        title: 'Search: ' + pattern,
+                        events: events,
+                    });
                 });
         },
     };

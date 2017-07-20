@@ -1,0 +1,15 @@
+div(class="row text-center")
+if users
+    each user in users
+        div(class="col-md-3 col-sm-6 hero-feature")
+            div(class="thumbnail")
+                img(src=user.avatar alt="")
+                div(class="caption")
+                    h3=user.username
+                    p
+                        | #{user.firstName} #{user.lastName}
+                    p
+                        a(href="/users/" + user.username, class="btn btn-primary") Show
+else
+    h3
+        | No users were found

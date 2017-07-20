@@ -1,5 +1,8 @@
 const express = require('express');
 const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 
 const init = (data) => {
     const app = express();
@@ -9,6 +12,9 @@ const init = (data) => {
     app.set('view engine', 'pug');
     app.use('/libs', express.static('node_modules'));
     app.use(express.static('public'));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(expressValidator());
 
     const homeController = require('./controllers/home.controller')(data);
     const eventsController = require('./controllers/events.controller')(data);
@@ -34,33 +40,33 @@ const init = (data) => {
     }));
 
     app.get('/signup', usersController.getSignup);
-    app.post('/signup', usersController.postSignup);
+    app.post('/signup', usersController.postSignup); // Add validation
     app.get('/logout', usersController.logout);
 
+    // Events routes
     app.get('/events/create', eventsController.getCreateEvent);
-    app.post('/events/create', eventsController.postCreateEvent);
+    app.post('/events/create', eventsController.postCreateEvent); // Add validation
     app.get('/events/:title', eventsController.getEventByTitle);
-    app.get('/events/:title/edit', eventsController.getUpdateEvent);
-    app.post('/events/:title/edit', eventsController.postUpdateEvent);
-    app.post('/events/:title/delete', eventsController.deleteEvent);
+    app.put('/api/events/:title', eventsController.updateEvent); // Add validation and refactor
+    app.delete('/api/events/:title', eventsController.deleteEvent);
 
-    // Get events by category name
+    // Categories routes
     app.get('/categories', eventsController.getAllCategories);
-    app.get('/categories/:name',
-        eventsController.getAllEventsByCategory);
+    app.get('/categories/:name', eventsController.getAllEventsByCategory); // Error
+    app.get('/api/categories/:name', eventsController.getEventsByCategory); // Error
 
-    // Get events by date
+    // Calendar routes
     app.get('/events-calendar', eventsController.getCalendar);
     app.get('/api/events-calendar/:date', eventsController.getAllEventsByDate);
 
+    // Users routes
     app.get('/users/:username', usersController.getUserProfile);
-    app.get('/users/:username/edit', usersController.getUpdateUserProfile);
-    app.post('/users/:username/edit', usersController.postUpdateUserProfile);
+    app.put('/users/:username', usersController.updateUserProfile); // Reimplement to return errors or redirect + status code
     app.get('/api/users/:username/events', usersController.getUserEvents);
 
+    // Search routes
     app.get('/search', homeController.search);
     app.get('/api/events/search', eventsController.searchEvent);
-    app.get('/api/events/cities/search', eventsController.searchEventByCity);
     app.get('/api/users/search', usersController.searchUser);
 
     app.get('/error', errorsController.show);

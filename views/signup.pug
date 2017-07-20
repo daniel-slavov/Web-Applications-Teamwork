@@ -8,24 +8,29 @@ block content
         div
             div
                 label Username
-                input(class="form-control", type="text", name="username", id="username")
+                input(class="form-control", type="text", name="username", value=(undefined===user ? '' : user.username), id="username")
             div
                 label Password
-                input(class="form-control", type="password", name="password", id="password")
+                input(class="form-control", type="password", name="password", value=(undefined===user ? '' : user.password), id="password")
             div
                 label Confirm password
-                input(class="form-control", type="password", name="passwordConfirm", id="password-confirm")
+                input(class="form-control", type="password", name="passwordConfirm", value=(undefined===user ? '' : user.passwordConfirm), id="password-confirm")
             div 
                 label First name
-                input(class="form-control", type="text", name="firstName", id="firstname")
+                input(class="form-control", type="text", name="firstName", value=(undefined===user ? '' : user.firstName), id="firstname")
             div
                 label Last name
-                input(class="form-control", type="text", name="lastName", id="lastname")         
+                input(class="form-control", type="text", name="lastName", value=(undefined===user ? '' : user.lastName), id="lastname")         
             div
                 label Email
-                input(class="form-control", type="email", value="johndoe@example.com", name="email", id="email")
+                input(class="form-control", type="email", name="email", value=(undefined===user ? 'example@mail.com' : user.email), id="email")
             div    
                 label Age
-                input(class="form-control", type="number", value="18", name="age", id="age")
+                input(class="form-control", type="number", name="age", value=(undefined===user ? '' : user.age), id="age")
             div
                 input(class="btn btn-success", type="submit", value="Sign up")
+
+    if errors
+        div.alert.alert-danger
+            each error in errors
+                p=error.msg
