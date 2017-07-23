@@ -57,7 +57,7 @@ module.exports = (data) => {
                             }
 
                             event.likes = 0;
-                            event.photo = 'photo.jpg';
+                            event.photo = 'http://s3.amazonaws.com/churchplantmedia-cms/grace_community_church_tucson_az/events_medium.jpg';
                             event.user = req.user.username;
 
                             data.events.create(event);
@@ -79,15 +79,13 @@ module.exports = (data) => {
                         });
                 });
         },
-        getEventByTitle: (req, res) => { // ERROR
-            console.log(req.params);
+        getEventByTitle: (req, res) => {
             const title = req.params.title;
 
             let event;
             data.events.getByTitle(title)
                 .then((eventInformation) => {
                     event = eventInformation;
-                    console.log(event);
                     return data.chats.getLatestMessages(event.title);
                 })
                 .then((messages) => {
@@ -122,7 +120,6 @@ module.exports = (data) => {
 
             return data.categories.getEventsByCategory(category)
                 .then((events) => {
-                    // console.log(events); // OK
                     res.render('events/events', {
                         title: category,
                         events: events,

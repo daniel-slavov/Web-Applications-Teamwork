@@ -52,8 +52,8 @@ const init = (data) => {
 
     // Categories routes
     app.get('/categories', eventsController.getAllCategories);
-    app.get('/categories/:name', eventsController.getAllEventsByCategory); // Error
-    app.get('/api/categories/:name', eventsController.getEventsByCategory); // Error
+    app.get('/categories/:name', eventsController.getAllEventsByCategory);
+    app.get('/api/categories/:name', eventsController.getEventsByCategory);
 
     // Calendar routes
     app.get('/events-calendar', eventsController.getCalendar);
@@ -61,8 +61,8 @@ const init = (data) => {
 
     // Users routes
     app.get('/users/:username', usersController.getUserProfile);
-    app.put('/users/:username', usersController.updateUserProfile);
-    app.get('/api/users/:username/events', usersController.getUserEvents);
+    app.put('/users/:username', usersController.updateUserProfile); // Validation and refactor
+    app.get('/api/users/:username/events', usersController.getUserEvents); // Return partial pug
 
     // Search routes
     app.get('/search', homeController.search);

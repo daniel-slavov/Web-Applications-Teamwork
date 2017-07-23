@@ -3,17 +3,19 @@ extends ../layout
 block content
     h1
         | #{title}
-    div
-        if events.length > 0
-            each event in events
-                div
-                    b=event.title
-                    div
-                        img(src=event.photo, width="300px", height="240px")
-                    p=event.details
-                    p=event.date
-                    p=event.time
-                    p=event.place
-        else
-            h3
-                | No events were found
+    
+    div.row
+        div(class="[ col-xs-12 col-sm-offset-2 col-sm-8 ]")
+            if events.length > 0
+                ul.event-list
+                    each event in events
+                        li
+                            time(datetime=event.time)
+                                span.day 4
+                                span.month July
+                                span.year 2017
+                                span.time ALL Day
+                            img(src=event.photo, alt="")
+                            div.info
+                                h2.title=event.title
+                                p.desc=event.details

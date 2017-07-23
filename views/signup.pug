@@ -8,25 +8,25 @@ block content
         div
             div
                 label Username
-                input(class="form-control", type="text", name="username", value=(undefined===user ? '' : user.username), id="username")
+                input(class="form-control", type="text", name="username", value=(undefined===context ? '' : context.username), id="username")
             div
                 label Password
-                input(class="form-control", type="password", name="password", value=(undefined===user ? '' : user.password), id="password")
+                input(class="form-control", type="password", name="password", value=(undefined===context ? '' : context.password), id="password")
             div
                 label Confirm password
-                input(class="form-control", type="password", name="passwordConfirm", value=(undefined===user ? '' : user.passwordConfirm), id="password-confirm")
+                input(class="form-control", type="password", name="passwordConfirm", value=(undefined===context ? '' : context.passwordConfirm), id="password-confirm")
             div 
                 label First name
-                input(class="form-control", type="text", name="firstName", value=(undefined===user ? '' : user.firstName), id="firstname")
+                input(class="form-control", type="text", name="firstName", value=(undefined===context ? '' : context.firstName), id="firstname")
             div
                 label Last name
-                input(class="form-control", type="text", name="lastName", value=(undefined===user ? '' : user.lastName), id="lastname")         
+                input(class="form-control", type="text", name="lastName", value=(undefined===context ? '' : context.lastName), id="lastname")         
             div
                 label Email
-                input(class="form-control", type="email", name="email", value=(undefined===user ? 'example@mail.com' : user.email), id="email")
+                input(class="form-control", type="email", name="email", value=(undefined===context ? 'example@mail.com' : context.email), id="email")
             div    
                 label Age
-                input(class="form-control", type="number", name="age", value=(undefined===user ? '' : user.age), id="age")
+                input(class="form-control", type="number", name="age", value=(undefined===context ? '' : context.age), id="age")
             div
                 input(class="btn btn-success", type="submit", value="Sign up")
 

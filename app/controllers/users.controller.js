@@ -36,7 +36,7 @@ module.exports = (data, passport) => {
                 .then((result) => {
                     if (!result.isEmpty()) {
                         return res.status(400).render('signup', {
-                            user: user,
+                            context: user,
                             errors: result.array(),
                         });
                     }
@@ -49,7 +49,7 @@ module.exports = (data, passport) => {
                                     username already exists.` });
 
                                 return res.render('signup', {
-                                    user: user,
+                                    context: user,
                                     errors: errors,
                                 });
                             }
