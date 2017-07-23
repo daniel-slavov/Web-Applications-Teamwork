@@ -3,11 +3,27 @@ extends ../layout
 block content
     h1#title
         | #{event.title}
+    h4#posted-by
+        | posted by 
+        a(href="/users/" + event.user) #{event.user}
     if user && user.username == event.user
         button(class="btn btn-danger") Delete event
     div#details.col-md-7
-        img(src=event.photo)
+        img#event-img.img-rounded(src=event.photo)
         br
+        ul.details.col-md-10
+            li.media
+                span.glyphicon.glyphicon-map-marker
+                <strong>  City:</strong> #{event.place}         
+            li.media
+                span.glyphicon.glyphicon-calendar
+                <strong>  Date:</strong> #{event.date}      
+            li.media
+                span.glyphicon.glyphicon-time
+                <strong>  Time:</strong> #{event.time}          
+            li.media <strong>Categories:</strong> #{event.categories}            
+            li.media <strong>Details:</strong> #{event.details}
+        
 
     div#chat.col-md-5
         ul#messages
