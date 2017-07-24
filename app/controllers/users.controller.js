@@ -2,32 +2,38 @@ module.exports = (data, passport) => {
     return {
         getLogin: (req, res) => {
             if (req.user) {
-                return res.redirect('/');
+                const username = req.user.username;
+
+                return res.redirect('/users/' + username);
             }
 
             return res.render('login');
         },
         getSignup: (req, res) => {
             if (req.user) {
-                return res.redirect('/');
+                const username = req.user.username;
+
+                return res.redirect('/users/' + username);
             }
 
             return res.render('signup');
         },
         postSignup: (req, res) => {
             if (req.user) {
-                return res.redirect('/');
+                const username = req.user.username;
+
+                return res.redirect('/users/' + username);
             }
+
+            const user = req.body;
 
             req.assert('username',
                 'Username must be between 6 and 25 symbols.').len(6, 25);
             req.assert('password',
                 'Passsword must be at least 6 symbols.').len(6);
             req.assert('passwordConfirm', 'Passwords do not match')
-                .equals(req.body.password);
+                .equals(user.password);
             req.assert('email', 'Email is not valid').isEmail();
-
-            const user = req.body;
 
             return req.getValidationResult()
                 .then((result) => {
@@ -65,20 +71,25 @@ module.exports = (data, passport) => {
             return res.redirect('/');
         },
         getUserProfile: (req, res) => {
-            if (!req.user) {
-                return res.redirect('/');
-            }
-
             const username = req.params.username;
-            // if (username !== req.user.username) {
-            //     return res.redirect('/');
-            // }
 
             return data.users.getUser(username)
                 .then((user) => {
+                    if (user === null) {
+                        return res.redirect('/error', {
+                            msg: 'No such user was found',
+                        });
+                    }
+
+                    if (req.user) {
+                        return res.render('users/profile', {
+                            context: user,
+                            user: req.user.username,
+                        });
+                    }
+
                     return res.render('users/profile', {
                         context: user,
-                        user: req.user.username,
                     });
                 });
         },
