@@ -1,16 +1,11 @@
 extends ./layout
 
 block content
-    h1
-        | Login
-
-    form(action="/login", method="post")
-        div
-            div
-                label Username
-                input(type="text", name="username", id="username")
-            div
-                label Password
-                input(type="password", name="password", id="password")
-            div
-                input(class="btn btn-success", type="submit", value="Submit")
+    .login-container
+        #output
+        .avatar
+        .form-box
+            form(action='/login', method='post')
+              input(name='username', type='text', id="username", placeholder='username')
+              input(type='password', name="password", id="password", placeholder='password')
+              button.btn.btn-info.btn-block.login(type='submit') Login
