@@ -1,6 +1,6 @@
  body {
-		background-color: rgb(220, 220, 220);
-	}
+		background-image: url('/images/congruent_pentagon.png') !important;
+}
     
     .event-list {
 		list-style: none;
@@ -97,3 +97,8 @@
 		color: rgb(30, 30, 30);
 		background-color: rgb(200, 200, 200);
 	}
+
+nav {
+	background-color: #f3fce8 !important;
+	opacity: 0.9;
+}

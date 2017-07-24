@@ -7,9 +7,6 @@ module.exports = (data, passport) => {
 
             return res.render('login');
         },
-        postLogin: (req, res) => {
-
-        },
         getSignup: (req, res) => {
             if (req.user) {
                 return res.redirect('/');
@@ -73,14 +70,15 @@ module.exports = (data, passport) => {
             }
 
             const username = req.params.username;
-            if (username !== req.user.username) {
-                return res.redirect('/');
-            }
+            // if (username !== req.user.username) {
+            //     return res.redirect('/');
+            // }
 
             return data.users.getUser(username)
                 .then((user) => {
                     return res.render('users/profile', {
                         context: user,
+                        user: req.user.username,
                     });
                 });
         },
@@ -95,7 +93,7 @@ module.exports = (data, passport) => {
             data.users.updateProfile(newUser.username, newUser.firstName,
                 newUser.lastName, newUser.age, newUser.email, newUser.avatar);
 
-            return res.redirect(201, '/users/' + newUser.username); // Return status code and redirect
+            return res.redirect(201, '/users/' + newUser.username);
         },
         getUserEvents: (req, res) => {
             if (!req.user) {
@@ -109,18 +107,20 @@ module.exports = (data, passport) => {
 
             return data.users.getEvents(username)
                 .then((events) => {
-                    return res.json(events);
+                    return res.render('partials/events', {
+                        events: events,
+                    });
                 });
         },
-        searchUser: (req, res) => {
+        searchUser: (req, res) => { // Check this later
             const pattern = req.query.name;
             const partial = req.query.isPartial;
 
             if (partial) {
-                return data.events.getByTitlePattern(pattern)
-                .then((events) => {
+                return data.users.getUserByPattern(pattern)
+                .then((users) => {
                     return res.render('partials/users', {
-                        events: events,
+                        users: users,
                     });
                 });
             }

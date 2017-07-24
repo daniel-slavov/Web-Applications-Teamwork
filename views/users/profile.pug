@@ -22,7 +22,10 @@ block content
         label Age:
         span=context.age
     div
-        button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show my events
+        if user == context.username
+            button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show my events
+        else
+            button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show events
     div#my-events.hidden
         | My Events:
         div.event-items
