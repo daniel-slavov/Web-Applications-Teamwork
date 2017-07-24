@@ -4,6 +4,41 @@
     margin-top: 20px;
 }
 
+#details-box {
+    background-color: rgba(243, 252, 232, 0.7);
+    border-radius: 20px;
+    margin-right: 30px;
+}
+
 .details {
     font-size: 14pt;
+}
+
+.details li {
+    margin: 10px;
+    padding-left: 10px;
+}
+
+#posted-by {
+    padding-left: 10px;
+}
+
+li.media {
+    margin-left: -20px;
+    margin-top: 0px;
+}
+
+a.pull-left {
+    margin-right: 10px;
+}
+#creator-buttons {
+    margin-top: 30px;
+}
+
+#delete-event-button, #update-event-button {
+    margin-right: 10px;
+}
+
+#delete-event-button > .glyphicon, #update-event-button > .glyphicon {
+    margin-right: 9px;
 }

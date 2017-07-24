@@ -74,12 +74,9 @@ const init = (data) => {
     io.on('connection', (socket) => {
         socket.on('chat message', (msg) => {
             data.chats.addMessage(msg);
-            console.log(msg);
             io.emit('chat message', msg);
         });
-        console.log('a user connected');
         socket.on('disconnect', () => {
-            console.log('user disconnected');
         });
     });
 
