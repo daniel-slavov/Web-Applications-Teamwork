@@ -31,6 +31,8 @@ nav.navbar.navbar-default(role='navigation')
                 a(href='/events/create') Create event
     ul.nav.navbar-nav.navbar-right
       if user
+        li
+            img.user-avatar(src=user.avatar)
         li#username
             a(href='/users/' + user.username) #{user.username}
         li#logout

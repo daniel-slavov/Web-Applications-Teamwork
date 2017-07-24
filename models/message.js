@@ -4,6 +4,7 @@ class Message {
         this.user = msgObj.user;
         this.content = msgObj.content;
         this.time = msgObj.time;
+        this.avatar = msgObj.avatar;
     }
 }
 

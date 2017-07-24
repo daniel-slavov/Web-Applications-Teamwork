@@ -2,6 +2,10 @@
 		background-image: url('/images/congruent_pentagon.png') !important;
 		font-family: 'Amaranth', sans-serif !important;
 }
+	.user-avatar {
+		height: 30px;
+		margin-top: 20%;
+	}
     
     .event-list {
 		list-style: none;

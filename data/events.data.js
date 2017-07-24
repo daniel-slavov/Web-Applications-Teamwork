@@ -29,7 +29,7 @@ class EventsData {
     }
 
     getByTitlePattern(pattern) {
-        return this.collection.find({ 'title': { $regex: pattern } })
+        return this.collection.find({ 'title': { $regex: pattern, $options: 'i' } })
             .toArray();
     }
 

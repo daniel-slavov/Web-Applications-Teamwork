@@ -41,7 +41,7 @@ class UsersData {
 
     getUserByPattern(pattern) {
         return this.collection
-            .find({ 'username': { '$regex': pattern } })
+            .find({ 'username': { '$regex': pattern, $options: 'i' } })
             .toArray();
     }
 
