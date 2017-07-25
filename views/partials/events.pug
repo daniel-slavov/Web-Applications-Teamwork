@@ -1,15 +1,25 @@
-div(class="row text-center")
-if events
-    each event in events
-        div(class="col-md-3 col-sm-6 hero-feature")
-            div(class="thumbnail")
-                img(src=event.photo alt="")
-                div(class="caption")
-                    h3=event.title
+.row
+    if events
+        each event in events
+            .row.single-event
+                .col-xs-12.col-sm-3.col-md-3
+                    a(href='#')
+                        img.img-responsive.img-box.img-thumbnail(src=event.photo)
+                .col-xs-12.col-sm-9.col-md-9
+                    h4
+                        a(href='/events/'+ event.title) #{event.title}
                     p
-                        | #{event.date} #{event.time} #{event.place}
+                        span.glyphicon.glyphicon-calendar
+                        |  #{event.date}
                     p
-                        a(href="/events/" + event.title, class="btn btn-primary") Show
-else
-    h3
-        | No events were found
+                        span.glyphicon.glyphicon-time
+                        |  #{event.time}
+                    p
+                        span.glyphicon.glyphicon-map-marker
+                        |  #{event.place}
+                    p
+                        span.glyphicon.glyphicon-tags
+                        |   #{event.categories}
+    else
+        h3
+            | No events were found
