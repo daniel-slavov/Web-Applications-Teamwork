@@ -239,7 +239,7 @@ module.exports = (data) => {
         },
 
         searchEvent: (req, res) => {
-            const pattern = req.query.title;
+            const pattern = req.query.name;
             const partial = req.query.isPartial;
 
             if (partial) {

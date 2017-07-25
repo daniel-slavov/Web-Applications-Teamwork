@@ -1,11 +1,4 @@
 const requester = {
-  //   init() {
-  //     $.ajaxSetup({
-  //       headers: {
-  //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //       }
-  //     });
-  //   },
   get(url) {
     return new Promise((resolve, reject) => {
       $.ajax({
