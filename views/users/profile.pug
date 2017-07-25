@@ -8,7 +8,7 @@ block content
         img(src=context.avatar, width="120px", height="120px")
     div
         label Username:
-        span=context.username
+        span#curent-user=context.username
     div
         label First name:
         span=context.firstName
@@ -28,5 +28,5 @@ block content
             button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show events
     div#my-events.hidden
         | My Events:
-        div.event-items
+        div#event-items
 
