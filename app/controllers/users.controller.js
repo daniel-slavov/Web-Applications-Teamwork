@@ -82,7 +82,7 @@ module.exports = (data, passport) => {
                     if (req.user) {
                         return res.render('users/profile', {
                             context: user,
-                            user: req.user.username,
+                            currentUser: req.user.username,
                         });
                     }
 
