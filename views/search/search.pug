@@ -5,19 +5,16 @@ block content
         | Search: 
         if title
             span #{title}
-    form.navbar-form(role='search', action="/search")
         .input-group
           input#pattern.form-control(type='text', placeholder='Search', name='pattern')
           #search-btn.input-group-btn
-            button.btn.btn-default(type='submit')
+            button.btn.btn-default
               i.glyphicon.glyphicon-search
-        div
+        div#searchOptions
+            label(class="radio-inline") Events
+            input(type="radio", name="searchOption", value="events" checked="checked")
             label(class="radio-inline") Users
             input(type="radio", name="searchOption", value="users")
-            label(class="radio-inline") Events
-            input(type="radio", name="searchOption", value="events")
-            label(class="radio-inline") Cities
-            input(type="radio", name="searchOption", value="cities")
 
     div.search-results
         if users

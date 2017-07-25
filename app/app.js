@@ -46,7 +46,7 @@ const init = (data) => {
     // Events routes
     app.get('/events/create', eventsController.getCreateEvent);
     app.post('/events/create', eventsController.postCreateEvent);
-    app.get('/events/:title', eventsController.getEventByTitle); // Fix no event
+    app.get('/events/:title', eventsController.getEventByTitle);
     app.put('/api/events/:title', eventsController.updateEvent); // Add validation and refactor
     app.delete('/api/events/:title', eventsController.deleteEvent);
 
@@ -56,7 +56,7 @@ const init = (data) => {
     app.get('/api/categories/:name', eventsController.getEventsByCategory);
 
     // Calendar routes
-    app.get('/events-calendar', eventsController.getCalendar); // TO DO
+    app.get('/events-calendar', eventsController.getCalendar);
     app.get('/api/events-calendar/:date', eventsController.getAllEventsByDate);
 
     // Users routes

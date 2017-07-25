@@ -76,9 +76,7 @@ module.exports = (data, passport) => {
             return data.users.getUser(username)
                 .then((user) => {
                     if (user === null) {
-                        return res.render('error', {
-                            msg: 'No such user was found',
-                        });
+                        return res.redirect('/error');
                     }
 
                     if (req.user) {
