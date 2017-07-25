@@ -27,6 +27,17 @@ const requester = {
       });
     });
   },
+  delete(url){
+    return new Promise((resolve,reject) => {
+        $.ajax({
+            url,
+            method: 'DELETE',
+            success(response) {
+                resolve(response);
+            }
+        });
+    });
+  },
   putJSON(url, body, options = {}) {
     const promise = new Promise((resolve, reject) => {
       const headers = options.headers || {};
