@@ -85,6 +85,10 @@ module.exports = (data) => {
             let event;
             data.events.getByTitle(title)
                 .then((eventInformation) => {
+                    if (eventInformation === null) {
+                        throw new Error('No events were found');
+                    }
+
                     event = eventInformation;
                     return data.chats.getLatestMessages(event.title);
                 })
@@ -94,6 +98,9 @@ module.exports = (data) => {
                         chat: messages,
                         user: req.user,
                     });
+                })
+                .catch((err) => {
+                    return res.redirect('/error');
                 });
         },
         getAllCategories: (req, res) => {
@@ -136,8 +143,8 @@ module.exports = (data) => {
                     });
                 });
         },
-        getCalendar: () => {
-
+        getCalendar: (req, res) => {
+            return res.render('calendar/calendar');
         },
         getAllEventsByDate: (req, res) => {
             const date = req.params.date;

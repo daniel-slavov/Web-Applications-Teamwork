@@ -19,6 +19,7 @@
     "express-session": "^1.15.3",
     "express-validator": "^3.2.1",
     "jquery": "^3.2.1",
+    "jquery-ui": "^1.12.1",
     "mongodb": "^2.2.30",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",

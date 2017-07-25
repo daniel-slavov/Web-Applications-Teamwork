@@ -8,6 +8,8 @@ html
     //- link(rel='shortcut icon', href='/favicon.png')
     link(rel='stylesheet', href='/css/main.css')
     link(rel='stylesheet', href='/libs/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css')
+    link(rel='stylesheet', href='/css/calendar.css')
     link(rel='stylesheet', href='/css/chat.css')
     link(rel='stylesheet', href='/css/details.css')
     link(rel='stylesheet', href='/css/login.css')
@@ -23,9 +25,15 @@ html
     include footer
 
     script(src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js')
+    script(src='https://code.jquery.com/ui/1.12.1/jquery-ui.js')
     script(src='/libs/bootstrap/dist/js/bootstrap.js')
+    script.
+      $( function() {
+      $( "#datepicker" ).datepicker();
+      });
     script(src='/js/requester.js')    
     script(src='/js/main.js')
     script(src='/js/search.js')
+  
     
     
