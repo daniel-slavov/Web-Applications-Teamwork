@@ -18,13 +18,15 @@ nav.navbar.navbar-default(role='navigation')
         a(href='/categories') Categories
       li
         a(href='/events-calendar') Calendar
-    .col-sm-3.col-md-3
-      form.navbar-form(role='search', action="/api/events/search")
-        .input-group
-          input#pattern.form-control(type='text', placeholder='Search', name='pattern')
-          #search-button.input-group-btn
-            button.btn.btn-default(type='submit')
-              i.glyphicon.glyphicon-search
+      li
+        a(href='/search') Search
+    //- .col-sm-3.col-md-3
+    //-   form.navbar-form(role='search', action="/api/events/search")
+    //-     .input-group
+    //-       input#pattern.form-control(type='text', placeholder='Search', name='pattern')
+    //-       #search-button.input-group-btn
+    //-         button.btn.btn-default(type='submit')
+    //-           i.glyphicon.glyphicon-search
     ul.nav.navbar-nav
         if user
             li
