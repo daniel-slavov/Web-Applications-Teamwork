@@ -62,3 +62,17 @@ div.thumbnail {
 .all-categories {
 	margin-top: 50px;
 }
+
+.create-event-form {
+	margin-top: 40px;
+	background-color: white;
+	padding: 20px;
+	border-radius: 10px;	
+}
+
+.create-event-form .btn {
+	background-color: #b1f6cb;
+	border-color: #b1f6cb;
+	color: #12b1b7;
+	margin-top: 10px;
+}

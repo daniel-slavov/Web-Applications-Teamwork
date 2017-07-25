@@ -47,7 +47,7 @@ const init = (data) => {
     app.get('/events/create', eventsController.getCreateEvent);
     app.post('/events/create', eventsController.postCreateEvent);
     app.get('/events/:title', eventsController.getEventByTitle);
-    app.put('/api/events/:title', eventsController.updateEvent); // Add validation and refactor
+    app.put('/api/events/:title', eventsController.updateEvent);
     app.delete('/api/events/:title', eventsController.deleteEvent);
 
     // Categories routes

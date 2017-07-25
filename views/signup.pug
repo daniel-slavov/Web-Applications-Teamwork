@@ -39,9 +39,9 @@ block content
                     .row
                         .col-md-12
                             button.btn-u.pull-left(type='submit') Sign Up
-                    if errors
-                        div.alert.alert-danger
-                            each error in errors
-                                p=error.msg
-            .col-md-2
-            
+                    //- if errors
+                    //-     div.alert.alert-danger
+                    //-         each error in errors
+                    //-             p=error.msg
+
+                    include errors/all

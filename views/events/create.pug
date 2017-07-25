@@ -4,34 +4,32 @@ block content
     h1
         | Create event form
 
-    form(action="/events/create", method="post")
-        div
+    div.create-event-form
+        form(action="/events/create", method="post")
             div
-                label Title
-                input(type="text", class="form-control", name="title", value=(undefined===event ? '' : event.title), id="title")
-            div
-                label Date
-                input(type="date", class="form-control", name="date", value=(undefined===event ? '' : event.date), id="date")
-            div
-                label Time
-                input(type="time", class="form-control", name="time", value=(undefined===event ? '12:00:00' : event.time), id="time")
-            div
-                label Place
-                input(type="text", class="form-control", name="place", value=(undefined===event ? '' : event.place), id="place")
-            div
-                label Description
-                input(type="textarea", class="form-control", name="details", value=(undefined===event ? '' : event.details), id="details")
-            div
-                label Choose category
-                select(multiple, class="form-control", name="categories")
-                    each cat in categories
-                        option #{cat.name}
-            div
-                input(type="submit", class="btn btn-success", value="Create event")
+                div
+                    label Title
+                    input(type="text", class="form-control", name="title", value=(undefined===event ? '' : event.title), id="title")
+                div
+                    label Date
+                    input(type="date", class="form-control", name="date", value=(undefined===event ? '' : event.date), id="date")
+                div
+                    label Time
+                    input(type="time", class="form-control", name="time", value=(undefined===event ? '12:00:00' : event.time), id="time")
+                div
+                    label Place
+                    input(type="text", class="form-control", name="place", value=(undefined===event ? '' : event.place), id="place")
+                div
+                    label Description
+                    input(type="textarea", class="form-control", name="details", value=(undefined===event ? '' : event.details), id="details")
+                div
+                    label Choose category
+                    select(multiple, class="form-control", name="categories")
+                        each cat in categories
+                            option #{cat.name}
+                div
+                    input(type="submit", class="btn btn-success", value="Create event")
 
-    if errors
-        div.alert.alert-danger
-            each error in errors
-                p=error.msg
+        include ../errors/all
 
 

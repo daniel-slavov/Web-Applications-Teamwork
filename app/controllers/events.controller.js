@@ -165,43 +165,62 @@ module.exports = (data) => {
                 return res.redirect('/login');
             }
 
+            req.assert('date', 'Date is required').isDate();
+            req.assert('time', 'Time is required').notEmpty();
+            req.assert('place', 'Place must contain only letters.').isAlpha();
+
             const newEvent = req.body;
             const title = req.params.title;
 
-            return data.events.getByTitle(title)
-                .then((event) => {
-                    if (event === null) {
-                        return res.redirect('/error');
-                    }
+            return req.getValidationResult()
+                .then((result) => {
+                    if (!result.isEmpty()) {
+                        // There are errors in validation
+                        // return errors object and status code
 
-                    if (event.user !== req.user.username) {
-                        return res.redirect('/error');
-                    }
-
-                    data.events.update(title, newEvent.date, newEvent.time,
-                        newEvent.place, newEvent.details, newEvent.photo);
-
-                    data.users.updateEvent(
-                        event.user, title, newEvent.date,
-                        newEvent.time, newEvent.place, newEvent.details,
-                        event.categories, event.likes, newEvent.photo);
-
-                    if (typeof event.categories === 'string') {
-                        const category = event.categories;
-                        data.categories.updateEvent(
-                            category, title, newEvent.date, newEvent.time,
-                            newEvent.place, newEvent.details, event.categories,
-                            event.likes, newEvent.photo, event.user);
-                    } else {
-                        event.categories.forEach((category) => {
-                            data.categories.updateEvent(category, title,
-                                newEvent.date, newEvent.time, newEvent.place,
-                                newEvent.details, event.categories,
-                                event.likes, newEvent.photo, event.user);
+                        return res.status(400).render('errors/all', {
+                            errors: result.array(),
                         });
                     }
 
-                    return res.redirect('/api/events/' + title);
+                    return data.events.getByTitle(title)
+                        .then((event) => {
+                            if (event === null) {
+                                return res.redirect('/error');
+                            }
+
+                            if (event.user !== req.user.username) {
+                                return res.redirect('/error');
+                            }
+
+                            data.events.update(title, newEvent.date,
+                                newEvent.time, newEvent.place,
+                                newEvent.details, newEvent.photo);
+
+                            data.users.updateEvent(
+                                event.user, title, newEvent.date,
+                                newEvent.time, newEvent.place, newEvent.details,
+                                event.categories, event.likes, newEvent.photo);
+
+                            if (typeof event.categories === 'string') {
+                                const category = event.categories;
+                                data.categories.updateEvent(
+                                    category, title, newEvent.date,
+                                    newEvent.time, newEvent.place,
+                                    newEvent.details, event.categories,
+                                    event.likes, newEvent.photo, event.user);
+                            } else {
+                                event.categories.forEach((category) => {
+                                    data.categories.updateEvent(category, title,
+                                        newEvent.date, newEvent.time,
+                                        newEvent.place, newEvent.details,
+                                        event.categories, event.likes,
+                                        newEvent.photo, event.user);
+                                });
+                            }
+
+                            return res.redirect(200, '/api/events/' + title);
+                        });
                 });
         },
         deleteEvent: (req, res) => {
