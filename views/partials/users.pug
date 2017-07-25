@@ -1,15 +1,20 @@
-div(class="row text-center")
-if users
-    each user in users
-        div(class="col-md-3 col-sm-6 hero-feature")
-            div(class="thumbnail")
-                img(src=user.avatar alt="")
-                div(class="caption")
-                    h3=user.username
-                    p
-                        | #{user.firstName} #{user.lastName}
-                    p
-                        a(href="/users/" + user.username, class="btn btn-primary") Show
-else
-    h3
-        | No users were found
+block content
+    h1
+        | #{title}
+    div.text-center
+        if users.length > 0
+            each user in users
+                a(href="/users/" + user.username)                    
+                    div.col-md-3.col-sm-4.user-thumbnail
+                        img.img-circle(src=user.avatar, alt="image", height="150px", width= "150px")
+                        p
+                            | #{user.username}
+                        p
+                            span.glyphicon.glyphicon-user
+                            |   #{user.firstName} #{user.lastName}
+                        p
+                            span.glyphicon.glyphicon-envelope
+                            |   #{user.email}    
+        else
+            h3
+                | No users were found
