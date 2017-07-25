@@ -10,4 +10,10 @@ $(document).ready(() => {
   } catch (error) {
 
   }
+
+  try {
+    deletion();
+  } catch (error) {
+
+  }
 });

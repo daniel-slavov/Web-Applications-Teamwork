@@ -230,7 +230,7 @@ module.exports = (data) => {
 
             const title = req.params.title;
 
-            return data.events.getEventByTitle(title)
+            return data.events.getByTitle(title)
                 .then((event) => {
                     if (event === null) {
                         return res.redirect('/error');
