@@ -4,18 +4,22 @@ block content
     h1
         | #{title}
     
-    div.row
-        div(class="col-xs-12 col-sm-offset-2 col-sm-8")
-            if events.length > 0
-                ul.event-list
-                    each event in events
-                        li
-                            time(datetime=event.time)
-                                span.day 4
-                                span.month July
-                                span.year 2017
-                                span.time event.time
-                            img(src=event.photo, alt="")
-                            div.info
-                                h2.title=event.title
-                                p.desc=event.details
+    if events
+        div.row
+            div(class="col-xs-12 col-sm-offset-2 col-sm-8")
+                if events.length > 0
+                    ul.event-list
+                        each event in events
+                            li
+                                time(datetime=event.time)
+                                    span.day 4
+                                    span.month July
+                                    span.year 2017
+                                    span.time event.time
+                                img(src=event.photo, alt="")
+                                div.info
+                                    h2.title=event.title
+                                    p.desc=event.details
+    else
+        h3
+            | No events were found

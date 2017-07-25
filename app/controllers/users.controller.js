@@ -57,7 +57,7 @@ module.exports = (data, passport) => {
                                 });
                             }
 
-                            user.avatar = 'photo.jpg';
+                            user.avatar = 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png';
                             user.events = [];
 
                             data.users.create(user);
@@ -76,7 +76,7 @@ module.exports = (data, passport) => {
             return data.users.getUser(username)
                 .then((user) => {
                     if (user === null) {
-                        return res.redirect('/error', {
+                        return res.render('error', {
                             msg: 'No such user was found',
                         });
                     }
@@ -107,29 +107,30 @@ module.exports = (data, passport) => {
             return res.redirect(201, '/users/' + newUser.username);
         },
         getUserEvents: (req, res) => {
-            if (!req.user) {
-                return res.redirect('/');
-            }
-
             const username = req.params.username;
-            if (username !== req.user.username) {
-                return res.redirect('/');
-            }
 
             return data.users.getEvents(username)
                 .then((events) => {
+                    if (events.length === 0) {
+                        return res.render('partials/events');
+                    }
+
                     return res.render('partials/events', {
                         events: events,
                     });
                 });
         },
-        searchUser: (req, res) => { // Check this later
+        searchUser: (req, res) => {
             const pattern = req.query.name;
             const partial = req.query.isPartial;
 
             if (partial) {
                 return data.users.getUserByPattern(pattern)
                 .then((users) => {
+                    if (users.length === 0) {
+                        return res.render('partials/users');
+                    }
+
                     return res.render('partials/users', {
                         users: users,
                     });
@@ -138,8 +139,8 @@ module.exports = (data, passport) => {
 
             return data.users.getUserByPattern(pattern)
                 .then((users) => {
-                    return res.render('users/users', {
-                        title: 'Search: ' + pattern,
+                    return res.render('search/search', {
+                        title: pattern,
                         users: users,
                     });
                 });

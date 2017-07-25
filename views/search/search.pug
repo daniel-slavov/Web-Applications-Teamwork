@@ -2,7 +2,9 @@ extends ../layout
 
 block content
     h1
-        | Search
+        | Search: 
+        if title
+            span #{title}
     form.navbar-form(role='search', action="/search")
         .input-group
           input#pattern.form-control(type='text', placeholder='Search', name='pattern')
@@ -16,3 +18,36 @@ block content
             input(type="radio", name="searchOption", value="events")
             label(class="radio-inline") Cities
             input(type="radio", name="searchOption", value="cities")
+
+    div.search-results
+        if users
+            div
+                if users.length > 0
+                    each user in users
+                        div
+                            b=user.username
+                            div
+                                img(src=user.avatar, width="300px", height="240px")
+                            p
+                                | #{user.firstName} #{user.lastName}                    
+                else
+                    h3
+                        | No users were found
+
+        if events
+            div
+                if events.length > 0
+                    each event in events
+                        div(class="col-md-3 col-sm-6 hero-feature")
+                            div(class="thumbnail")
+                                img(src=event.photo alt="")
+                                div(class="caption")
+                                    h3=event.title
+                                    p
+                                        | #{event.date} #{event.time} #{event.place}
+                                    p
+                                        a(href="/events/" + event.title, class="btn btn-primary") Show
+                else
+                    h3
+                        | No events were found
+    

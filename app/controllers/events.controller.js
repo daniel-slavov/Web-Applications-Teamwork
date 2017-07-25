@@ -104,23 +104,33 @@ module.exports = (data) => {
                     });
                 });
         },
-        getEventsByCategory: (req, res) => { // Error here
+        getEventsByCategory: (req, res) => {
             const category = req.params.name;
 
             return data.categories.getEventsByCategory(category)
                 .then((events) => {
+                    if (events.length === 0) {
+                        return res.render('partials/events');
+                    }
+
                     events = events.slice(0, 4);
                     return res.render('partials/events', {
                         events: events,
                     });
                 });
         },
-        getAllEventsByCategory: (req, res) => { // Error here
+        getAllEventsByCategory: (req, res) => {
             const category = req.params.name;
 
             return data.categories.getEventsByCategory(category)
                 .then((events) => {
-                    res.render('events/events', {
+                    if (events.length === 0) {
+                        return res.render('events/events', {
+                            title: category,
+                        });
+                    }
+
+                    return res.render('events/events', {
                         title: category,
                         events: events,
                     });
@@ -134,6 +144,10 @@ module.exports = (data) => {
 
             return data.events.getByDate(date)
                 .then((events) => {
+                    if (events.length === 0) {
+                        return res.render('partials/events');
+                    }
+
                     return res.render('partials/events', {
                         events: events,
                     });
@@ -224,6 +238,10 @@ module.exports = (data) => {
             if (partial) {
                 return data.events.getByTitlePattern(pattern)
                 .then((events) => {
+                    if (events.length === 0) {
+                        return res.render('partials/events');
+                    }
+
                     return res.render('partials/events', {
                         events: events,
                     });
@@ -232,8 +250,8 @@ module.exports = (data) => {
 
             return data.events.getByTitlePattern(pattern)
                 .then((events) => {
-                    return res.render('events/events', {
-                        title: 'Search: ' + pattern,
+                    return res.render('search/search', {
+                        title: pattern,
                         events: events,
                     });
                 });
