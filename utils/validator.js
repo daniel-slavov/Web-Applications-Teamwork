@@ -1,13 +1,13 @@
 const Validator = {
     isValidUser(userObj) {
-        // const props = ['username', 'password', 'firstName',
-        //     'lastName', 'email', 'age', 'avatar'];
+        const props = ['username', 'password', 'firstName',
+            'lastName', 'email', 'age', 'avatar'];
 
-        // for (const prop in props) {
-        //     if (!userObj.hasOwnProperty(props[prop])) {
-        //         return false;
-        //     }
-        // }
+        for (const prop in props) {
+            if (!Object.prototype.hasOwnProperty.call(userObj, props[prop])) {
+                return false;
+            }
+        }
 
         return true;
     },
@@ -16,7 +16,7 @@ const Validator = {
             'place', 'likes', 'user', 'details', 'photo'];
 
         for (const prop in props) {
-            if (!eventObj.hasOwnProperty(props[prop])) {
+            if (!Object.prototype.hasOwnProperty.call(eventObj, props[prop])) {
                 return false;
             }
         }
