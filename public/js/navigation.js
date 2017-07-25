@@ -1,6 +1,6 @@
 const navigation = () => {
-    $('btn-success').click(() => {
-        let url = '/users/' + user.username + '/my-events';
+    $('#show-my-events-btn').click(() => {
+        let url = `api/users/${user.username}/my-events`;
         console.log(url);
 
         requester.get(url)
