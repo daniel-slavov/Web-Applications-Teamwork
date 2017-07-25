@@ -1,109 +1,64 @@
  body {
-		background-image: url('/images/congruent_pentagon.png') !important;
-		font-family: 'Amaranth', sans-serif !important;
+	background-image: url('/images/congruent_pentagon.png') !important;
+	font-family: 'Amaranth', sans-serif !important;
 }
-	.user-avatar {
-		height: 30px;
-		margin-top: 20%;
-	}
-    
-    .event-list {
-		list-style: none;
-		font-family: 'Lato', sans-serif;
-		margin: 0px;
-		padding: 0px;
-	}
-	.event-list > li {
-		background-color: rgb(255, 255, 255);
-		box-shadow: 0px 0px 5px rgb(51, 51, 51);
-		box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
-		padding: 0px;
-		margin: 0px 0px 20px;
-	}
-	.event-list > li > time {
-		display: inline-block;
-		width: 100%;
-		color: rgb(255, 255, 255);
-		background-color: rgb(197, 44, 102);
-		padding: 5px;
-		text-align: center;
-		text-transform: uppercase;
-	}
-	.event-list > li:nth-child(even) > time {
-		background-color: rgb(165, 82, 167);
-	}
-	.event-list > li > time > span {
-		display: none;
-	}
-	.event-list > li > time > .day {
-		display: block;
-		font-size: 56pt;
-		font-weight: 100;
-		line-height: 1;
-	}
-	.event-list > li time > .month {
-		display: block;
-		font-size: 24pt;
-		font-weight: 900;
-		line-height: 1;
-	}
-	.event-list > li > img {
-		width: 100%;
-	}
-	.event-list > li > .info {
-		padding-top: 5px;
-		text-align: center;
-	}
-	.event-list > li > .info > .title {
-		font-size: 17pt;
-		font-weight: 700;
-		margin: 0px;
-	}
-	.event-list > li > .info > .desc {
-		font-size: 13pt;
-		font-weight: 300;
-		margin: 0px;
-	}
-	.event-list > li > .info > ul,
-	.event-list > li > .social > ul {
-		display: table;
-		list-style: none;
-		margin: 10px 0px 0px;
-		padding: 0px;
-		width: 100%;
-		text-align: center;
-	}
-	.event-list > li > .social > ul {
-		margin: 0px;
-	}
-	.event-list > li > .info > ul > li,
-	.event-list > li > .social > ul > li {
-		display: table-cell;
-		cursor: pointer;
-		color: rgb(30, 30, 30);
-		font-size: 11pt;
-		font-weight: 300;
-        padding: 3px 0px;
-	}
-    .event-list > li > .info > ul > li > a {
-		display: block;
-		width: 100%;
-		color: rgb(30, 30, 30);
-		text-decoration: none;
-	} 
-    .event-list > li > .social > ul > li {    
-        padding: 0px;
-    }
-    .event-list > li > .social > ul > li > a {
-        padding: 3px 0px;
-	} 
-	.event-list > li > .info > ul > li:hover,
-	.event-list > li > .social > ul > li:hover {
-		color: rgb(30, 30, 30);
-		background-color: rgb(200, 200, 200);
-	}
+.user-avatar {
+	height: 30px;
+	margin-top: 20%;
+}
 
 nav {
 	background-color: #f3fce8 !important;
 	opacity: 0.9;
+}
+
+.upcoming-events {
+	background-color: rgba(243, 252, 232, 0.7);
+	border-radius: 20px;
+	padding: 40px;
+	margin-top: 40px;
+}
+
+.container h1 {
+	color: white;
+	text-shadow: 0 0 5px black;
+}
+
+a.more {
+	background-color: #b1f6cb;
+	border-color: #b1f6cb;
+	color: #12b1b7;
+	width: 100%;
+}
+
+div.thumbnail {
+	padding: 20px !important;
+	border-radius: 10px;
+	/* height: 400px;; */
+}
+
+.caption > h3 {
+	font-size: 2em;
+}
+
+#event-date, #event-place {
+	text-align: left;
+	font-size: 1.5em;
+}
+
+.category-btn {
+	color: #bfbfbf !important;
+	font-size: 2em !important;
+	text-shadow: 0 0 6px white;
+	background-color: white !important;
+	box-shadow: 5px 5px #bfbfbf;
+	border: 2px solid white !important;
+}
+
+.category-option {
+	margin-bottom: 25px;
+}
+
+.all-categories {
+	margin-top: 50px;
 }

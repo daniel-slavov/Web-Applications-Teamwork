@@ -3,5 +3,7 @@ extends ../layout
 block content
     h1
         | All categories
-    each cat in categories
-        button(type="button", class="btn btn-success btn-lg btn-block") #{cat.name}       
+    div.all-categories
+        each cat in categories
+            div.category-option
+                button(type="button", class="category-btn btn btn-success btn-lg btn-block") #{cat.name}       

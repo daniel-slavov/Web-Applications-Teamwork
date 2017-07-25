@@ -84,8 +84,14 @@
 }
 
 .form-box button.login{
+    background-color: #b1f6cb;
+    border-color: #b1f6cb; 
+    text-shadow: 0 0 5px black;
     margin-top:15px;
     padding: 10px 20px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .animated {

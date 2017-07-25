@@ -1,14 +1,14 @@
         .mycolor{
-            color : #72c02c;
+            color : #12b1b7;
         }        
         .myborder{
             padding: 20px;;
             border: 1px solid #ccc;
             background-color: white;
             border-radius: 4px;
-            -webkit-box-shadow: 0px 0px 3px 0px #72c02c;
-            -moz-box-shadow:    0px 0px 3px 0px #72c02c;
-            box-shadow:         0px 0px 3px 0px #72c02c;
+            -webkit-box-shadow: 0px 0px 5px 0px #12b1b7;
+            -moz-box-shadow:    0px 0px 5px 0px #12b1b7;
+            box-shadow:         0px 0px 5px 0px #12b1b7;
             margin-top: 50px;
         }
         .mybutton{
@@ -22,10 +22,12 @@
 
         }
         .btn-u:hover {
-            background: #5fb611;
+            background-color: #b1f6cb;
+	        border-color: #12b1b7;
         }
         .btn-u:hover, .btn-u:focus, .btn-u:active, .btn-u.active, .open .dropdown-toggle.btn-u {
-            background: #5fb611;
+            background-color: #b1f6cb;
+	        border-color: #12b1b7;
         }
         .btn-u:hover {
             color: #fff;
@@ -36,9 +38,6 @@
             transition: all 0.3s ease-in-out;
         }
         .btn-u {
-            background: #72c02c;
-        }
-        .btn-u {
             white-space: nowrap;
             border: 0;
             color: #fff;
@@ -47,9 +46,11 @@
             font-weight: 400;
             padding: 6px 13px;
             position: relative;
-            background: #72c02c;
+            background-color: #12b1b7;
+	        border-color: #12b1b7;
             display: inline-block;
             text-decoration: none;
+            border-radius: 5px;
         }
         .input-group-addon {
             border-right: 0;
@@ -83,7 +84,7 @@
             color: #555;
             background-color: #fff;
             background-image: none;
-            border: 1px solid  #72c02c !important;
+            border: 1px solid  #b1f6cb !important;
             border-radius: 4px;
             -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
             box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
