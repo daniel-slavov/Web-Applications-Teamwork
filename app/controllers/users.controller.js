@@ -96,13 +96,28 @@ module.exports = (data, passport) => {
                 return res.redirect('/');
             }
 
+            req.assert('email', 'Email is not valid').isEmail();
+
             const newUser = req.body;
             newUser.username = req.user.username;
 
-            data.users.updateProfile(newUser.username, newUser.firstName,
-                newUser.lastName, newUser.age, newUser.email, newUser.avatar);
+            return req.getValidationResult()
+                .then((result) => {
+                    if (!result.isEmpty()) {
+                        // There are errors in validation
 
-            return res.redirect(201, '/users/' + newUser.username);
+                        return res.status(400).render('errors/all', {
+                            errors: result.array(),
+                        });
+                    }
+
+                    data.users.updateProfile(
+                        newUser.username, newUser.firstName,
+                        newUser.lastName, newUser.age,
+                        newUser.email, newUser.avatar);
+
+                    return res.redirect(201, '/users/' + newUser.username);
+                });
         },
         getUserEvents: (req, res) => {
             const username = req.params.username;

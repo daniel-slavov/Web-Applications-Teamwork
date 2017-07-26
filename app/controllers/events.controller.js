@@ -21,7 +21,7 @@ module.exports = (data) => {
                 'Title must be at least 6 symbols.').len(6);
             req.assert('date', 'Date is required').isDate();
             req.assert('time', 'Time is required').notEmpty();
-            req.assert('place', 'Place must contain only letters.').isAlpha();
+            req.assert('place', 'Place is required.').notEmpty();
             req.assert('categories', 'Category is required').notEmpty();
 
             const event = req.body;
@@ -167,7 +167,7 @@ module.exports = (data) => {
 
             req.assert('date', 'Date is required').isDate();
             req.assert('time', 'Time is required').notEmpty();
-            req.assert('place', 'Place must contain only letters.').isAlpha();
+            req.assert('place', 'Place is required.').notEmpty();
 
             const newEvent = req.body;
             const title = req.params.title;
