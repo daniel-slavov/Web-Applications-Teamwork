@@ -1,5 +1,5 @@
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\data\categories.data.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\data\categories.data.js
 FN:4,(anonymous_1)
 FN:10,(anonymous_2)
 FN:17,(anonymous_3)
@@ -38,7 +38,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\data\chats.data.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\data\chats.data.js
 FN:4,(anonymous_1)
 FN:10,(anonymous_2)
 FN:15,(anonymous_3)
@@ -62,7 +62,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\data\data.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\data\data.js
 FNF:0
 FNH:0
 DA:1,0
@@ -79,7 +79,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\data\events.data.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\data\events.data.js
 FN:5,(anonymous_1)
 FN:11,(anonymous_2)
 FN:18,(anonymous_3)
@@ -127,7 +127,7 @@ BRF:2
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\data\index.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\data\index.js
 FNF:0
 FNH:0
 DA:1,0
@@ -137,7 +137,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\data\users.data.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\data\users.data.js
 FN:5,(anonymous_1)
 FN:11,(anonymous_2)
 FN:18,(anonymous_3)
@@ -189,7 +189,7 @@ BRF:2
 BRH:1
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\app\controllers\errors.controller.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\app\controllers\errors.controller.js
 FNF:0
 FNH:0
 DA:1,0
@@ -201,7 +201,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\app\controllers\events.controller.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\app\controllers\events.controller.js
 FNF:0
 FNH:0
 DA:1,0
@@ -361,7 +361,7 @@ BRF:40
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\app\controllers\home.controller.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\app\controllers\home.controller.js
 FNF:0
 FNH:0
 DA:1,0
@@ -375,7 +375,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\app\controllers\users.controller.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\app\controllers\users.controller.js
 FNF:0
 FNH:0
 DA:1,0
@@ -473,7 +473,7 @@ BRF:26
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\app\app.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\app\app.js
 FNF:0
 FNH:0
 DA:1,0
@@ -539,7 +539,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\app\index.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\app\index.js
 FNF:0
 FNH:0
 DA:1,0
@@ -549,7 +549,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\config\auth.config.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\config\auth.config.js
 FNF:0
 FNH:0
 DA:1,0
@@ -590,7 +590,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\config\config.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\config\config.js
 FNF:0
 FNH:0
 DA:1,0
@@ -605,7 +605,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\config\index.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\config\index.js
 FNF:0
 FNH:0
 DA:1,0
@@ -615,7 +615,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\db\db.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\db\db.js
 FNF:0
 FNH:0
 DA:1,0
@@ -630,7 +630,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\db\index.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\db\index.js
 FNF:0
 FNH:0
 DA:1,0
@@ -640,7 +640,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\models\category.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\models\category.js
 FN:2,(anonymous_1)
 FNF:1
 FNH:0
@@ -654,7 +654,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\models\event.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\models\event.js
 FN:2,(anonymous_1)
 FNF:1
 FNH:0
@@ -675,7 +675,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\models\message.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\models\message.js
 FN:2,(anonymous_1)
 FNF:1
 FNH:0
@@ -692,7 +692,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\models\user.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\models\user.js
 FN:2,(anonymous_1)
 FNF:1
 FNH:1
@@ -712,7 +712,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\Yoana\Desktop\Web-Applications-Teamwork\server.js
+SF:D:\TelerikAcademy\Web-Applications-With-Node.js\Teamwork\Web-Applications-Teamwork\server.js
 FNF:0
 FNH:0
 DA:3,0

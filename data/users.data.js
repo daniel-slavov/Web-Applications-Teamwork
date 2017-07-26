@@ -89,7 +89,7 @@ class UsersData {
     removeEvent(username, eventTitle) {
         this.collection.update(
             { username: username },
-            { $pull: { events: { $in: [{ title: eventTitle }] } } },
+            { $pull: { events: { title: eventTitle } } },
             { multi: true }
         );
     }
