@@ -217,7 +217,7 @@ describe('UsersData', () => {
         });
 
         it('expect to update user\'s event', () => {
-            data.updateProfile('user', 'new title', 'new date', 'new time',
+            data.updateEvent('user', 'new title', 'new date', 'new time',
                 'new place', 'new details', 'new likes', 'new photo');
 
             expect(users[0].events).to.deep.include({
@@ -247,8 +247,8 @@ describe('UsersData', () => {
             };
         });
 
-        it('expect to update user\'s event', () => {
-            data.updateProfile('user', 'new title', 'new date', 'new time',
+        it('expect to delete user\'s event', () => {
+            data.removeEvent('user', 'new title', 'new date', 'new time',
                 'new place', 'new details', 'new likes', 'new photo');
 
             expect(users[0].events).to.not.deep.include({
