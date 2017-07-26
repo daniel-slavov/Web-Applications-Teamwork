@@ -192,15 +192,15 @@ module.exports = (data) => {
                             if (event.user !== req.user.username) {
                                 return res.redirect('/error');
                             }
-
+                            
                             data.events.update(title, newEvent.date,
                                 newEvent.time, newEvent.place,
-                                newEvent.details, newEvent.photo);
+                                newEvent.details, event.photo);
 
                             data.users.updateEvent(
                                 event.user, title, newEvent.date,
                                 newEvent.time, newEvent.place, newEvent.details,
-                                event.categories, event.likes, newEvent.photo);
+                                event.categories, event.likes, event.photo);
                             
                             if (typeof event.categories === 'string') {
                                 const category = event.categories;
@@ -208,14 +208,14 @@ module.exports = (data) => {
                                     category, title, newEvent.date,
                                     newEvent.time, newEvent.place,
                                     newEvent.details, event.categories,
-                                    event.likes, newEvent.photo, event.user);
+                                    event.likes, event.photo, event.user);
                             } else {
                                 event.categories.forEach((category) => {
                                     data.categories.updateEvent(category, title,
                                         newEvent.date, newEvent.time,
                                         newEvent.place, newEvent.details,
                                         event.categories, event.likes,
-                                        newEvent.photo, event.user);
+                                        event.photo, event.user);
                                 });
                             }
 

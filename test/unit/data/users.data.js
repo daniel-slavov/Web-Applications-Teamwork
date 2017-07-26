@@ -1,8 +1,8 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
 
-const UsersData = require('../../../../data/users.data');
-const User = require('../../../../models/user');
+const UsersData = require('../../../data/users.data');
+const User = require('../../../models/user');
 
 describe('UsersData', () => {
     const db = {
