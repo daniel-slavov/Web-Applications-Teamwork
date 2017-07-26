@@ -201,7 +201,7 @@ module.exports = (data) => {
                                 event.user, title, newEvent.date,
                                 newEvent.time, newEvent.place, newEvent.details,
                                 event.categories, event.likes, newEvent.photo);
-
+                            
                             if (typeof event.categories === 'string') {
                                 const category = event.categories;
                                 data.categories.updateEvent(
@@ -253,7 +253,7 @@ module.exports = (data) => {
                         });
                     }
 
-                    return res.redirect('/');
+                    return res.status(200).json({ redirect: '/' });
                 });
         },
 

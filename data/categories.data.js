@@ -61,7 +61,7 @@ class CategoriesData {
     removeEvent(categoryName, event) {
         this.collection.update(
             { name: categoryName },
-            { $pull: { events: event } }
+            { $pull: { events: { title: event.title } } }
         );
     }
 }

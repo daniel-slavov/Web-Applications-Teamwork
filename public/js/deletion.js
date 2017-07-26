@@ -6,8 +6,8 @@ const deletion = () => {
         // console.log(url);
 
         requester.delete(url)
-                 .then(response => {
-                     console.log('Deleted.');
+                 .then((response) => {
+                     location.href = response.redirect;
                  });
     });
 };
