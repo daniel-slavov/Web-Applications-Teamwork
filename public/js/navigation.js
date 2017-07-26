@@ -26,5 +26,16 @@ const navigation = () => {
                 });
     });
 
+    $('.ui-state-default').click((event) => {
+        let date = event.target.innerHTML;
+        // console.log(date);
+        let url = `${document.location.origin}/api/events-calendar/${date}`;
+        // console.log(url);
 
+        requester.get(url)
+                .then(response => {
+                    // console.log(response);
+                    $('#datepicker').after(response);
+                })
+    });
 };
