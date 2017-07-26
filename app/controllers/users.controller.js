@@ -1,4 +1,4 @@
-module.exports = (data, passport) => {
+module.exports = (data) => {
     return {
         getLogin: (req, res) => {
             if (req.user) {
@@ -140,10 +140,6 @@ module.exports = (data, passport) => {
             if (partial) {
                 return data.users.getUserByPattern(pattern)
                 .then((users) => {
-                    if (users.length === 0) {
-                        return res.render('partials/users');
-                    }
-
                     return res.render('partials/users', {
                         users: users,
                     });
