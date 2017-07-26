@@ -21,7 +21,7 @@ const update = () => {
         let title = $('#title').text();
         // console.log(title);
         let url = `${document.location.origin}/api/events/${title}`;
-        // console.log(url);
+        console.log(url);
         var data = {
             place: $('.media:eq(0) > input').val(),
             date: $('.media:eq(1) > input').val(),
@@ -29,16 +29,19 @@ const update = () => {
             details: $('.media:eq(4) > input').val()
         }
 
-        // console.log(data);
-
         requester.put(url, data)
-                 .then((response, textStatus, xhr) => {
-                     console.log(`Response: ${xhr.status}`);
-                     if (true) {
-                        location.reload();
-                     } else {
-                        $('#details-box').after(response);
-                     }
-                 });
+                 .then((response) => {
+                     console.log(`Response then`);
+
+                    location.reload();
+                    
+                 }, err => {
+                     console.log($('#details-box').parent().prev());
+
+                     $('.alert').remove();
+
+                     $('div.row:eq(0)').before(err.responseText);
+
+                    });
     });
 };

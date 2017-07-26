@@ -34,7 +34,12 @@ const requester = {
             method: 'PUT',
             data: `place=${data.place}&date=${data.date}&time=${data.time}&details=${data.details}`,
             success(response) {
+                console.log('here be dragons', response);
                 resolve(response);
+            },
+            error(err)
+            {
+                reject(err);
             }
         });
     });

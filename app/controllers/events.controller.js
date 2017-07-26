@@ -219,7 +219,7 @@ module.exports = (data) => {
                                 });
                             }
 
-                            console.log('UPDATE');
+                            res.send('');
                             return res.status(200);
                         });
                 });
