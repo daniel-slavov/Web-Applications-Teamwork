@@ -29,8 +29,9 @@ class EventsData {
     }
 
     getByTitlePattern(pattern) {
-        return this.collection.find({ 'title': { $regex: pattern, $options: 'i' } })
-            .toArray();
+        return this.collection.find({
+            'title': { $regex: pattern, $options: 'i' },
+        }).toArray();
     }
 
     getUpcoming() {
@@ -43,12 +44,14 @@ class EventsData {
     update(eventTitle, date, time, place, details, photo) {
         this.collection.update(
             { title: eventTitle },
-            { $set: { date: date,
+            { $set: {
+                date: date,
                 time: time,
                 place: place,
                 details: details,
                 photo: photo,
-            } }
+            },
+        }
         );
     }
 
