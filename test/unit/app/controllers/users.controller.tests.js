@@ -1,11 +1,10 @@
 const { expect } = require('chai');
+const sinon = require('sinon');
 
 describe('Users controller', () => {
     let data = null;
     let controller = null;
-    const user = {
-        username: 'test',
-    };
+    let user = null;
     let foundItems = [];
 
     let req = null;
@@ -27,13 +26,28 @@ describe('Users controller', () => {
         };
 
         controller =
-        require('../../../../app/controllers/users.controller')(data);
+            require('../../../../app/controllers/users.controller')(data);
 
         req = require('../../req-res').getRequestMock();
         res = require('../../req-res').getResponseMock();
     });
 
     describe('getLogin', () => {
+        it('should redirect to user profile if there is auth. user', () => {
+            req = require('../../req-res').getRequestMock({
+                user: {
+                    username: 'test',
+                },
+            });
+
+            const spy = sinon.spy(res, 'redirect');
+            const route = '/users/' + req.user.username;
+
+            controller.getLogin(req, res);
+
+            sinon.assert.calledWith(spy, route);
+        });
+
         it('should render login view if there is no authenticated user', () => {
             controller.getLogin(req, res);
 
@@ -42,6 +56,21 @@ describe('Users controller', () => {
     });
 
     describe('getSignup', () => {
+        it('should redirect to user profile if there is auth. user', () => {
+            req = require('../../req-res').getRequestMock({
+                user: {
+                    username: 'test',
+                },
+            });
+
+            const spy = sinon.spy(res, 'redirect');
+            const route = '/users/' + req.user.username;
+
+            controller.getSignup(req, res);
+
+            sinon.assert.calledWith(spy, route);
+        });
+
         it('should render signup view if there is no authenticated user',
         () => {
             controller.getSignup(req, res);
@@ -54,16 +83,39 @@ describe('Users controller', () => {
         it(`should render signup view again and return 
             status code 400 if server validation did not pass`,
         () => {
-            // TO DO
+            req = require('../../req-res').getRequestMock({
+                body: {
+
+                },
+            });
+
+            controller.postSignup(req, res);
         });
     });
 
     describe('getUserProfile', () => {
+        it('should redirect to error page if user is not found', () => {
+            req = require('../../req-res').getRequestMock({
+                params: { username: 'test' },
+            });
+
+            const spy = sinon.spy(res, 'redirect');
+            const route = '/error';
+
+            return controller.getUserProfile(req, res)
+                .then(() => {
+                    sinon.assert.calledWith(spy, route);
+                });
+        });
+
         it(`should render users/profile view without current
             user if there is no authenticated user`, () => {
                 req = require('../../req-res').getRequestMock({
                     params: { username: 'test' },
                 });
+                user = {
+                    username: 'test',
+                };
 
                 return controller.getUserProfile(req, res)
                     .then(() => {
@@ -81,6 +133,9 @@ describe('Users controller', () => {
                     user: user,
                     params: { username: 'simona' },
                 });
+                user = {
+                    username: 'test',
+                };
 
                 return controller.getUserProfile(req, res)
                     .then(() => {
