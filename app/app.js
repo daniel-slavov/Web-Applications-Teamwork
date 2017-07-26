@@ -61,7 +61,7 @@ const init = (data) => {
 
     // Users routes
     app.get('/users/:username', usersController.getUserProfile);
-    app.put('/users/:username', usersController.updateUserProfile); // Validation and refactor
+    app.put('/users/:username', usersController.updateUserProfile);
     app.get('/api/users/:username/events', usersController.getUserEvents);
 
     // Search routes
