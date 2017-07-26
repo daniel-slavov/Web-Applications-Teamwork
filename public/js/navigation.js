@@ -30,6 +30,7 @@ const navigation = () => {
         requester.get(url)
                 .then(response => {
                     // console.log(response);
+                    $('.row').remove();
                     $(event.target).after(response);
                 });
     });
