@@ -27,7 +27,19 @@ const requester = {
       });
     });
   },
-  delete(url){
+  put(url,data) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url,
+            method: 'PUT',
+            data,
+            success(response) {
+                resolve(response);
+            }
+        });
+    });
+  },
+  delete(url) {
     return new Promise((resolve,reject) => {
         $.ajax({
             url,

@@ -13,15 +13,22 @@ block content
             ul.details.col-md-10
                 li.media
                     span.glyphicon.glyphicon-map-marker
-                    <strong>  City:</strong> #{event.place}         
+                    <strong>  City:</strong> 
+                    span.data #{event.place}
                 li.media
                     span.glyphicon.glyphicon-calendar
-                    <strong>  Date:</strong> #{event.date}      
+                    <strong>  Date:</strong> 
+                    span.data #{event.date}
                 li.media
                     span.glyphicon.glyphicon-time
-                    <strong>  Time:</strong> #{event.time}          
-                li.media <strong>Categories:</strong> #{event.categories}            
-                li.media <strong>Details:</strong> #{event.details}
+                    <strong>  Time:</strong> 
+                    span.data #{event.time}
+                li.media 
+                    <strong>Categories:</strong> 
+                    span.data #{event.categories}
+                li.media 
+                    <strong>Details:</strong> 
+                    span.data #{event.details}
             
 
         div#chat.col-md-5

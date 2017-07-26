@@ -1,13 +1,16 @@
 const deletion = () => {
     $('#delete-event-button').click(() => {
         let title = $('#title').text();
-        // console.log(title);
+        console.log(title);
         let url = `${document.location.origin}/api/events/${title}`;
-        // console.log(url);
+        console.log('URL: ' + url);
 
-        requester.delete(url)
+        if (confirm("Please confirm that you want to delete the event.")) {
+            requester.delete(url)
                  .then(response => {
-                     console.log('Deleted.');
+                     console.log(response);
+                     window.location.replace('/');
                  });
+        }
     });
 };
