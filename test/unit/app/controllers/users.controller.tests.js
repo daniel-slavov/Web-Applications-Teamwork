@@ -22,6 +22,9 @@ describe('Users controller', () => {
                 getUserByPattern(pattern) {
                     return Promise.resolve(foundItems);
                 },
+                create(object) {
+                    return;
+                },
             },
         };
 
@@ -83,14 +86,98 @@ describe('Users controller', () => {
         it(`should render signup view again and return 
             status code 400 if server validation did not pass`,
         () => {
+            const result = {
+                isEmpty: function() {
+                    return false;
+                },
+                array: function() {
+                    return [];
+                },
+            };
+
             req = require('../../req-res').getRequestMock({
                 body: {
+                    username: 'test',
+                    password: '123456',
+                },
+                assert: function() {
+                    return this;
+                },
+                len: function(first, second) {
+                    return this;
+                },
+                equals: function(pass) {
+                    return this;
+                },
+                isEmail: function() {
+                    return this;
+                },
 
+                getValidationResult: function() {
+                    return new Promise((resolve, rej) => {
+                        resolve(result);
+                    });
                 },
             });
 
-            controller.postSignup(req, res);
+            const spy = sinon.spy(res, 'status');
+
+            return controller.postSignup(req, res)
+                .then(() => {
+                    sinon.assert.calledWith(spy, 400);
+
+                    expect(res.context).to.be.deep.equal({
+                        context: req.body,
+                        errors: result.array(),
+                    });
+
+                    expect(res.viewName).to.be.equal('signup');
+                });
         });
+
+        it(`should call create method of data.users
+            if validation passes and redirect to login page`, () => {
+                const result = {
+                    isEmpty: function() {
+                        return true;
+                    },
+                };
+
+                req = require('../../req-res').getRequestMock({
+                    body: {
+                        username: 'test',
+                        password: '123456',
+                    },
+                    assert: function() {
+                        return this;
+                    },
+                    len: function(first, second) {
+                        return this;
+                    },
+                    equals: function(pass) {
+                        return this;
+                    },
+                    isEmail: function() {
+                        return this;
+                    },
+
+                    getValidationResult: function() {
+                        return new Promise((resolve, rej) => {
+                            resolve(result);
+                        });
+                    },
+                });
+
+                const createSpy = sinon.spy(data.users, 'create');
+                const redirectSpy = sinon.spy(res, 'redirect');
+
+                return controller.postSignup(req, res)
+                    .then(() => {
+                        sinon.assert.calledWith(createSpy, req.body);
+
+                        sinon.assert.calledWith(redirectSpy, '/login');
+                    });
+            });
     });
 
     describe('getUserProfile', () => {
@@ -98,7 +185,7 @@ describe('Users controller', () => {
             req = require('../../req-res').getRequestMock({
                 params: { username: 'test' },
             });
-
+            user = null;
             const spy = sinon.spy(res, 'redirect');
             const route = '/error';
 
