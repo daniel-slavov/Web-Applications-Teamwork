@@ -8,7 +8,7 @@ const deletion = () => {
         if (confirm("Please confirm that you want to delete the event.")) {
             requester.delete(url)
                  .then(response => {
-                     location.href = response.redirect;
+                     location.href = '/';
                  });
         }
     });

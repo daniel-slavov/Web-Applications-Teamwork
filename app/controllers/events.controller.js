@@ -219,7 +219,8 @@ module.exports = (data) => {
                                 });
                             }
 
-                            return res.redirect(200, '/api/events/' + title);
+                            console.log('UPDATE');
+                            return res.status(200);
                         });
                 });
         },
@@ -253,7 +254,7 @@ module.exports = (data) => {
                         });
                     }
 
-                    return res.status(200).json({ redirect: '/' });
+                    return res.status(200);
                 });
         },
 

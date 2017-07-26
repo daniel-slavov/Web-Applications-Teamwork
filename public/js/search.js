@@ -12,7 +12,7 @@ const search = () => {
                  .then(response => {
                      console.log(response);
                      $('.search-results').html(response);
-                     window.history.pushState('Search', 'Title', `/api/${searchOption}/search?title=${pattern}`);
+                     window.history.pushState('Search', 'Title', `/api/${searchOption}/search?name=${pattern}`);
                  });
          }
     });

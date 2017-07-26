@@ -4,3 +4,7 @@
     border-radius: 10px;
     font-size: 15pt;
 }
+
+#hide-my-events-btn {
+    display: none;
+}

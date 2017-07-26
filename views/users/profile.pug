@@ -23,9 +23,7 @@ block content
     div
         if currentUser == context.username
             button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show my events
+            button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide my events
         else
             button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show events
-    div#my-events.hidden
-        | My Events:
-        div#event-items
-
+            button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide events

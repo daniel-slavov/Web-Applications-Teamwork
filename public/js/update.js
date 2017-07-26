@@ -29,11 +29,16 @@ const update = () => {
             details: $('.media:eq(4) > input').val()
         }
 
-        console.log(data);
+        // console.log(data);
 
         requester.put(url, data)
-                 .then(response => {
-                     console.log('Updated.');
+                 .then((response, textStatus, xhr) => {
+                     console.log(`Response: ${xhr.status}`);
+                     if (true) {
+                        location.reload();
+                     } else {
+                        $('#details-box').after(response);
+                     }
                  });
     });
 };
