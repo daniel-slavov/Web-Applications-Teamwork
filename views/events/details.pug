@@ -25,7 +25,7 @@ block content
                     span.data #{event.time}
                 li.media 
                     <strong>Categories:</strong> 
-                    span.data #{event.categories}
+                    span #{event.categories}
                 li.media 
                     <strong>Details:</strong> 
                     span.data #{event.details}
@@ -64,10 +64,16 @@ block content
             });
 
     if user && user.username == event.user
-        div#creator-buttons.row.col-xs-12
-            button(id="delete-event-button", class="btn btn-lg btn-danger") 
-                span.glyphicon.glyphicon-trash
-                span.button-text Delete event
-            button(id="update-event-button", class="btn btn-lg btn-warning")
-                span.glyphicon.glyphicon-pencil
-                span.button-text Update event
+    div#creator-buttons.row.col-xs-12
+        button(id="delete-event-button", class="btn btn-lg btn-danger") 
+            span.glyphicon.glyphicon-trash
+            span.button-text Delete event
+        button(id="update-event-button", class="btn btn-lg btn-warning")
+            span.glyphicon.glyphicon-pencil
+            span.button-text Update event
+        button(id="cancel-event-button", class="btn btn-lg btn-danger hidden") 
+            span.glyphicon.glyphicon-remove
+            span.button-text Cancel
+        button(id="confirm-event-button", class="btn btn-lg btn-success hidden") 
+            span.glyphicon.glyphicon-floppy-disk
+            span.button-text Confirm

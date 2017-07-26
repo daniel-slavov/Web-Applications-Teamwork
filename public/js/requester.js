@@ -32,7 +32,9 @@ const requester = {
         $.ajax({
             url,
             method: 'PUT',
-            data,
+            // place: data.place,
+            // date: data.date,
+            // time: data.time,
             success(response) {
                 resolve(response);
             }
