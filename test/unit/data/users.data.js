@@ -41,9 +41,11 @@ describe('UsersData', () => {
         return Promise.resolve(foundUser);
     };
     const newEvent = { title: 'New event' };
-    const update = (userObj) =>{
+    let update = (userObj) => {
         users[0].events.push(newEvent);
     };
+
+
     beforeEach(() => {
         users = [{
             _id: '596b1d2cfef2e82704d679e4',
@@ -171,6 +173,87 @@ describe('UsersData', () => {
         it('expect add new event to user\'s list of events', () => {
             data.addEventToUser('user', newEvent);
             expect(users[0].events).to.deep.include(newEvent);
+        });
+    });
+
+    describe('updateProfile()', () => {
+        before(() => {
+            update = (userObj, anything) => {
+                users[1].firstName = 'firstName';
+                users[1].lastName = 'lastName';
+                users[1].age = 'age';
+                users[1].email = 'email';
+                users[1].avatar = 'avatar';
+            };
+        });
+        it('expect to update user\'s profile', () => {
+            data.updateProfile('user', 'firstName', 'lastName',
+                'age', 'email', 'avatar');
+
+            expect(users).to.deep.include({
+                _id: '596b2a0ae6239d22044adb29',
+                username: 'user1',
+                password: '234567',
+                firstName: 'firstName',
+                lastName: 'lastName',
+                age: 'age',
+                email: 'email',
+                avatar: 'avatar',
+            });
+        });
+    });
+
+    describe('updateEvent()', () => {
+        before(() => {
+            update = (userObj, anything) => {
+                users[0].events[0].title = 'new title';
+                users[0].events[0].date = 'new date';
+                users[0].events[0].time = 'new time';
+                users[0].events[0].place = 'new place';
+                users[0].events[0].details = 'new details';
+                users[0].events[0].likes = 'new likes';
+                users[0].events[0].photo = 'new photo';
+            };
+        });
+
+        it('expect to update user\'s event', () => {
+            data.updateProfile('user', 'new title', 'new date', 'new time',
+                'new place', 'new details', 'new likes', 'new photo');
+
+            expect(users[0].events).to.deep.include({
+                title: 'new title',
+                date: 'new date',
+                time: 'new time',
+                place: 'new place',
+                details: 'new details',
+                likes: 'new likes',
+                photo: 'new photo',
+            });
+        });
+    });
+
+    describe('removeEvent()', () => {
+        before(() => {
+            update = (userObj, anything) => {
+                let index = 0;
+                for (let i = 0; i < users[0].events.length; i++) {
+                    if (users[0].events[i].title === 'Some event') {
+                        index = i;
+                        break;
+                    }
+                }
+
+                users[0].events.slice(index, index + 1);
+            };
+        });
+
+        it('expect to update user\'s event', () => {
+            data.updateProfile('user', 'new title', 'new date', 'new time',
+                'new place', 'new details', 'new likes', 'new photo');
+
+            expect(users[0].events).to.not.deep.include({
+                title: 'Some event',
+            });
         });
     });
 });
