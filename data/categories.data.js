@@ -1,17 +1,7 @@
-const Category = require('../models/category');
-
 class CategoriesData {
-    constructor(db, validator) {
+    constructor(db) {
         this.db = db;
         this.collection = this.db.collection('categories');
-        this.validator = validator;
-    }
-
-    create(categoryObj) {
-        if (this.validator.isValidCategory(categoryObj)) {
-            const newCategory = new Category(categoryObj);
-            this.collection.insertOne(newCategory);
-        }
     }
 
     getAll() {
@@ -22,10 +12,9 @@ class CategoriesData {
 
     getEventsByCategory(categoryName) {
         return this.collection
-            .find({ name: categoryName })
-            .toArray()
+            .findOne({ name: categoryName })
             .then((foundCategory) => {
-                return foundCategory[0].events;
+                return foundCategory.events;
             });
     }
 
