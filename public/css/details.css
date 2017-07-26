@@ -35,10 +35,10 @@ a.pull-left {
     margin-top: 30px;
 }
 
-#delete-event-button, #update-event-button {
+#delete-event-button, #update-event-button, #cancel-event-button, #confirm-event-button {
     margin-right: 10px;
 }
 
-#delete-event-button > .glyphicon, #update-event-button > .glyphicon {
+#delete-event-button > .glyphicon, #update-event-button > .glyphicon, #cancel-event-button > .glyphicon, #confirm-event-button > .glyphicon {
     margin-right: 9px;
 }
