@@ -16,4 +16,10 @@ $(document).ready(() => {
   } catch (error) {
 
   }
+
+  try {
+    update();
+  } catch (error) {
+
+  }
 });
