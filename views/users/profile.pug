@@ -3,37 +3,110 @@ extends ../layout
 block content
     h1
         | My profile information
-    div.row
-        div.col-md-3
-            div
-                img(src=context.avatar, width="120px", height="120px")
-            if currentUser == context.username
-                div.change-avatar
-                    button(id='change-avatar-btn', type='button', class='btn btn-info') Change avatar
-        div.col-md-6
-            div.upload-avatar
-    div
-        label Username:
-        span#curent-user=context.username
-    div.info
-        label First name:
-        span.data=context.firstName
-    div.info
-        label Last name:
-        span.data=context.lastName
-    div.info
-        label Email:
-        span.data=context.email
-    div.info
-        label Age:
-        span.data=context.age
-    div
-        if currentUser == context.username
-            button(id='edit-profile-btn' type="button", class="btn btn-warning btn-lg btn-block") Edit profile
-            button(id='cancel-profile-btn' type="button", class="btn btn-danger btn-lg btn-block") Cancel
-            button(id='confirm-profile-btn' type="button", class="btn btn-success btn-lg btn-block") Save changes
-            button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show my events
-            button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide my events
-        else
-            button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show events
-            button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide events
+    //- div.row
+    //-     div.col-md-3
+    //-         div
+    //-             img(src=context.avatar, width="120px", height="120px")
+    //-         if currentUser == context.username
+    //-             div.change-avatar
+    //-                 button(id='change-avatar-btn', type='button', class='btn btn-info') Change avatar
+    //-     div.col-md-6
+    //-         div.upload-avatar
+    //- div
+    //-     label Username:
+    //-     span#curent-user=context.username
+    //- div.info
+    //-     label First name:
+    //-     span.data=context.firstName
+    //- div.info
+    //-     label Last name:
+    //-     span.data=context.lastName
+    //- div.info
+    //-     label Email:
+    //-     span.data=context.email
+    //- div.info
+    //-     label Age:
+    //-     span.data=context.age
+    //- div
+    //-     if currentUser == context.username
+    //-         button(id='edit-profile-btn' type="button", class="btn btn-warning btn-lg btn-block") Edit profile
+    //-         button(id='cancel-profile-btn' type="button", class="btn btn-danger btn-lg btn-block") Cancel
+    //-         button(id='confirm-profile-btn' type="button", class="btn btn-success btn-lg btn-block") Save changes
+    //-         button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show my events
+    //-         button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide my events
+    //-     else
+    //-         button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show events
+    //-         button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide events
+
+    div.container
+        div.row
+        div.col-xs-12.col-sm-12.col-md-12.col-lg-8
+            div.panel.panel-info
+                div.panel-heading
+                    h3.panel-title#curent-user
+                        | #{context.username}
+                div.panel-body
+                    div.row
+                        div.col-md-4.col-lg-4
+                            img#avatar-img(alt="User Pic" src=context.avatar class="img-thumbnail img-responsive")
+                        div.col-xs-10.col-sm-10.hidden-md.hidden-lg
+                        br
+                        
+                        if currentUser == context.username
+                            dl
+                                dt
+                                    button(id='change-avatar-btn', type='button', class='btn btn-info', data-toggle="modal" data-target="#myModal")
+                                        span.glyphicon.glyphicon-picture
+                                        |  Change avatar
+                                dt
+                                    div.col-md-6
+                                        div.upload-avatar
+                        div.col-md-9.col-lg-9 
+                            table.table-user-information.col-md-9
+                                tbody
+                                    tr.info
+                                        td
+                                            |  First name
+                                        td.data
+                                            | #{context.firstName}
+                                    tr.info
+                                        td
+                                            |  Last name
+                                        td.data
+                                            | #{context.lastName}
+                                    tr.info
+                                        td
+                                            |  Email
+                                        td.data
+                                            | #{context.email}
+                                    tr.info
+                                        td
+                                            |  Age
+                                        td.data
+                                            | #{context.age}              
+                div.panel-footer
+                    if currentUser == context.username
+                        span
+                            button(id='edit-profile-btn' type="button", class="btn btn-warning btn-lg btn-block")
+                                span.glyphicon.glyphicon-edit
+                                |  Edit profile
+                            button(id='cancel-profile-btn' type="button", class="btn btn-danger btn-lg btn-block") 
+                                span.glyphicon.glyphicon-remove-circle
+                                |  Cancel
+                            button(id='confirm-profile-btn' type="button", class="btn btn-success btn-lg btn-block")
+                                span.glyphicon.glyphicon-ok
+                                |  Save changes
+                            button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block")
+                                span.glyphicon.glyphicon-th-list
+                                |  Show my events
+                            button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block")
+                                span.glyphicon.glyphicon-chevron-up
+                                |  Hide my events
+                    else
+                            button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") 
+                                span.glyphicon.glyphicon-th-list
+                                |  Show events
+                            button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block")
+                                span.glyphicon.glyphicon-chevron-up
+                                |  Hide events
+        include ../partials/upload.pug

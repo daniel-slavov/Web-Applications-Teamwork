@@ -48,7 +48,7 @@ const update = () => {
 
         requester.get(url)
             .then((response) => {
-                $('.upload-avatar').html(response);
+                // $('.upload-avatar').html(response);
                 $('#uploadForm').attr('action', postUrl);
             });
     });
@@ -60,7 +60,7 @@ const update = () => {
 
         requester.get(url)
             .then((response) => {
-                $('.upload-event-photo').html(response);
+                //$('.upload-event-photo').html(response);
                 $('#uploadForm').attr('action', postUrl);           
             });
     });

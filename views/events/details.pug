@@ -71,7 +71,7 @@ block content
             button(id="update-event-button", class="btn btn-lg btn-warning")
                 span.glyphicon.glyphicon-pencil
                 span.button-text Update event
-            button(id="change-event-photo-btn", class="btn btn-lg btn-info")
+            button(id="change-event-photo-btn", class="btn btn-lg btn-info", data-toggle="modal", data-target="#myModal")
                 span.glyphicon.glyphicon-picture
                 span.button-text Update event photo
             button(id="cancel-event-button", class="btn btn-lg btn-danger hidden") 
@@ -81,4 +81,4 @@ block content
                 span.glyphicon.glyphicon-floppy-disk
                 span.button-text Confirm
         
-        div.row.upload-event-photo
+        include ../partials/upload.pug
