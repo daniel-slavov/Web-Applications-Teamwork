@@ -7,8 +7,9 @@ block content
         div.col-md-3
             div
                 img(src=context.avatar, width="120px", height="120px")
-            div.change-avatar
-                button(id='change-avatar-btn', type='button', class='btn btn-info') Change avatar
+            if currentUser == context.username
+                div.change-avatar
+                    button(id='change-avatar-btn', type='button', class='btn btn-info') Change avatar
         div.col-md-6
             div.upload-avatar
     div

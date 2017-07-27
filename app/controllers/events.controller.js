@@ -1,3 +1,6 @@
+const multer = require('multer');
+const path = require('path');
+
 module.exports = (data) => {
     return {
         getCreateEvent: (req, res) => {
@@ -43,7 +46,8 @@ module.exports = (data) => {
                         .then((existing) => {
                             if (existing !== null) {
                                 const errors = [];
-                                errors.push({ msg: `Event with that 
+                                errors.push({
+                                    msg: `Event with that 
                                     title already exists.` });
 
                                 return data.categories.getAll()
@@ -192,7 +196,7 @@ module.exports = (data) => {
                             if (event.user !== req.user.username) {
                                 return res.redirect('/error');
                             }
-                            
+
                             data.events.update(title, newEvent.date,
                                 newEvent.time, newEvent.place,
                                 newEvent.details, event.photo);
@@ -201,7 +205,7 @@ module.exports = (data) => {
                                 event.user, title, newEvent.date,
                                 newEvent.time, newEvent.place, newEvent.details,
                                 event.categories, event.likes, event.photo);
-                            
+
                             if (typeof event.categories === 'string') {
                                 const category = event.categories;
                                 data.categories.updateEvent(
@@ -242,7 +246,7 @@ module.exports = (data) => {
                     }
 
                     data.events.remove(title);
-
+                    data.chats.removeCharRoom(title);
                     data.users.removeEvent(req.user.username, title);
 
                     if (typeof event.categories === 'string') {
@@ -257,22 +261,21 @@ module.exports = (data) => {
                     return res.status(200);
                 });
         },
-
         searchEvent: (req, res) => {
             const pattern = req.query.name;
             const partial = req.query.isPartial;
 
             if (partial) {
                 return data.events.getByTitlePattern(pattern)
-                .then((events) => {
-                    if (events.length === 0) {
-                        return res.render('partials/events');
-                    }
+                    .then((events) => {
+                        if (events.length === 0) {
+                            return res.render('partials/events');
+                        }
 
-                    return res.render('partials/events', {
-                        events: events,
+                        return res.render('partials/events', {
+                            events: events,
+                        });
                     });
-                });
             }
 
             return data.events.getByTitlePattern(pattern)
@@ -280,6 +283,76 @@ module.exports = (data) => {
                     return res.render('search/search', {
                         title: pattern,
                         events: events,
+                    });
+                });
+        },
+        updatePhoto: (req, res) => {
+            const title = req.params.title;
+
+            if (!req.user) {
+                return res.redirect('/error');
+            }
+
+            return data.events.getByTitle(title)
+                .then((event) => {
+                    if (req.user.username !== event.user) {
+                        return res.redirect('/error');
+                    }
+
+                    const storage = multer.diskStorage({
+                        destination: 'static/images/uploads/',
+                        filename: (request, file, callback) => {
+                            callback(null, file.fieldname + '-' + Date.now()
+                                + path.extname(file.originalname));
+                        },
+                    });
+
+                    const upload = multer({
+                        storage: storage,
+                        fileFilter: (request, file, callback) => {
+                            const ext = path.extname(file.originalname);
+                            if (ext !== '.png' && ext !== '.jpg'
+                                && ext !== '.jpeg') {
+                                return callback(res.end(
+                                    'Only images are allowed - png/jpg/jpeg.'),
+                                    null);
+                            }
+
+                            return callback(null, true);
+                        },
+                    }).single('userFile');
+
+                    upload(req, res, (err) => {
+                        const filePath = '../' + req.file.destination
+                            + req.file.filename;
+                        event.photo = filePath;
+
+                        data.events.updatePhoto(event.title, filePath);
+
+                        data.users.updateEvent(
+                            event.user, event.title, event.date,
+                            event.time, event.place, event.details,
+                            event.categories, event.likes, event.photo);
+
+                        if (typeof event.categories === 'string') {
+                            const category = event.categories;
+                            data.categories.updateEvent(
+                                category, event.title, event.date,
+                                event.time, event.place,
+                                event.details, event.categories,
+                                event.likes, event.photo, event.user);
+                        } else {
+                            event.categories.forEach((category) => {
+                                data.categories.updateEvent(
+                                    category, event.title,
+                                    event.date, event.time,
+                                    event.place, event.details,
+                                    event.categories, event.likes,
+                                    event.photo, event.user);
+                            });
+                        }
+
+                        return res.redirect('/events/' + event.title);
                     });
                 });
         },

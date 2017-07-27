@@ -42,8 +42,7 @@ const update = () => {
 
     $('#change-avatar-btn').click((event) => {
         const $target = event.target;
-        const username = $.trim($('#curent-user').text());
-        console.log(username);
+        const username = $('#curent-user').text();
         const url = `/api/upload`;
         const postUrl = `/api/users/${username}/upload/avatar`;
 
@@ -51,7 +50,18 @@ const update = () => {
             .then((response) => {
                 $('.upload-avatar').html(response);
                 $('#uploadForm').attr('action', postUrl);
-                // window.history.pushState('Search', 'Title', `/api/${searchOption}/search?name=${pattern}`);
+            });
+    });
+
+    $('#change-event-photo-btn').click((event) => {
+        const title = $('#title').text();
+        const url = `/api/upload`;
+        const postUrl = `/api/events/${title}/upload/photo`;
+
+        requester.get(url)
+            .then((response) => {
+                $('.upload-event-photo').html(response);
+                $('#uploadForm').attr('action', postUrl);           
             });
     });
 

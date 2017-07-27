@@ -4,7 +4,6 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
-const multer = require('multer');
 const path = require('path');
 
 const init = (data) => {
@@ -74,12 +73,14 @@ const init = (data) => {
     app.get('/api/events/search', eventsController.searchEvent);
     app.get('/api/users/search', usersController.searchUser);
 
+    // Error route
     app.get('/error', errorsController.show);
 
+    // Upload file routes
     app.get('/api/upload', homeController.getUpload);
     app.post('/api/users/:username/upload/avatar',
         usersController.updateAvatar);
-    // app.post('/api/upload/photo', eventsController.updatePhoto);
+    app.post('/api/events/:title/upload/photo', eventsController.updatePhoto);
 
     io.on('connection', (socket) => {
         socket.on('chat message', (msg) => {
