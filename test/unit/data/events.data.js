@@ -42,7 +42,7 @@ describe('EventsData', () => {
             }
         }
 
-        return Promise.resolve(null);
+        return null;
     };
     const newEvent = { title: 'New event' };
     let update = (eventObj) => {
@@ -101,12 +101,11 @@ describe('EventsData', () => {
                 });
         });
 
-        // it('expect to return null if event was not found', () => {
-        //     data.getByTitle('test')
-        //         .then((found) => {
-        //             expect(found).to.be.null;
-        //         });
-        // });
+        it('expect to return null if event was not found', () => {
+            const found = data.getByTitle('test');
+
+            expect(found).to.be.empty;
+        });
     });
 
     describe('getById()', () => {
@@ -213,6 +212,32 @@ describe('EventsData', () => {
                 _id: '596b1d2cfef2e82704d679e4',
                 categories: categories,
             });
+        });
+    });
+
+    describe('updateLikes()', () => {
+        before(() => {
+            update = (eventTitle, likes) => {
+                events[0].likes = 15;
+            };
+        });
+
+        it('expect to update likes of event', () => {
+            data.updateLikes('Event', 15);
+            expect(events[0].likes).to.equal(15);
+        });
+    });
+
+    describe('updatePhoto()', () => {
+        before(() => {
+            update = (eventTitle, photo) => {
+                events[0].photo = 'photo photo';
+            };
+        });
+
+        it('expect to update photo of event', () => {
+            data.updatePhoto('Event', 'photo photo');
+            expect(events[0].photo).to.equal('photo photo');
         });
     });
 

@@ -237,6 +237,20 @@ describe('UsersData', () => {
         });
     });
 
+    describe('updateAvatar()', () => {
+        before(() => {
+            update = (userObj, anything) => {
+                users[0].avatar = 'photo photo';
+            };
+        });
+
+        it('expect to update user\'s avatar', () => {
+            data.updateAvatar('user', 'photo photo');
+
+            expect(users[0].avatar).to.deep.equal('photo photo');
+        });
+    });
+
     describe('removeEvent()', () => {
         before(() => {
             update = (userObj, anything) => {
