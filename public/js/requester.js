@@ -27,31 +27,29 @@ const requester = {
       });
     });
   },
-  put(url,data) {
+  put(url, data) {
     return new Promise((resolve, reject) => {
         $.ajax({
             url,
             method: 'PUT',
             data: `place=${data.place}&date=${data.date}&time=${data.time}&details=${data.details}`,
             success(response) {
-                console.log('here be dragons', response);
                 resolve(response);
             },
-            error(err)
-            {
+            error(err) {
                 reject(err);
-            }
+            },
         });
     });
   },
   delete(url) {
-    return new Promise((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         $.ajax({
             url,
             method: 'DELETE',
             success(response) {
                 resolve(response);
-            }
+            },
         });
     });
   },
