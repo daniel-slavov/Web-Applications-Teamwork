@@ -40,7 +40,7 @@ block content
 
     div.container
         div.row
-        div.col-xs-12.col-sm-12.col-md-12.col-lg-8
+        div.col-xs-12.col-sm-12.col-md-12.col-lg-8.col-lg-offset-2
             div.panel.panel-info
                 div.panel-heading
                     h3.panel-title#curent-user
@@ -109,4 +109,5 @@ block content
                             button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block")
                                 span.glyphicon.glyphicon-chevron-up
                                 |  Hide events
-        include ../partials/upload.pug
+    div#user-events
+    include ../partials/upload.pug

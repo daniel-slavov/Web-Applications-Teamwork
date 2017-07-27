@@ -11,7 +11,7 @@ const navigation = () => {
         requester.get(url)
                  .then((response) => {
                     //  console.log(response);
-                     $('#hide-my-events-btn').after(response);
+                     $('#user-events').html(response);
                  });
     });
 

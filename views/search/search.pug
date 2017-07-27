@@ -6,31 +6,20 @@ block content
         if title
             span #{title}
         .input-group
-          input#pattern.form-control(type='text', placeholder='Search', name='pattern')
+          input#pattern.form-control.input-lg(type='text', placeholder='Search', name='pattern')
           #search-btn.input-group-btn
-            button.btn.btn-default
+            button.btn.btn-default.btn-lg
               i.glyphicon.glyphicon-search
         div#searchOptions
-            label(class="radio-inline") Events
-            input(type="radio", name="searchOption", value="events" checked="checked")
-            label(class="radio-inline") Users
-            input(type="radio", name="searchOption", value="users")
+            label(class="radio-inline", for="events-option") Events
+            input(id="events-option", type="radio", name="searchOption", value="events" checked="checked")
+            label(class="radio-inline", for="users-option") Users
+            input(id="users-option", type="radio", name="searchOption", value="users")
 
     div.search-results
         if users
             div
-                if users.length > 0
-                    each user in users
-                        div
-                            b=user.username
-                            div
-                                img(src=user.avatar, width="300px", height="240px")
-                            p
-                                | #{user.firstName} #{user.lastName}                    
-                else
-                    h3
-                        | No users were found
-
+                include ../partials/users
         if events
             div
                 if events.length > 0
