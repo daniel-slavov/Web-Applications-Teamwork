@@ -3,8 +3,14 @@ extends ../layout
 block content
     h1
         | My profile information
-    div
-        img(src=context.avatar, width="120px", height="120px")
+    div.row
+        div.col-md-3
+            div
+                img(src=context.avatar, width="120px", height="120px")
+            div.change-avatar
+                button(id='change-avatar-btn', type='button', class='btn btn-info') Change avatar
+        div.col-md-6
+            div.upload-avatar
     div
         label Username:
         span#curent-user=context.username

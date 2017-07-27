@@ -1,3 +1,6 @@
+const multer = require('multer');
+const path = require('path');
+
 module.exports = (data) => {
     return {
         getLogin: (req, res) => {
@@ -48,7 +51,8 @@ module.exports = (data) => {
                         .then((existingUser) => {
                             if (existingUser !== null) {
                                 const errors = [];
-                                errors.push({ msg: `User with that 
+                                errors.push({
+                                    msg: `User with that 
                                     username already exists.` });
 
                                 return res.render('signup', {
@@ -139,11 +143,11 @@ module.exports = (data) => {
 
             if (partial) {
                 return data.users.getUserByPattern(pattern)
-                .then((users) => {
-                    return res.render('partials/users', {
-                        users: users,
+                    .then((users) => {
+                        return res.render('partials/users', {
+                            users: users,
+                        });
                     });
-                });
             }
 
             return data.users.getUserByPattern(pattern)
@@ -151,6 +155,48 @@ module.exports = (data) => {
                     return res.render('search/search', {
                         title: pattern,
                         users: users,
+                    });
+                });
+        },
+        updateAvatar: (req, res) => {
+            const username = req.params.username;
+
+            if (!req.user || req.user.username !== username) {
+                return res.redirect('/error');
+            }
+
+            return data.users.getUser(username)
+                .then((user) => {
+                    const storage = multer.diskStorage({
+                        destination: 'static/images/uploads/',
+                        filename: (request, file, callback) => {
+                            callback(null, file.fieldname + '-' + Date.now()
+                                + path.extname(file.originalname));
+                        },
+                    });
+
+                    const upload = multer({
+                        storage: storage,
+                        fileFilter: (request, file, callback) => {
+                            const ext = path.extname(file.originalname);
+                            if (ext !== '.png' && ext !== '.jpg'
+                                    && ext !== '.jpeg') {
+                                return callback(res.end(
+                                    'Only images are allowed - png/jpg/jpeg.'),
+                                    null);
+                            }
+
+                            return callback(null, true);
+                        },
+                    }).single('userFile');
+
+                    upload(req, res, (err) => {
+                        const filePath = '../' + req.file.destination
+                            + req.file.filename;
+
+                        data.users.updateAvatar(req.user.username, filePath);
+
+                        return res.redirect('/users/' + req.user.username);
                     });
                 });
         },

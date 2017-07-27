@@ -13,6 +13,9 @@ module.exports = (data) => {
         search: (req, res) => {
             return res.render('search/search');
         },
+        getUpload: (req, res) => {
+            return res.render('partials/upload');
+        },
     };
 };
 

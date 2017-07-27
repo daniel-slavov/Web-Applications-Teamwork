@@ -16,7 +16,7 @@ const init = (data) => {
     app.use('/libs', express.static('node_modules'));
     app.use(express.static('public'));
     // app.use(express.static(path.join(__dirname, 'public')));
-    app.use('/static', express.static(path.join(__dirname, 'static')));
+    app.use('/static', express.static(path.join(__dirname, '../static')));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(expressValidator());
@@ -76,36 +76,10 @@ const init = (data) => {
 
     app.get('/error', errorsController.show);
 
-    app.get('/api/file', (req, res) => {
-        return res.render('users/avatar');
-    });
-
-    app.post('/api/file', function(req, res) {
-        const storage = multer.diskStorage({
-            destination: 'static/images/uploads/',
-            filename: (request, file, callback) => {
-                callback(null, file.fieldname + '-' + Date.now()
-                    + path.extname(file.originalname));
-            },
-        });
-
-        const upload = multer({
-            storage: storage,
-            fileFilter: (request, file, callback) => {
-                const ext = path.extname(file.originalname);
-                if (ext !== '.png' && ext !== '.jpg' && ext !== '.jpeg') {
-                    return callback(res.end(
-                            'Only images are allowed - png/jpg/jpeg.'), null);
-                }
-
-                return callback(null, true);
-            },
-        }).single('userFile');
-
-        upload(req, res, (err) => {
-            return res.redirect('/');
-        });
-    });
+    app.get('/api/upload', homeController.getUpload);
+    app.post('/api/users/:username/upload/avatar',
+        usersController.updateAvatar);
+    // app.post('/api/upload/photo', eventsController.updatePhoto);
 
     io.on('connection', (socket) => {
         socket.on('chat message', (msg) => {

@@ -1,6 +1,6 @@
 const update = () => {
     $('#update-event-button').click(() => {
-        for (let index = 0; index < 4; index+=1) {
+        for (let index = 0; index < 4; index += 1) {
             const editField = document.createElement('input');
             editField.setAttribute('type', 'text');
             editField.setAttribute('value', $('.data:eq(0)').text());
@@ -30,17 +30,28 @@ const update = () => {
         };
 
         requester.put(url, data)
-                .then((response) => {
-                    //  console.log(`Response then`);
-                    location.reload();
-                }, (err) => {
-                    //  console.log($('#details-box').parent().prev());
-                    $('.alert').remove();
-                    $('div.row:eq(0)').before(err.responseText);
-                });
+            .then((response) => {
+                //  console.log(`Response then`);
+                location.reload();
+            }, (err) => {
+                //  console.log($('#details-box').parent().prev());
+                $('.alert').remove();
+                $('div.row:eq(0)').before(err.responseText);
+            });
     });
 
-    $('#change-avatar-btn').click(() => {
-        
+    $('#change-avatar-btn').click((event) => {
+        const $target = event.target;
+        const username = $.trim($('#curent-user').text());
+        console.log(username);
+        const url = `/api/upload`;
+        const postUrl = `/api/users/${username}/upload/avatar`;
+
+        requester.get(url)
+            .then((response) => {
+                $('.upload-avatar').html(response);
+                $('#uploadForm').attr('action', postUrl);
+                // window.history.pushState('Search', 'Title', `/api/${searchOption}/search?name=${pattern}`);
+            });
     });
 };
