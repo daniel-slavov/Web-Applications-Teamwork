@@ -35,39 +35,66 @@ const navigation = () => {
                 });
     });
 
-    $('.ui-state-default').click((event) => {
-        console.log(event.target.innerHTML);
+    $('#show-events-btn').click((event) => {
+        // console.log(event.target.innerHTML);
+        const date = $('.ui-state-active').html();
+        // console.log(date);
+        let month = '';
 
-    //     if (event.target.hasClass('ui-state-default')) {
-    //         let date = event.target.innerHTML;
-    //         console.log(date);
-    //         let url = `${document.location.origin}/api/events-calendar/${date}`;
-    //         // console.log(url);
+        switch ($('.ui-datepicker-month').html()) {
+            case 'January':
+                month = '01';
+                break;
+            case 'February':
+                month = '02';
+                break;
+            case 'March':
+                month = '03';
+                break;
+            case 'April':
+                month = '04';
+                break;
+            case 'May':
+                month = '05';
+                break;
+            case 'June':
+                month = '06';
+                break;
+            case 'July':
+                month = '07';
+                break;
+            case 'August':
+                month = '08';
+                break;
+            case 'September':
+                month = '09';
+                break;
+            case 'October':
+                month = '10';
+                break;
+            case 'November':
+                month = '11';
+                break;
+            case 'December':
+                month = '12';
+                break;
+            default:
+                break;
+        }
+        // console.log(month);
 
-    //         requester.get(url)
-    //                 .then(response => {
-    //                     console.log(response);
-    //                     $('.row').remove();
-    //                     $('#datepicker').after(response);
-    //                 })
-    //     }
-    // });
+        const year = $('.ui-datepicker-year').html();
 
-    // $('html').on('click', 'td', (event) => {
-    //     console.log(event.target.innerHTML);
+        // console.log(year);
 
-        // if (event.target.hasClass('ui-state-default')) {
-        //     let date = event.target.innerHTML;
-        //     console.log(date);
-        //     let url = `${document.location.origin}/api/events-calendar/${date}`;
-        //     // console.log(url);
+        const url = `${document.location.origin}/api/events-calendar/${year}-${month}-${date}`;
+        // console.log(url);
 
-        //     requester.get(url)
-        //             .then(response => {
-        //                 console.log(response);
-        //                 $('.row').remove();
-        //                 $('#datepicker').after(response);
-        //             })
-        // }
+        requester.get(url)
+                .then((response) => {
+                    // console.log(response);
+                    $('.row').remove();
+                    $('#show-events-btn').after(response);
+                });
     });
 };

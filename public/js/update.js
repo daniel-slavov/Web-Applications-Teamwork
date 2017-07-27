@@ -41,6 +41,6 @@ const update = () => {
     });
 
     $('#change-avatar-btn').click(() => {
-        
+
     });
 };

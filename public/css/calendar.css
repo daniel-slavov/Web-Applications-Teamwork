@@ -24,3 +24,7 @@ a.ui-state-default {
 .ui-datepicker table {
     font-size: 1.5em;
 }
+
+#show-events-btn {
+    margin: 10px;
+}
