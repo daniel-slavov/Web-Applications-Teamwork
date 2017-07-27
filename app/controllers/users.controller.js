@@ -118,7 +118,7 @@ module.exports = (data) => {
                     data.users.updateProfile(
                         newUser.username, newUser.firstName,
                         newUser.lastName, newUser.age,
-                        newUser.email, newUser.avatar);
+                        newUser.email);
 
                     return res.redirect(201, '/users/' + newUser.username);
                 });
@@ -181,9 +181,7 @@ module.exports = (data) => {
                             const ext = path.extname(file.originalname);
                             if (ext !== '.png' && ext !== '.jpg'
                                     && ext !== '.jpeg') {
-                                return callback(res.end(
-                                    'Only images are allowed - png/jpg/jpeg.'),
-                                    null);
+                                return res.redirect('/error');
                             }
 
                             return callback(null, true);

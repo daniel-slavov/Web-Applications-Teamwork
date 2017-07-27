@@ -50,7 +50,7 @@ class UsersData {
             .findOne({ _id: new ObjectID(id) });
     }
 
-    updateProfile(username, firstName, lastName, age, email, avatar) {
+    updateProfile(username, firstName, lastName, age, email) {
         this.collection
             .update({ username: username },
             {
@@ -59,7 +59,6 @@ class UsersData {
                     lastName: lastName,
                     age: age,
                     email: email,
-                    avatar: avatar,
                 },
             });
     }
