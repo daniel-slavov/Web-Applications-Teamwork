@@ -25,6 +25,9 @@ describe('Users controller', () => {
                 create(object) {
                     return;
                 },
+                updateProfile(username, firstName, lastName, age, email) {
+                    return;
+                },
             },
         };
 
@@ -75,65 +78,65 @@ describe('Users controller', () => {
         });
 
         it('should render signup view if there is no authenticated user',
-        () => {
-            controller.getSignup(req, res);
+            () => {
+                controller.getSignup(req, res);
 
-            expect(res.viewName).to.be.equal('signup');
-        });
+                expect(res.viewName).to.be.equal('signup');
+            });
     });
 
     describe('postSignup', () => {
         it(`should render signup view again and return 
             status code 400 if server validation did not pass`,
-        () => {
-            const result = {
-                isEmpty: function() {
-                    return false;
-                },
-                array: function() {
-                    return [];
-                },
-            };
+            () => {
+                const result = {
+                    isEmpty: function() {
+                        return false;
+                    },
+                    array: function() {
+                        return [];
+                    },
+                };
 
-            req = require('../../req-res').getRequestMock({
-                body: {
-                    username: 'test',
-                    password: '123456',
-                },
-                assert: function() {
-                    return this;
-                },
-                len: function(first, second) {
-                    return this;
-                },
-                equals: function(pass) {
-                    return this;
-                },
-                isEmail: function() {
-                    return this;
-                },
+                req = require('../../req-res').getRequestMock({
+                    body: {
+                        username: 'test',
+                        password: '123456',
+                    },
+                    assert: function() {
+                        return this;
+                    },
+                    len: function(first, second) {
+                        return this;
+                    },
+                    equals: function(pass) {
+                        return this;
+                    },
+                    isEmail: function() {
+                        return this;
+                    },
 
-                getValidationResult: function() {
-                    return new Promise((resolve, rej) => {
-                        resolve(result);
-                    });
-                },
-            });
-
-            const spy = sinon.spy(res, 'status');
-
-            return controller.postSignup(req, res)
-                .then(() => {
-                    sinon.assert.calledWith(spy, 400);
-
-                    expect(res.context).to.be.deep.equal({
-                        context: req.body,
-                        errors: result.array(),
-                    });
-
-                    expect(res.viewName).to.be.equal('signup');
+                    getValidationResult: function() {
+                        return new Promise((resolve, rej) => {
+                            resolve(result);
+                        });
+                    },
                 });
-        });
+
+                const spy = sinon.spy(res, 'status');
+
+                return controller.postSignup(req, res)
+                    .then(() => {
+                        sinon.assert.calledWith(spy, 400);
+
+                        expect(res.context).to.be.deep.equal({
+                            context: req.body,
+                            errors: result.array(),
+                        });
+
+                        expect(res.viewName).to.be.equal('signup');
+                    });
+            });
 
         it(`should call create method of data.users
             if validation passes and redirect to login page`, () => {
@@ -212,7 +215,7 @@ describe('Users controller', () => {
 
                         expect(res.viewName).to.be.equal('users/profile');
                     });
-        });
+            });
 
         it(`should render users/profile view with current
             user if there is authenticated user`, () => {
@@ -233,45 +236,142 @@ describe('Users controller', () => {
 
                         expect(res.viewName).to.be.equal('users/profile');
                     });
-        });
+            });
     });
 
     describe('updateUserProfile', () => {
+        it(`should call redirect to /login once
+            if there is no authenticated user`, () => {
+                const spy = sinon.spy(res, 'redirect');
+                const route = '/login';
+
+                controller.updateUserProfile(req, res);
+
+                sinon.assert.calledWith(spy, route);
+            });
+
+        it(`should call redirect to /login once 
+            if there authenticated user is trying to 
+                update someone else's details`, () => {
+                req = require('../../req-res').getRequestMock({
+                    user: { username: 'else' },
+                    params: { username: 'test' },
+                });
+                const spy = sinon.spy(res, 'redirect');
+                const route = '/login';
+
+                controller.updateUserProfile(req, res);
+
+                sinon.assert.calledWith(spy, route);
+            });
+
         it(`should render all errors if there 
-        is error in server validation`, () => {
-            // TO DO
-        });
+            is error in server validation and return status 400`, () => {
+                // const result = {
+                //     isEmpty: function() {
+                //         return false;
+                //     },
+                //     array: function() {
+                //         return [];
+                //     },
+                // };
+
+                // req = require('../../req-res').getRequestMock({
+                //     body: {},
+                //     user: { username: 'test' },
+                //     params: { username: 'test' },
+                //     assert: function() {
+                //         return this;
+                //     },
+                //     isEmail: function() {
+                //         return this;
+                //     },
+                //     getValidationResult: function() {
+                //         return new Promise((resolve, rej) => {
+                //             resolve(result);
+                //         });
+                //     },
+                // });
+
+                // const spy = sinon.spy(res, 'status');
+
+                // controller.updateUserProfile(req, res);
+
+                // sinon.assert.called(spy);
+
+                // // expect(res.context).to.be.deep.equal({
+                // //     errors: result.array(),
+                // // });
+
+                // // expect(res.viewName).to.be.equal('errors/all');
+            });
+
+            it('should call data.users updateProfile once if validation passes',
+                () => {
+                    const result = {
+                        isEmpty: function() {
+                            return true;
+                        },
+                        array: function() {
+                            return [];
+                        },
+                    };
+
+                    req = require('../../req-res').getRequestMock({
+                        body: {},
+                        user: { username: 'test' },
+                        params: { username: 'test' },
+                        assert: function() {
+                            return this;
+                        },
+                        isEmail: function() {
+                            return this;
+                        },
+                        getValidationResult: function() {
+                            return new Promise((resolve, rej) => {
+                                resolve(result);
+                            });
+                        },
+                    });
+
+                    const spy = sinon.spy(data.users, 'updateProfile');
+
+                    controller.updateUserProfile(req, res);
+                    console.log(req);
+                    console.log(res);
+                    sinon.assert.calledOnce(spy);
+            });
     });
 
     describe('getUserEvents', () => {
         it(`should render partials/events view 
             without context if no events were found`, () => {
-            req = require('../../req-res').getRequestMock({
-                params: { username: 'test' },
-            });
-
-            return controller.getUserEvents(req, res)
-                .then(() => {
-                    expect(res.viewName).to.be.equal('partials/events');
+                req = require('../../req-res').getRequestMock({
+                    params: { username: 'test' },
                 });
-        });
+
+                return controller.getUserEvents(req, res)
+                    .then(() => {
+                        expect(res.viewName).to.be.equal('partials/events');
+                    });
+            });
 
         it(`should render partials/events view 
             with context if some events were found`, () => {
-            req = require('../../req-res').getRequestMock({
-                params: { username: 'test' },
-            });
-            foundItems = [1, 2, 3, 4];
-
-            return controller.getUserEvents(req, res)
-                .then(() => {
-                    expect(res.context).to.be.deep.equal({
-                        events: foundItems,
-                    });
-
-                    expect(res.viewName).to.be.equal('partials/events');
+                req = require('../../req-res').getRequestMock({
+                    params: { username: 'test' },
                 });
-        });
+                foundItems = [1, 2, 3, 4];
+
+                return controller.getUserEvents(req, res)
+                    .then(() => {
+                        expect(res.context).to.be.deep.equal({
+                            events: foundItems,
+                        });
+
+                        expect(res.viewName).to.be.equal('partials/events');
+                    });
+            });
     });
 
     describe('searchUser', () => {
@@ -293,7 +393,7 @@ describe('Users controller', () => {
 
                         expect(res.viewName).to.be.equal('partials/users');
                     });
-        });
+            });
 
         it(`should render search/search view
             if isPartial query parameter is not specified`, () => {
@@ -313,6 +413,6 @@ describe('Users controller', () => {
 
                         expect(res.viewName).to.be.equal('search/search');
                     });
-        });
+            });
     });
 });

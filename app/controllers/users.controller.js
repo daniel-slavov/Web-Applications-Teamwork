@@ -96,8 +96,8 @@ module.exports = (data) => {
                 });
         },
         updateUserProfile: (req, res) => {
-            if (!req.user && req.user.username !== req.params.username) {
-                return res.redirect('/');
+            if (!req.user || req.user.username !== req.params.username) {
+                return res.redirect('/login');
             }
 
             req.assert('email', 'Email is not valid').isEmail();
