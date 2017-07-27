@@ -1,5 +1,13 @@
-h2
-    | Upload photo
-form#uploadForm(enctype='multipart/form-data', method='post')
-    input(type='file', name='userFile', value='Choose photo')
-    input(type='submit', value='Upload File', name='submit')
+div#myModal.modal.fade(role="dialog")
+    div.vertical-alignment-modal
+        div.modal-dialog.vertical-align-center
+            div.modal-content
+                div.modal-header
+                    button(type="button" class="close" data-dismiss="modal") ×
+                    h4.modal-title
+                        | Upload photo
+                div.modal-body
+                    form#uploadForm(enctype='multipart/form-data', method='post')
+                        input(type='file', name='userFile', value='Choose photo')                        
+                        div.modal-footer
+                            input.btn.btn-default(type='submit', value='Upload File', name='submit')

@@ -100,7 +100,7 @@ module.exports = (data) => {
                 return res.redirect('/');
             }
 
-            req.assert('email', 'Email is not valid').isEmail();
+            //req.assert('email', 'Email is not valid').isEmail();
 
             const newUser = req.body;
             newUser.username = req.user.username;
