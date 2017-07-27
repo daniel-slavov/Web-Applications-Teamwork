@@ -12,7 +12,7 @@ block content
                     input(type="text", class="form-control", name="title", value=(undefined===event ? '' : event.title), id="title")
                 div
                     label Date
-                    input(type="date", class="form-control", name="date", value=(undefined===event ? '' : event.date), id="date")
+                    input(type="date", class="form-control", placeholder="YYYY-MM-DD" name="date", value=(undefined===event ? '' : event.date), id="date")
                 div
                     label Time
                     input(type="time", class="form-control", name="time", value=(undefined===event ? '12:00:00' : event.time), id="time")

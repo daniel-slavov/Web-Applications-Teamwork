@@ -24,6 +24,11 @@ class EventsData {
             .toArray();
     }
 
+    getAll() {
+        return this.collection.find({})
+            .toArray();
+    }
+
     getById(id) {
         return this.collection.findOne({ _id: new ObjectID(id) });
     }

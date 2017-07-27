@@ -87,7 +87,7 @@ const update = () => {
     });
 
     $('#confirm-profile-btn').click(() => {
-        const username = $('#curent-user').html();
+        const username = $('#curent-user').text();
         console.log(username);
         const url = `${document.location.origin}/users/${username}`;
         console.log(url);

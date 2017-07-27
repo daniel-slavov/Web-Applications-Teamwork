@@ -164,6 +164,18 @@ module.exports = (data) => {
                     });
                 });
         },
+        getAllEvents: (req, res) => {
+            return data.events.getAll()
+                .then((events) => {
+                    if (events.length === 0) {
+                        return res.render('events');
+                    }
+
+                    return res.render('events', {
+                        events: events,
+                    });
+                });
+        },
         updateEvent: (req, res) => {
             if (!req.user) {
                 return res.redirect('/login');
