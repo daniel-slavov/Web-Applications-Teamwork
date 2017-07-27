@@ -13,9 +13,10 @@ class ChatsData {
     }
 
     addMessage(msg) {
-        this.validator.isValidMessage(msg);
-        const message = new Message(msg);
-        this.collection.insertOne(message);
+        if (this.validator.isValidMessage(msg)) {
+            const message = new Message(msg);
+            this.collection.insertOne(message);
+        }
     }
 }
 
