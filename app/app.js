@@ -71,8 +71,8 @@ const init = (data) => {
 
     // Search routes
     app.get('/search', homeController.search);
-    app.get('/api/events/search', eventsController.searchEvent);
-    app.get('/api/users/search', usersController.searchUser);
+    app.get('/search/events', eventsController.searchEvent);
+    app.get('/search/users', usersController.searchUser);
 
     // Error route
     app.get('/error', errorsController.show);

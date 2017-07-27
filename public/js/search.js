@@ -5,14 +5,14 @@ const search = () => {
         $('.search-results').empty();
 
         if (pattern.length > 0) {
-            const url = `/api/${searchOption}/search?name=${pattern}&isPartial=true`;
+            const url = `/search/${searchOption}?name=${pattern}&isPartial=true`;
             // console.log(url);
 
              requester.get(url)
                  .then((response) => {
                     //  console.log(response);
                      $('.search-results').html(response);
-                     window.history.pushState('Search', 'Title', `/api/${searchOption}/search?name=${pattern}`);
+                     window.history.pushState('Search', 'Title', `/search/${searchOption}?name=${pattern}`);
                  });
          }
     });
