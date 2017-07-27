@@ -258,7 +258,7 @@ module.exports = (data) => {
                     }
 
                     data.events.remove(title);
-                    data.chats.removeCharRoom(title);
+                    data.chats.removeChatRoom(title);
                     data.users.removeEvent(req.user.username, title);
 
                     if (typeof event.categories === 'string') {
@@ -270,6 +270,7 @@ module.exports = (data) => {
                         });
                     }
 
+                    res.send('');
                     return res.status(200);
                 });
         },
