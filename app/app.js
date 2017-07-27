@@ -48,6 +48,7 @@ const init = (data) => {
     app.get('/logout', usersController.logout);
 
     // Events routes
+    app.get('/events', eventsController.getAllEvents);
     app.get('/events/create', eventsController.getCreateEvent);
     app.post('/events/create', eventsController.postCreateEvent);
     app.get('/events/:title', eventsController.getEventByTitle);
