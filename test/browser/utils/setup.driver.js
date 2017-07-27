@@ -5,9 +5,12 @@ const setupDriver = (browser) => {
         .usingServer('http://localhost:4444/wd/hub')
         .withCapabilities({
             browserName: browser,
-        })
+            })
         .build();
+
+
     return driver;
 };
+
 
 module.exports = { setupDriver };
