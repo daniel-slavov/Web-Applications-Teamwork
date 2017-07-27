@@ -10,16 +10,18 @@ describe('ChatsData', () => {
     };
 
     let chats = [];
-    let validator = {
-        isValidMessage: (userObj) => {
-            return true;
-        },
+    const isValidMessage = () => {
+        return true;
+    };
+    const validator = {
+        isValidMessage,
     };
     let data = null;
 
     const toArray = () => {
         return Promise.resolve(chats);
     };
+
     const find = (chat) => {
         return {
             toArray,
@@ -37,6 +39,9 @@ describe('ChatsData', () => {
         chats.push(newMessage);
     };
 
+    const remove = (room) => {
+        chats.pop();
+    };
 
     beforeEach(() => {
         chats = [{
@@ -50,7 +55,11 @@ describe('ChatsData', () => {
 
         sinon.stub(db, 'collection')
             .callsFake(() => {
-                return { find, insertOne };
+                return { find, insertOne, remove };
+            });
+        sinon.stub(validator, 'isValidMessage')
+            .callsFake(() => {
+                return isValidMessage;
             });
 
         data = new ChatsData(db, validator);
@@ -58,6 +67,7 @@ describe('ChatsData', () => {
 
     afterEach(() => {
         db.collection.restore();
+        validator.isValidMessage.restore();
     });
 
     describe('getLatestMessages()', () => {
@@ -84,11 +94,11 @@ describe('ChatsData', () => {
         });
 
         it('expect not to add message if isValidMessage returns false', () => {
-            validator = {
-                isValidMessage: (msgObj) => {
+            validator.isValidMessage.restore();
+            sinon.stub(validator, 'isValidMessage')
+                .callsFake(() => {
                     return false;
-                },
-            };
+                });
 
             const messageToAdd = {
                 room: 'Some event chat',
@@ -99,7 +109,14 @@ describe('ChatsData', () => {
             };
             data.addMessage(messageToAdd);
 
-            expect(chats).to.deep.include(new Message(messageToAdd));
+            expect(chats).to.not.deep.include(new Message(messageToAdd));
+        });
+    });
+
+    describe('removeChatRoom()', () => {
+        it('expect to remove chat room', () => {
+            data.removeChatRoom('Some event chat');
+            expect(chats.length).to.be.equal(0);
         });
     });
 });

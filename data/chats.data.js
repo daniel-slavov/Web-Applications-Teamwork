@@ -18,6 +18,10 @@ class ChatsData {
             this.collection.insertOne(message);
         }
     }
+
+    removeChatRoom(room) {
+        this.collection.remove({ room: room });
+    }
 }
 
 module.exports = ChatsData;
