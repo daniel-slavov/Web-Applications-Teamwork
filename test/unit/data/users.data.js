@@ -10,10 +10,11 @@ describe('UsersData', () => {
     };
 
     let users = [];
-    let validator = {
-        isValidUser: (userObj) => {
-            return true;
-        },
+    const isValidUser = (userObj) => {
+        return true;
+    };
+    const validator = {
+        isValidUser,
     };
     let data = null;
     const events = [{ title: 'Some event' }];
@@ -63,12 +64,16 @@ describe('UsersData', () => {
             .callsFake(() => {
                 return { findOne, find, insertOne, update };
             });
-
+        sinon.stub(validator, 'isValidUser')
+            .callsFake(() => {
+                return isValidUser;
+            });
         data = new UsersData(db, validator);
     });
 
     afterEach(() => {
         db.collection.restore();
+        validator.isValidUser.restore();
     });
 
     describe('getUserByPattern()', () => {
@@ -145,18 +150,18 @@ describe('UsersData', () => {
         });
 
         it('expect not to create user if isValidUser returns false', () => {
-            validator = {
-                isValidUser: (userObj) => {
+            validator.isValidUser.restore();
+            sinon.stub(validator, 'isValidUser')
+                .callsFake(() => {
                     return false;
-                },
-            };
+                });
             const userToCreate = {
-                username: 'test',
+                username: 'not created',
                 password: '123456',
             };
             data.create(userToCreate);
 
-            expect(users).to.deep.include(new User(userToCreate));
+            expect(users).to.not.deep.include(new User(userToCreate));
         });
     });
 

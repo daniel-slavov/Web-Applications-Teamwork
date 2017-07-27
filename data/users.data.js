@@ -51,41 +51,47 @@ class UsersData {
     }
 
     updateProfile(username, firstName, lastName, age, email, avatar) {
-            this.collection
-                .update({ username: username },
-                {
-                    $set: {
-                        firstName: firstName,
-                        lastName: lastName,
-                        age: age,
-                        email: email,
-                        avatar: avatar,
-                    },
-                });
+        this.collection
+            .update({ username: username },
+            {
+                $set: {
+                    firstName: firstName,
+                    lastName: lastName,
+                    age: age,
+                    email: email,
+                    avatar: avatar,
+                },
+            });
     }
 
     updateEvent(username, eventTitle, date, time, place, details,
-            categories, likes, photo) {
+        categories, likes, photo) {
         this.collection.update({
             username: username,
             'events.title': eventTitle,
         }, {
-            $set: {
-                'events.$': {
-                title: eventTitle,
-                date: date,
-                time: time,
-                place: place,
-                details: details,
-                categories: categories,
-                likes: likes,
-                photo: photo,
-                user: username,
+                $set: {
+                    'events.$': {
+                        title: eventTitle,
+                        date: date,
+                        time: time,
+                        place: place,
+                        details: details,
+                        categories: categories,
+                        likes: likes,
+                        photo: photo,
+                        user: username,
+                    },
                 },
-            },
-        });
+            });
     }
 
+    updateAvatar(username, avatar) {
+        this.collection.update(
+            { username: username },
+            { $set: { avatar: avatar } }
+        );
+    }
     removeEvent(username, eventTitle) {
         this.collection.update(
             { username: username },
