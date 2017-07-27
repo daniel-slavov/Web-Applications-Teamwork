@@ -240,7 +240,7 @@ describe('Users controller', () => {
     });
 
     describe('updateUserProfile', () => {
-        it(`should call redirect to /login once
+        it(`should call redirect to /login once 
             if there is no authenticated user`, () => {
                 const spy = sinon.spy(res, 'redirect');
                 const route = '/login';
@@ -248,7 +248,7 @@ describe('Users controller', () => {
                 controller.updateUserProfile(req, res);
 
                 sinon.assert.calledWith(spy, route);
-            });
+        });
 
         it(`should call redirect to /login once 
             if there authenticated user is trying to 
@@ -263,84 +263,98 @@ describe('Users controller', () => {
                 controller.updateUserProfile(req, res);
 
                 sinon.assert.calledWith(spy, route);
-            });
+        });
 
         it(`should render all errors if there 
             is error in server validation and return status 400`, () => {
-                // const result = {
-                //     isEmpty: function() {
-                //         return false;
-                //     },
-                //     array: function() {
-                //         return [];
-                //     },
-                // };
+                const result = {
+                    isEmpty: function() {
+                        return false;
+                    },
+                    array: function() {
+                        return [];
+                    },
+                };
 
-                // req = require('../../req-res').getRequestMock({
-                //     body: {},
-                //     user: { username: 'test' },
-                //     params: { username: 'test' },
-                //     assert: function() {
-                //         return this;
-                //     },
-                //     isEmail: function() {
-                //         return this;
-                //     },
-                //     getValidationResult: function() {
-                //         return new Promise((resolve, rej) => {
-                //             resolve(result);
-                //         });
-                //     },
-                // });
+                req = require('../../req-res').getRequestMock({
+                    body: {},
+                    user: { username: 'test' },
+                    params: { username: 'test' },
+                    assert: function() {
+                        return this;
+                    },
+                    isEmail: function() {
+                        return this;
+                    },
+                    getValidationResult: function() {
+                        return new Promise((resolve, rej) => {
+                            resolve(result);
+                        });
+                    },
+                });
 
-                // const spy = sinon.spy(res, 'status');
+                const spy = sinon.spy(res, 'status');
 
-                // controller.updateUserProfile(req, res);
+                return controller.updateUserProfile(req, res)
+                    .then(() => {
+                        sinon.assert.called(spy);
 
-                // sinon.assert.called(spy);
+                        expect(res.context).to.be.deep.equal({
+                            errors: result.array(),
+                        });
 
-                // // expect(res.context).to.be.deep.equal({
-                // //     errors: result.array(),
-                // // });
-
-                // // expect(res.viewName).to.be.equal('errors/all');
-            });
-
-            it('should call data.users updateProfile once if validation passes',
-                () => {
-                    const result = {
-                        isEmpty: function() {
-                            return true;
-                        },
-                        array: function() {
-                            return [];
-                        },
-                    };
-
-                    req = require('../../req-res').getRequestMock({
-                        body: {},
-                        user: { username: 'test' },
-                        params: { username: 'test' },
-                        assert: function() {
-                            return this;
-                        },
-                        isEmail: function() {
-                            return this;
-                        },
-                        getValidationResult: function() {
-                            return new Promise((resolve, rej) => {
-                                resolve(result);
-                            });
-                        },
+                        expect(res.viewName).to.be.equal('errors/all');
                     });
+        });
 
-                    const spy = sinon.spy(data.users, 'updateProfile');
+        it('should call data.users updateProfile once if validation passes',
+            () => {
+                const result = {
+                    isEmpty: function() {
+                        return true;
+                    },
+                    array: function() {
+                        return [];
+                    },
+                };
 
-                    controller.updateUserProfile(req, res);
-                    console.log(req);
-                    console.log(res);
-                    sinon.assert.calledOnce(spy);
-            });
+                req = require('../../req-res').getRequestMock({
+                    body: {
+                        firstName: 'Test',
+                        lastName: 'Test',
+                        age: 20,
+                        email: 'example@mail.com',
+                    },
+                    user: { username: 'test' },
+                    params: { username: 'test' },
+                    assert: function() {
+                        return this;
+                    },
+                    isEmail: function() {
+                        return this;
+                    },
+                    getValidationResult: function() {
+                        return new Promise((resolve, rej) => {
+                            resolve(result);
+                        });
+                    },
+                });
+
+                const dataSpy = sinon.spy(data.users, 'updateProfile');
+                const responseSpy = sinon.spy(res, 'redirect');
+
+                return controller.updateUserProfile(req, res)
+                    .then(() => {
+                        sinon.assert.calledWith(dataSpy, req.body.username,
+                            req.body.firstName, req.body.lastName,
+                            req.body.age, req.body.email
+                        );
+
+                        const route = '/users/' + req.body.username;
+
+                        sinon.assert.calledWith(responseSpy, 201, route);
+                    });
+        });
     });
 
     describe('getUserEvents', () => {
