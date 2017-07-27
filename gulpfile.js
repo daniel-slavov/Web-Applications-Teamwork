@@ -9,14 +9,11 @@ gulp.task('server:start', () => {
     return require('./server');
 });
 
-gulp.task('pre-test', () => {
+gulp.task('pre-test-unit', () => {
     return gulp.src([
         './data/**/*.js',
-        './app/**/*.js',
-        './config/**/*.js',
-        './db/**/*.js',
+        './app/controllers/*.js',
         './models/**/*.js',
-        './server.js',
     ])
         .pipe(istanbul({
             includeUntested: true,
@@ -24,10 +21,49 @@ gulp.task('pre-test', () => {
         .pipe(istanbul.hookRequire());
 });
 
-gulp.task('tests:unit', ['pre-test'], () => {
+gulp.task('pre-test-integration', () => {
+    return gulp.src([
+        './app/app.js',
+    ])
+        .pipe(istanbul({
+            includeUntested: true,
+        }))
+        .pipe(istanbul.hookRequire());
+});
+
+gulp.task('pre-test-functional', () => {
+    return gulp.src([
+        './public/**/*.js',
+    ])
+        .pipe(istanbul({
+            includeUntested: true,
+        }))
+        .pipe(istanbul.hookRequire());
+});
+
+gulp.task('tests:unit', ['pre-test-unit'], () => {
     return gulp.src([
         './test/unit/**/*.js',
-        './test/integration/**/*.js',
+    ])
+        .pipe(mocha({
+            reporter: 'spec',
+        }))
+        .pipe(istanbul.writeReports());
+});
+
+gulp.task('tests:integration', ['pre-test-integration'], () => {
+    return gulp.src([
+         './test/integration/**/*.js',
+    ])
+        .pipe(mocha({
+            reporter: 'spec',
+        }))
+        .pipe(istanbul.writeReports());
+});
+
+gulp.task('tests:functional', ['pre-test-functional'], () => {
+    return gulp.src([
+         './tests/functional/**/*.js',
     ])
         .pipe(mocha({
             reporter: 'spec',

@@ -62,6 +62,13 @@ class EventsData {
         );
     }
 
+    updatePhoto(eventTitle, photo) {
+        this.collection.update(
+           { title: eventTitle },
+            { $set: { photo: photo } }
+        );
+    }
+
     remove(eventTitle) {
         this.collection.remove(
             { title: eventTitle }
