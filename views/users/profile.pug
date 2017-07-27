@@ -14,20 +14,23 @@ block content
     div
         label Username:
         span#curent-user=context.username
-    div
+    div.info
         label First name:
-        span=context.firstName
-    div
+        span.data=context.firstName
+    div.info
         label Last name:
-        span=context.lastName
-    div
+        span.data=context.lastName
+    div.info
         label Email:
-        span=context.email
-    div
+        span.data=context.email
+    div.info
         label Age:
-        span=context.age
+        span.data=context.age
     div
         if currentUser == context.username
+            button(id='edit-profile-btn' type="button", class="btn btn-warning btn-lg btn-block") Edit profile
+            button(id='cancel-profile-btn' type="button", class="btn btn-danger btn-lg btn-block") Cancel
+            button(id='confirm-profile-btn' type="button", class="btn btn-success btn-lg btn-block") Save changes
             button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show my events
             button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide my events
         else

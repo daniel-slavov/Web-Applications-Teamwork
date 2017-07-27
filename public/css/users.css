@@ -5,6 +5,6 @@
     font-size: 15pt;
 }
 
-#hide-my-events-btn {
+#hide-my-events-btn, #cancel-profile-btn, #confirm-profile-btn {
     display: none;
 }
