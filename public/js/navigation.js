@@ -18,7 +18,7 @@ const navigation = () => {
     $('#hide-my-events-btn').click(() => {
         $('#hide-my-events-btn').hide();
         $('#show-my-events-btn').show();
-        $('button ~ div.row').remove();
+        $('#user-events').empty();
     });
 
     $('.category-btn').click((event) => {

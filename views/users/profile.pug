@@ -3,41 +3,6 @@ extends ../layout
 block content
     h1
         | My profile information
-    //- div.row
-    //-     div.col-md-3
-    //-         div
-    //-             img(src=context.avatar, width="120px", height="120px")
-    //-         if currentUser == context.username
-    //-             div.change-avatar
-    //-                 button(id='change-avatar-btn', type='button', class='btn btn-info') Change avatar
-    //-     div.col-md-6
-    //-         div.upload-avatar
-    //- div
-    //-     label Username:
-    //-     span#curent-user=context.username
-    //- div.info
-    //-     label First name:
-    //-     span.data=context.firstName
-    //- div.info
-    //-     label Last name:
-    //-     span.data=context.lastName
-    //- div.info
-    //-     label Email:
-    //-     span.data=context.email
-    //- div.info
-    //-     label Age:
-    //-     span.data=context.age
-    //- div
-    //-     if currentUser == context.username
-    //-         button(id='edit-profile-btn' type="button", class="btn btn-warning btn-lg btn-block") Edit profile
-    //-         button(id='cancel-profile-btn' type="button", class="btn btn-danger btn-lg btn-block") Cancel
-    //-         button(id='confirm-profile-btn' type="button", class="btn btn-success btn-lg btn-block") Save changes
-    //-         button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show my events
-    //-         button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide my events
-    //-     else
-    //-         button(id='show-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Show events
-    //-         button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block") Hide events
-
     div.container
         div.row
         div.col-xs-12.col-sm-12.col-md-12.col-lg-8.col-lg-offset-2
@@ -109,5 +74,5 @@ block content
                             button(id='hide-my-events-btn' type="button", class="btn btn-success btn-lg btn-block")
                                 span.glyphicon.glyphicon-chevron-up
                                 |  Hide events
-    div#user-events
+    div#user-events.col-xs-12.col-sm-12.col-md-12.col-lg-8.col-lg-offset-2
     include ../partials/upload.pug
