@@ -63,7 +63,7 @@ gulp.task('tests:integration', ['pre-test-integration'], () => {
 
 gulp.task('tests:functional', ['pre-test-functional'], () => {
     return gulp.src([
-         './tests/functional/**/*.js',
+         './tests/browser/tests/*.js',
     ])
         .pipe(mocha({
             reporter: 'spec',
