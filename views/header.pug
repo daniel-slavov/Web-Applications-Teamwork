@@ -8,28 +8,21 @@ nav.navbar.navbar-default(role='navigation')
       span.icon-bar
       span.icon-bar
       span.icon-bar
-    a.navbar-brand(href='/') EventsBox
+    a#logoBtn.navbar-brand(href='/') EventsBox
   // Collect the nav links, forms, and other content for toggling
   .navbar-collapse
     ul.nav.navbar-nav
-      li.active
+      li#homeBtn
         a(href='/') Home
-      li.dropdown
+      li#categoriesBtn
         a(href='/categories') Categories
-      li
+      li#calendarBtn
         a(href='/events-calendar') Calendar
-      li
+      li#searchBtn
         a(href='/search') Search
-    //- .col-sm-3.col-md-3
-    //-   form.navbar-form(role='search', action="/api/events/search")
-    //-     .input-group
-    //-       input#pattern.form-control(type='text', placeholder='Search', name='pattern')
-    //-       #search-button.input-group-btn
-    //-         button.btn.btn-default(type='submit')
-    //-           i.glyphicon.glyphicon-search
     ul.nav.navbar-nav
         if user
-            li
+            li#createEventBtn
                 a(href='/events/create') Create event
     ul.nav.navbar-nav.navbar-right
       if user

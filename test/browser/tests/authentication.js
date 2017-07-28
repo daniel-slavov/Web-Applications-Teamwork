@@ -6,8 +6,8 @@ const ui = require('../shared/ui.utils');
 const authUtils = require('../shared/auth.utils');
 const browsers = ['chrome'];
 
-describe('Tests', () => {
-    const url = 'http://localhost:3003';
+describe('Authentication: ', () => {
+    const url = 'http://localhost:3003/';
     let driver = null;
 
     beforeEach(() => {
@@ -22,34 +22,33 @@ describe('Tests', () => {
         return driver.quit();
     });
 
-    describe('Authentication: ', () => {
-        const user = authUtils.getRandomUser();
-        it('Should create user', () => {
-            return async()
-            .then(() => authUtils.signUpUser(user.username, user.password))
-            .then(() => driver.getCurrentUrl())
-            .then((currentUrl) => {
-                expect(currentUrl).to.eql(`${url}/login`);
-            });
-        });
+    const user = authUtils.getRandomUser();
 
-        it('Should login user', () => {
-            return async()
-            .then(() => authUtils.signInUser(user.username, user.password))
-            .then(() => ui.getText('#username a'))
-            .then((text) => {
-                expect(text).to.eql(user.username);
-            });
+    it('Should create user', () => {
+        return async()
+        .then(() => authUtils.signUpUser(user.username, user.password))
+        .then(() => driver.getCurrentUrl())
+        .then((currentUrl) => {
+            expect(currentUrl).to.eql(`${url}login`);
         });
+    });
 
-        it('Should logout user', () => {
-            return async()
-            .then(() => authUtils.signInUser(user.username, user.password))
-            .then(() => ui.click('#logout a'))
-            .then(() => driver.findElement(webdriver.By.css('#login')))
-            .then((element) => {
-                expect(element).not.to.be.undefined;
-            });
+    it('Should login user', () => {
+        return async()
+        .then(() => authUtils.signInUser(user.username, user.password))
+        .then(() => ui.getText('#username a'))
+        .then((text) => {
+            expect(text).to.eql(user.username);
+        });
+    });
+
+    it('Should logout user', () => {
+        return async()
+        .then(() => authUtils.signInUser(user.username, user.password))
+        .then(() => ui.click('#logout a'))
+        .then(() => driver.findElement(webdriver.By.css('#login')))
+        .then((element) => {
+            expect(element).not.to.be.undefined;
         });
     });
 });
