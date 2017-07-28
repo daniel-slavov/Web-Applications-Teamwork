@@ -69,14 +69,16 @@ describe('Navigation: ', () => {
     });
 
     describe('Private pages: ', () => {
-        const testUser = {
-            username: 'selenium',
-            password: '123456',
-        };
+        const user = authUtils.getRandomUser();
+
+        beforeEach(() => {
+            return driver
+                .then(() => authUtils.signUpUser(user.username, user.password))
+                .then(() => authUtils.signInUser(user.username, user.password));
+        });
 
         it('Create event page', () => {
             return async()
-            .then(() => authUtils.signInUser(testUser.username, testUser.password))
             .then(() => ui.click('#createEventBtn'))
             .then(() => driver.getCurrentUrl())
             .then((currentUrl) => {
@@ -86,11 +88,10 @@ describe('Navigation: ', () => {
 
         it('Profile page', () => {
             return async()
-            .then(() => authUtils.signInUser(testUser.username, testUser.password))
             .then(() => ui.click('#username'))
             .then(() => driver.getCurrentUrl())
             .then((currentUrl) => {
-                expect(currentUrl).to.be.eql(`${url}users/${testUser.username}`);
+                expect(currentUrl).to.be.eql(`${url}users/${user.username}`);
             });
         });
     });
