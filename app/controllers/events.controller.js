@@ -87,7 +87,7 @@ module.exports = (data) => {
             const title = req.params.title;
 
             let event;
-            data.events.getByTitle(title)
+            return data.events.getByTitle(title)
                 .then((eventInformation) => {
                     if (eventInformation === null) {
                         throw new Error('No events were found');
@@ -97,6 +97,7 @@ module.exports = (data) => {
                     return data.chats.getLatestMessages(event.title);
                 })
                 .then((messages) => {
+                    console.log(messages);
                     return res.render('events/details', {
                         event: event,
                         chat: messages,
