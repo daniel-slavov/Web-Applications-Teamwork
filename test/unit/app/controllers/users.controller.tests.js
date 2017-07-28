@@ -427,6 +427,6 @@ describe('Users controller', () => {
 
                         expect(res.viewName).to.be.equal('search/search');
                     });
-            });
+        });
     });
 });

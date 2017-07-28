@@ -97,7 +97,6 @@ module.exports = (data) => {
                     return data.chats.getLatestMessages(event.title);
                 })
                 .then((messages) => {
-                    console.log(messages);
                     return res.render('events/details', {
                         event: event,
                         chat: messages,
