@@ -38,14 +38,14 @@ const waitForMany = (selector) => {
     }
 };
 
-const elementExists = (selector) => {
-    return async()
-        .then(() => driver.findElements(
-            webdriver.By.css(selector)))
-        .then((elements) => {
-            console.log(elements);
-        });
-};
+// const elementExists = (selector) => {
+//     return async()
+//         .then(() => driver.findElements(
+//             webdriver.By.css(selector)))
+//         .then((elements) => {
+//             console.log(elements);
+//         });
+// };
 
 const getText = (selector) => {
     return async()
@@ -85,5 +85,5 @@ module.exports = {
     setDriver(_driver) {
         driver = _driver;
     },
-    waitSeconds, waitFor, getText, getTexts, getSelected, setValue, click, elementExists
+    waitSeconds, waitFor, getText, getTexts, getSelected, setValue, click,
 };
