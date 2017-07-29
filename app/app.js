@@ -92,7 +92,7 @@ const init = (data) => {
         });
     });
 
-    return Promise.resolve(server);
+    return app;
 };
 
 module.exports = {

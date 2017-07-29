@@ -53,7 +53,7 @@ gulp.task('tests:unit', ['pre-test-unit'], () => {
 
 gulp.task('tests:integration', ['pre-test-integration'], () => {
     return gulp.src([
-         './test/integration/**/*.js',
+         './test/integration/*.js',
     ])
         .pipe(mocha({
             reporter: 'spec',
