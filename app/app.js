@@ -58,6 +58,7 @@ const init = (data) => {
 
     // Categories routes
     app.get('/categories', eventsController.getAllCategories);
+    app.post('/categories/create', eventsController.postCreateCategory);
     app.get('/categories/:name', eventsController.getAllEventsByCategory);
     app.get('/api/categories/:name', eventsController.getEventsByCategory);
 

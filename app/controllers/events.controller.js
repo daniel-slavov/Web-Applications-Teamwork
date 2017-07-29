@@ -15,8 +15,14 @@ module.exports = (data) => {
                     });
                 });
         },
+        postCreateCategory: (req, res) => {
+            data.categories.create(req.body);
+            return res.sendStatus(200);
+        },
         postCreateEvent: (req, res) => {
             if (!req.user) {
+                console.log('not logged in');
+                
                 return res.redirect('/login');
             }
 
@@ -28,6 +34,7 @@ module.exports = (data) => {
             req.assert('categories', 'Category is required').notEmpty();
 
             const event = req.body;
+            console.log(event);
 
             return req.getValidationResult()
                 .then((result) => {

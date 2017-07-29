@@ -24,7 +24,7 @@ const Validator = {
         return true;
     },
     isValidCategory(categoryObj) {
-        if (!categoryObj.hasOwnProperty('name')) {
+        if (!Object.prototype.hasOwnProperty.call(categoryObj, 'name')) {
             return false;
         }
 

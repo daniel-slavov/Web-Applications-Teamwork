@@ -1,7 +1,17 @@
+const Category = require('../models/category');
+
 class CategoriesData {
-    constructor(db) {
+    constructor(db, validator) {
         this.db = db;
         this.collection = this.db.collection('categories');
+        this.validator = validator;
+    }
+
+    create(categoryObj) {
+        if (this.validator.isValidCategory(categoryObj)) {
+            const newCategory = new Category(categoryObj);
+            this.collection.insertOne(newCategory);
+        }
     }
 
     getAll() {

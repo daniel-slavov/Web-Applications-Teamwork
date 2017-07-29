@@ -8,7 +8,7 @@ const init = (db) => {
     return Promise.resolve({
         users: new UsersData(db, Validator),
         events: new EventsData(db, Validator),
-        categories: new CategoriesData(db),
+        categories: new CategoriesData(db, Validator),
         chats: new ChatsData(db, Validator),
     });
 };
