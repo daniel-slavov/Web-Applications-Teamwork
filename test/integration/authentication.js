@@ -11,8 +11,12 @@ const signUpUser = (agent, user) => {
             .send({
                 username: user.username,
                 password: user.password,
-                passwordConfirm: user.username,
+                passwordConfirm: user.passwordConfirm,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 email: user.email,
+                age: user.age,
+                avatar: user.avatar,
             })
             .end((err, res) => {
                 resolve(res);
@@ -43,7 +47,12 @@ describe('Authentication: ', () => {
     const user = {
         username: 'test-user',
         password: '123456',
+        passwordConfirm: '123456',
+        firstName: 'First',
+        lastName: 'Last',
         email: 'test-user@mail.com',
+        age: '20',
+        avatar: 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png',
     };
 
     let app = null;
@@ -59,7 +68,21 @@ describe('Authentication: ', () => {
         })
     );
 
-    afterEach(() => cleanUp(config.connectionString));
+    // afterEach(() => cleanUp(config.connectionString));
+
+    describe('Home: ', () => {
+        it('- should redirect to home page', (done) => {
+            request(app)
+                .get('/')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    return done();
+                });
+        });
+    });
 
     describe('Signup: ', () => {
         describe('GET: ', () => {
@@ -83,10 +106,14 @@ describe('Authentication: ', () => {
                     .send({
                         username: user.username,
                         password: user.password,
-                        passwordConfirm: user.password,
+                        passwordConfirm: user.passwordConfirm,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
                         email: user.email,
+                        age: user.age,
+                        avatar: user.avatar,
                     })
-                    .expect(302)
+                    .expect(200)
                     .end((err, res) => {
                         if (err) {
                             return done(err);
@@ -199,6 +226,7 @@ describe('Authentication: ', () => {
                         if (err) {
                             return done(err);
                         }
+                        expect(res.header.location).to.be.eql('/');
                         return done();
                     });
             });
@@ -207,7 +235,7 @@ describe('Authentication: ', () => {
                 agent.post('/login')
                     .type('form')
                     .send({
-                        username: '1',
+                        username: `${user.username}1`,
                         password: user.password,
                     })
                     .expect(302)
@@ -215,22 +243,24 @@ describe('Authentication: ', () => {
                         if (err) {
                             return done(err);
                         }
+                        expect(res.header.location).to.be.eql('/login');
                         return done();
                     });
             });
 
             it('- wrong password', (done) => {
-                agent.post('/signup')
+                agent.post('/login')
                     .type('form')
                     .send({
                         username: user.username,
-                        password: '1',
+                        password: `${user.password}1`,
                     })
-                    .expect(400)
+                    .expect(302)
                     .end((err, res) => {
                         if (err) {
                             return done(err);
                         }
+                        expect(res.header.location).to.be.eql('/login');
                         return done();
                     });
             });
@@ -239,10 +269,11 @@ describe('Authentication: ', () => {
 
     describe('Logout: ', () => {
         describe('GET: ', () => {
-            it('- should return 302', (done) => {
-                signUpUser(agent, user);
-                signInUser(agent, user);
+            beforeEach(() => signUpUser(agent, user)
+                .then(() => signInUser(agent, user))
+            );
 
+            it('- should return 302', (done) => {
                 request(app)
                     .get('/logout')
                     .expect(302)
@@ -250,6 +281,7 @@ describe('Authentication: ', () => {
                         if (err) {
                             return done(err);
                         }
+                        expect(res.header.location).to.be.eql('/');
                         return done();
                     });
             });
