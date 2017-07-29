@@ -24,6 +24,7 @@ gulp.task('pre-test-unit', () => {
 gulp.task('pre-test-integration', () => {
     return gulp.src([
         './app/app.js',
+        './app/controllers/*.js',
     ])
         .pipe(istanbul({
             includeUntested: true,
