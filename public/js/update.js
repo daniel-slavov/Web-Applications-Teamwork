@@ -1,4 +1,17 @@
 const update = () => {
+    $('.glyphicon-thumbs-up').click(() => {
+        const likes = $('#likes').text();
+        const title = $('#title').text();
+        const data = {
+            title: title,
+            votes: likes,
+        };
+        const url = `${document.location.origin}/api/events/${title}/upvote`;
+        requester.put(url, data)
+            .then((response) => {
+                $('#likes').text(' ' + response.votes + ' ');
+            });
+    });
     $('#update-event-button').click(() => {
         for (let index = 0; index < 4; index += 1) {
             const editField = document.createElement('input');

@@ -11,6 +11,12 @@ block content
             img#event-img.img-rounded(src=event.photo)
             br
             ul.details.col-md-10
+                if user
+                    li.media
+                        span.glyphicon.glyphicon-thumbs-up 
+                        span#likes 
+                            | #{event.likes} 
+                        | Likes
                 li.media
                     span.glyphicon.glyphicon-map-marker
                     <strong>  City:</strong> 

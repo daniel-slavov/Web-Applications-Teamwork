@@ -274,6 +274,16 @@ module.exports = (data) => {
                     return res.status(200);
                 });
         },
+        upvote: (req, res) => {
+            if (!req.user) {
+                return res.redirect('/login');
+            }
+
+            const newVotes = +req.body.votes + 1;
+            const title = req.body.title;
+            data.events.updateLikes(title, newVotes);
+            return res.send({ votes: newVotes });
+        },
         searchEvent: (req, res) => {
             const pattern = req.query.name;
             const partial = req.query.isPartial;

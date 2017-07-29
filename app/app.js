@@ -54,6 +54,7 @@ const init = (data) => {
     app.get('/events/:title', eventsController.getEventByTitle);
     app.put('/api/events/:title', eventsController.updateEvent);
     app.delete('/api/events/:title', eventsController.deleteEvent);
+    app.put('/api/events/:title/upvote', eventsController.upvote);
 
     // Categories routes
     app.get('/categories', eventsController.getAllCategories);
