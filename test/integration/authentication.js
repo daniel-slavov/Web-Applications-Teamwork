@@ -71,9 +71,23 @@ describe('Authentication: ', () => {
     // afterEach(() => cleanUp(config.connectionString));
 
     describe('Home: ', () => {
-        it('- should redirect to home page', (done) => {
+        it('- should load home page', (done) => {
             request(app)
                 .get('/')
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    return done();
+                });
+        });
+    });
+
+    describe('Error: ', () => {
+        it('- should load error page', (done) => {
+            request(app)
+                .get('/error')
                 .expect(200)
                 .end((err, res) => {
                     if (err) {

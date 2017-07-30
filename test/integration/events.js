@@ -28,8 +28,11 @@ const signInUser = (agent, user) => {
     return new Promise((resolve, reject) => {
         agent.post('/signin')
             .type('form')
-            .send(user)
-            .end((err, res, req) => {
+            .send({
+                username: user.username,
+                password: user.password,
+            })
+            .end((err, res) => {
                 resolve(res);
             });
     });
@@ -44,7 +47,6 @@ const createCategory = (agent, category) => {
                 event: category.event,
             })
             .end((err, res) => {
-                // console.log(res);
                 resolve(res);
             });
     });
@@ -70,7 +72,7 @@ const createEvent = (agent, event) => {
 
 describe('Events: ', () => {
     const config = {
-        connectionString: 'mongodb://localhost/Events',
+        connectionString: 'mongodb://localhost/Events-test',
         port: 3002,
     };
 
@@ -87,7 +89,7 @@ describe('Events: ', () => {
 
     const category = {
         name: 'test-category',
-        event: '',
+        event: [],
     };
 
     const event = {
@@ -108,7 +110,7 @@ describe('Events: ', () => {
         .then((data) => require('../../app').init(data))
         .then((app_) => {
             app = app_;
-            agent = request.agent(app_);
+            agent = request.agent(config.connectionString);
         })
         .then(() => signUpUser(agent, user))
         .then(() => signInUser(agent, user))
@@ -132,8 +134,7 @@ describe('Events: ', () => {
         });
 
         it('- load create events page', (done) => {
-            request(app)
-                .get('/events/create')
+            agent.get('/events/create')
                 .expect(302)
                 .end((err, res) => {
                     if (err) {

@@ -5,6 +5,7 @@ module.exports = (data) => {
     return {
         getCreateEvent: (req, res) => {
             if (!req.user) {
+                console.log('not logged in');
                 return res.redirect('/login');
             }
 
@@ -20,9 +21,8 @@ module.exports = (data) => {
             return res.sendStatus(200);
         },
         postCreateEvent: (req, res) => {
+            console.log('postCreateEvent');
             if (!req.user) {
-                console.log('not logged in');
-                
                 return res.redirect('/login');
             }
 
