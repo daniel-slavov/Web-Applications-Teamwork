@@ -91,6 +91,14 @@ class UsersData {
             { $set: { avatar: avatar } }
         );
     }
+
+    updateVotedEvents(username, eventTitle) {
+        this.collection.update(
+            { username: username },
+            { $push: { votedEvents: eventTitle } },
+        );
+    }
+
     removeEvent(username, eventTitle) {
         this.collection.update(
             { username: username },

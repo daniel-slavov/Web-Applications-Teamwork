@@ -94,7 +94,7 @@ const init = (data) => {
         });
     });
 
-    return app;
+    return Promise.resolve(server);
 };
 
 module.exports = {

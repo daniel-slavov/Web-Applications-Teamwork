@@ -10,6 +10,7 @@ const update = () => {
         requester.put(url, data)
             .then((response) => {
                 $('#likes').text(' ' + response.votes + ' ');
+                $('.glyphicon-thumbs-up').remove();
             });
     });
     $('#update-event-button').click(() => {

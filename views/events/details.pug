@@ -13,7 +13,8 @@ block content
             ul.details.col-md-10
                 if user
                     li.media
-                        span.glyphicon.glyphicon-thumbs-up 
+                        if user.votedEvents.indexOf(event.title) < 0
+                            span.glyphicon.glyphicon-thumbs-up 
                         span#likes 
                             | #{event.likes} 
                         | Likes
@@ -51,23 +52,6 @@ block content
             div#input.col-xs-10
                 input#new-message.col-lg-10.form-control(autocomplete='off', placeholder="Enter your message...")
                 button#send.col-lg-2.btn.btn-success Send
-        script(src='/socket.io/socket.io.js')
-        script(src='https://code.jquery.com/jquery-1.11.1.js')
-        script.
-            $(function () {
-            if(!document.getElementById('username')) {
-                $('#input').hide();
-            }
-            var socket = io();
-            $('#send').click(function () {
-            socket.emit('chat message', {user: $('#username').text(), avatar: $(".user-avatar").attr("src"), content: $('#new-message').val(), time: (new Date).toLocaleTimeString(), room: $('#title').text()});
-            $('#new-message').val('');
-            return false;
-            });
-            socket.on('chat message', function (msg) {
-            $('#messages').append($(`<li class="media"><div class="media-body"><a href="#" class="pull-left"><img class="media-object img-circle" src="${msg.avatar}"></a>${msg.content}<br><small class="text-muted">Posted by ${msg.user} at ${msg.time}</small><hr></div></li>`));
-            });
-            });
 
     if user && user.username == event.user
         div#creator-buttons.row.col-xs-12
@@ -88,3 +72,23 @@ block content
                 span.button-text Confirm
         
         include ../partials/upload.pug
+
+    script(src='/socket.io/socket.io.js')
+    script(src='https://code.jquery.com/jquery-1.11.1.js')
+    script.
+        console.log("in script");
+        $(function () {
+        if(!document.getElementById('username')) {
+            $('#input').hide();
+        }
+        var socket = io();
+        $('#send').click(function () {
+            console.log("send");
+        socket.emit('chat message', {user: $('#username').text(), avatar: $(".user-avatar").attr("src"), content: $('#new-message').val(), time: (new Date).toLocaleTimeString(), room: $('#title').text()});
+        $('#new-message').val('');
+        return false;
+        });
+        socket.on('chat message', function (msg) {
+        $('#messages').append($(`<li class="media"><div class="media-body"><a href="#" class="pull-left"><img class="media-object img-circle" src="${msg.avatar}"></a>${msg.content}<br><small class="text-muted">Posted by ${msg.user} at ${msg.time}</small><hr></div></li>`));
+        });
+        });

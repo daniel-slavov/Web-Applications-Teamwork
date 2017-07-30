@@ -8,6 +8,7 @@ class User {
         this.age = object.age;
         this.avatar = object.avatar;
         this.events = [];
+        this.votedEvents = [];
     }
 }
 

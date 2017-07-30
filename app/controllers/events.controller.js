@@ -293,6 +293,8 @@ module.exports = (data) => {
             const newVotes = +req.body.votes + 1;
             const title = req.body.title;
             data.events.updateLikes(title, newVotes);
+            const user = req.user.username;
+            data.users.updateVotedEvents(user, title);
             return res.send({ votes: newVotes });
         },
         searchEvent: (req, res) => {
