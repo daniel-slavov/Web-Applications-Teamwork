@@ -295,7 +295,40 @@ module.exports = (data) => {
             data.events.updateLikes(title, newVotes);
             const user = req.user.username;
             data.users.updateVotedEvents(user, title);
-            return res.send({ votes: newVotes });
+
+            data.events.getByTitle(title)
+                .then((event) => {
+                    if (event === null) {
+                        return res.redirect('/error');
+                    }
+
+                    if (event.user !== req.user.username) {
+                        return res.redirect('/error');
+                    }
+
+                    data.users.updateEvent(
+                        event.user, title, event.date,
+                        event.time, event.place, event.details,
+                        event.categories, newVotes, event.photo);
+
+                    if (typeof event.categories === 'string') {
+                        const category = event.categories;
+                        data.categories.updateEvent(
+                            category, title, event.date,
+                            event.time, event.place,
+                            event.details, event.categories,
+                            newVotes, event.photo, event.user);
+                    } else {
+                        event.categories.forEach((category) => {
+                            data.categories.updateEvent(category, title,
+                                event.date, event.time,
+                                event.place, event.details,
+                                event.categories, newVotes,
+                                event.photo, event.user);
+                        });
+                    }
+                    return res.send({ votes: newVotes });
+                });
         },
         searchEvent: (req, res) => {
             const pattern = req.query.name;
