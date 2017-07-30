@@ -5,7 +5,7 @@ module.exports = (data) => {
     return {
         getCreateEvent: (req, res) => {
             if (!req.user) {
-                console.log('not logged in');
+                // console.log('not logged in');
                 return res.redirect('/login');
             }
 
@@ -17,12 +17,14 @@ module.exports = (data) => {
                 });
         },
         postCreateCategory: (req, res) => {
+            // console.log(`00 ${req.body.name}`);
             data.categories.create(req.body);
             return res.sendStatus(200);
         },
         postCreateEvent: (req, res) => {
-            console.log('postCreateEvent');
+            // console.log(req.user);
             if (!req.user) {
+                console.log('not logged in');
                 return res.redirect('/login');
             }
 
@@ -34,7 +36,7 @@ module.exports = (data) => {
             req.assert('categories', 'Category is required').notEmpty();
 
             const event = req.body;
-            console.log(event);
+            // console.log(event);
 
             return req.getValidationResult()
                 .then((result) => {
@@ -139,10 +141,13 @@ module.exports = (data) => {
         },
         getAllEventsByCategory: (req, res) => {
             const category = req.params.name;
+            // console.log(`01 ${category}`);
 
             return data.categories.getEventsByCategory(category)
                 .then((events) => {
+                    // console.log(`02 ${events}`);
                     if (events.length === 0) {
+                        // console.log('length = 0');
                         return res.render('events/events', {
                             title: category,
                         });

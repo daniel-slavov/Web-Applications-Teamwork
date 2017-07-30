@@ -21,9 +21,11 @@ class CategoriesData {
     }
 
     getEventsByCategory(categoryName) {
+        // console.log(categoryName);
         return this.collection
             .findOne({ name: categoryName })
             .then((foundCategory) => {
+                // console.log(foundCategory.events);
                 return foundCategory.events;
             });
     }

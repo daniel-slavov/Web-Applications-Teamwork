@@ -19,6 +19,7 @@ const signUpUser = (agent, user) => {
                 avatar: user.avatar,
              })
             .end((err, res) => {
+                console.log('1');
                 resolve(res);
             });
     });
@@ -33,26 +34,31 @@ const signInUser = (agent, user) => {
                 password: user.password,
             })
             .end((err, res) => {
+                console.log('2');
                 resolve(res);
             });
     });
 };
 
-const createCategory = (agent, category) => {
+const createCategory = (app, category) => {
     return new Promise((resolve, reject) => {
-        agent.post('/categories/create')
+        request(app)
+            .post('/categories/create')
             .type('form')
             .send({
                 name: category.name,
                 event: category.event,
             })
             .end((err, res) => {
+                console.log('3');
+                // console.log(err);
                 resolve(res);
             });
     });
 };
 
-const createEvent = (agent, event) => {
+const createEvent = (agent, event, user) => {
+    console.log('test method create event');
     return new Promise((resolve, reject) => {
         agent.post('/events/create')
             .type('form')
@@ -63,6 +69,10 @@ const createEvent = (agent, event) => {
                 place: event.place,
                 details: event.details,
                 categories: event.categories,
+                user: {
+                    username: user.username,
+                    password: user.password,
+                },
             })
             .end((err, res) => {
                 resolve(res);
@@ -98,7 +108,7 @@ describe('Events: ', () => {
         time: '12:00:00',
         place: 'Sofia',
         details: 'some details',
-        categories: 'test',
+        categories: category.name,
     };
 
     let app = null;
@@ -110,12 +120,12 @@ describe('Events: ', () => {
         .then((data) => require('../../app').init(data))
         .then((app_) => {
             app = app_;
-            agent = request.agent(config.connectionString);
+            agent = request.agent(app_);
         })
         .then(() => signUpUser(agent, user))
         .then(() => signInUser(agent, user))
-        .then(() => createCategory(agent, category))
-        .then(() => createEvent(agent, event))
+        .then(() => createCategory(app, category))
+        .then(() => createEvent(agent, event, user))
     );
 
     // afterEach(() => cleanUp(config.connectionString));
@@ -135,7 +145,7 @@ describe('Events: ', () => {
 
         it('- load create events page', (done) => {
             agent.get('/events/create')
-                .expect(302)
+                // .expect()
                 .end((err, res) => {
                     if (err) {
                         // console.log(err);
