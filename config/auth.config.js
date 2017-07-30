@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const LocalStrategy = require('passport-local');
 const MongoStore = require('connect-mongo')(session);
 const config = require('./config');
+const crypto = require('crypto-js');
 
 const configAuth = (app, { users }, passport, db) => {
     app.use(cookieParser('keyboard cat'));
@@ -22,7 +23,8 @@ const configAuth = (app, { users }, passport, db) => {
     app.use(passport.session());
 
     passport.use(new LocalStrategy((username, password, done) => {
-        return users.login(username, password)
+        const passHash = crypto.SHA1(username + password).toString();
+        return users.login(username, passHash)
             .then((user) => {
                 if (user) {
                     return done(null, user);

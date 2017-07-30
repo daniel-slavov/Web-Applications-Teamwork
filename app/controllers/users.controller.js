@@ -1,5 +1,6 @@
 const multer = require('multer');
 const path = require('path');
+const crypto = require('crypto-js');
 
 module.exports = (data) => {
     return {
@@ -63,7 +64,10 @@ module.exports = (data) => {
 
                             user.avatar = 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png';
                             user.events = [];
-
+                            user.password = crypto
+                                .SHA1(user.username + user.password)
+                                .toString();
+                            console.log(user.password);
                             data.users.create(user);
 
                             return res.redirect('/login');
