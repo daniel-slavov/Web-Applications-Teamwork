@@ -40,50 +40,6 @@ const signInUser = (agent, user) => {
     });
 };
 
-const createCategory = (app, category) => {
-    return new Promise((resolve, reject) => {
-        request(app)
-            .post('/categories/create')
-            .type('form')
-            .send({
-                name: category.name,
-                event: category.event,
-            })
-            .end((err, res) => {
-                console.log('3');
-                // console.log(err);
-                resolve(res);
-            });
-    });
-};
-
-const createEvent = (agent, event, user) => {
-    console.log('test method create event');
-    return new Promise((resolve, reject) => {
-        agent.post('/events/create')
-            .type('form')
-            .set('user', {
-                username: user.username,
-                password: user.password,
-             }) // not sure about this
-            .send({
-                title: event.title,
-                date: event.date,
-                time: event.time,
-                place: event.place,
-                details: event.details,
-                categories: event.categories,
-                user: { // maybe wrong
-                    username: user.username,
-                    password: user.password,
-                },
-            })
-            .end((err, res) => {
-                resolve(res);
-            });
-    });
-};
-
 describe('Events: ', () => {
     const config = {
         connectionString: 'mongodb://localhost/Events-test',
@@ -101,20 +57,6 @@ describe('Events: ', () => {
         avatar: 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png',
     };
 
-    const category = {
-        name: 'test-category',
-        event: [],
-    };
-
-    const event = {
-        title: 'test-event',
-        date: '2017-08-01',
-        time: '12:00:00',
-        place: 'Sofia',
-        details: 'some details',
-        categories: category.name,
-    };
-
     let app = null;
     let agent = null;
 
@@ -127,17 +69,14 @@ describe('Events: ', () => {
             agent = request.agent(app_);
         })
         .then(() => signUpUser(agent, user))
-        .then(() => signInUser(agent, user))
-        .then(() => createCategory(app, category))
-        .then(() => createEvent(agent, event, user))
     );
 
     // afterEach(() => cleanUp(config.connectionString));
 
     describe('GET: ', () => {
-        it('- load all events page', (done) => {
+        it('- load profile page', (done) => {
             request(app)
-                .get('/events')
+                .get(`/users/${user.username}`)
                 .expect(200)
                 .end((err, res) => {
                     if (err) {
@@ -147,28 +86,38 @@ describe('Events: ', () => {
                 });
         });
 
-        it('- load create events page', (done) => {
-            agent.get('/events/create')
-                // .expect()
+        it(`- get user's events`, (done) => {
+            request(app)
+                .get(`/api/users/${user.username}/events`)
+                .expect(200)
                 .end((err, res) => {
                     if (err) {
-                        // console.log(err);
                         return done(err);
                     }
-                    // console.log(res);
                     return done();
                 });
         });
+    });
 
-        it('- load single event page', (done) => {
-            request(app)
-                .get(`/events/${event.title}`)
-                .expect(302)
+    describe('PUT: ', () => {
+        beforeEach(() => signInUser(agent, user));
+
+        it('- update user details', () => {
+            // request(app)
+                agent.put(`/users/${user.username}`)
+                .send({
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    age: user.age,
+                })
+                .expect(200)
                 .end((err, res) => {
                     if (err) {
                         return done(err);
                     }
-                    expect(res.header.location).to.contain('error');
+                    console.log(res);
                     return done();
                 });
         });

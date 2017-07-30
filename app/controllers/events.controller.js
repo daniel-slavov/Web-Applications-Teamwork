@@ -36,7 +36,6 @@ module.exports = (data) => {
             req.assert('categories', 'Category is required').notEmpty();
 
             const event = req.body;
-            // console.log(event);
 
             return req.getValidationResult()
                 .then((result) => {
