@@ -28,10 +28,27 @@ const navigation = () => {
 
         requester.get(url)
                 .then((response) => {
-                    // console.log(response);
-                    $('.row').remove();
-                    $(event.target).after(response);
+                    $('.category-results').remove();
+                    const $results = $("<div/>", {
+                        class: 'category-results',
+                    });
+                    const $all = $("<a/>", {
+                        type: 'button',
+                        'data-toggle': 'tooltip',
+                        'data-placement': 'right',
+                        href: '/categories/' + category,
+                        title: 'See all events in this category',
+                        text: 'More from this category ...',
+                        css: {
+                            'font-size': '1.5em'
+                        }
+                    });
+                    $results.append(response);
+                    $results.append($all);
+                    $(event.target).after($results);
+                    
                 });
+
     });
 
     $('#show-events-btn').click((event) => {
