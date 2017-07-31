@@ -14,7 +14,7 @@ const update = () => {
             });
     });
     $('#update-event-button').click(() => {
-        for (let index = 0; index < 4; index += 1) {
+        for (let index = 1; index <= 4; index += 1) {
             const editField = document.createElement('input');
             editField.setAttribute('type', 'text');
             editField.setAttribute('value', $('.data:eq(0)').text());
@@ -37,12 +37,11 @@ const update = () => {
         const url = `${document.location.origin}/api/events/${title}`;
         // console.log(url);
         const data = {
-            place: $('.media:eq(0) > input').val(),
-            date: $('.media:eq(1) > input').val(),
-            time: $('.media:eq(2) > input').val(),
-            details: $('.media:eq(4) > input').val(),
+            place: $('.media:eq(1) > input').val(),
+            date: $('.media:eq(2) > input').val(),
+            time: $('.media:eq(3) > input').val(),
+            details: $('.media:eq(5) > input').val(),
         };
-
         requester.put(url, data)
             .then((response) => {
                 //  console.log(`Response then`);
