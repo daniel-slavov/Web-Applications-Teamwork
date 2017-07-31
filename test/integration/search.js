@@ -17,7 +17,7 @@ describe('Search: ', () => {
         })
     );
 
-    it('- load search page', (done) => {
+    it('expect to load search page (200)', (done) => {
         request(app)
             .get('/search')
             .expect(200)
@@ -29,7 +29,7 @@ describe('Search: ', () => {
             });
     });
 
-    it('- search events', (done) => {
+    it('expect to load search events (200)', (done) => {
         request(app)
             .get('/search/events')
             .query({
@@ -44,7 +44,7 @@ describe('Search: ', () => {
             });
     });
 
-    it('- search users', (done) => {
+    it('expect to load search users (200)', (done) => {
         request(app)
             .get('/search/users')
             .query({
