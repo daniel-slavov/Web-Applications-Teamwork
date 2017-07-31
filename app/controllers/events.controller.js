@@ -300,13 +300,9 @@ module.exports = (data) => {
             const user = req.user.username;
             data.users.updateVotedEvents(user, title);
 
-            data.events.getByTitle(title)
+            return data.events.getByTitle(title)
                 .then((event) => {
                     if (event === null) {
-                        return res.redirect('/error');
-                    }
-
-                    if (event.user !== req.user.username) {
                         return res.redirect('/error');
                     }
 
@@ -331,6 +327,7 @@ module.exports = (data) => {
                                 event.photo, event.user);
                         });
                     }
+
                     return res.send({ votes: newVotes });
                 });
         },
