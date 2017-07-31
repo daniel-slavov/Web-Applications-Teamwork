@@ -83,7 +83,7 @@ const init = require('../../app/app');
 //     });
 // };
 
-describe('Events: ', () => {
+describe('Events looooook hererererere: ', () => {
     const config = {
         connectionString: 'mongodb://localhost/Events-test',
         port: 3002,
@@ -118,6 +118,12 @@ describe('Events: ', () => {
     let agent = null;
     let cookie = null;
 
+    after(() => {
+        return Promise.resolve()
+            .then(() => require('../../db').init(config.connectionString))
+            .then((db) => db.dropDatabase());
+    });
+
     beforeEach(() => Promise.resolve()
         .then(() => require('../../db').init(config.connectionString))
         .then((db) => require('../../data').init(db))
@@ -133,12 +139,22 @@ describe('Events: ', () => {
     );
 
     // afterEach(() => cleanUp(config.connectionString));
-
-    describe('GET: ', () => {
-        it('- load all events page', (done) => {
+    describe('POST /signup', () => {
+        it('expect to return 302 (OK)', (done) => {
             request(app)
-                .get('/events')
-                .expect(200)
+                .post('/signup')
+                .send({
+                    username: 'test-user',
+                    password: '123456',
+                    passwordConfirm: '123456',
+                    firstName: 'First',
+                    lastName: 'Last',
+                    email: 'test-user@mail.com',
+                    age: '20',
+                    avatar: 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png',
+                })
+                .expect(302)
+                .expect('Location', '/login')
                 .end((err, res) => {
                     if (err) {
                         return done(err);
@@ -146,22 +162,40 @@ describe('Events: ', () => {
                     return done();
                 });
         });
+    });
 
-        it('- load create events page', (done) => {
-            request.agent(app)
+    describe('GET: ', () => {
+        // it('- load all events page', (done) => {
+        //     request(app)
+        //         .get('/events')
+        //         .expect(200)
+        //         .end((err, res) => {
+        //             if (err) {
+        //                 return done(err);
+        //             }
+        //             return done();
+        //         });
+        // });
+
+        it('expect to return 302 (Found)', (done) => {
+            request(app)
                 .post('/login')
-                .set('Accept', 'application/json')
+                // .set('Accept', 'application/json')
                 .send({ username: user.username, password: user.password })
                 .expect(302)
+                .expect('Location', '/')
                 .end((error, res) => {
                     if (error) {
                         throw error;
                     }
                     cookie = res.headers['set-cookie'];
+                    console.log('sth');
                     return done();
                 });
+        });
 
-            request.agent(app)
+        it('- load create events page', (done) => {
+            request(app)
                 .get(`/events/create`)
                 .set('cookie', cookie)
                 .expect(200)
