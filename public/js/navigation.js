@@ -36,9 +36,7 @@ const navigation = () => {
     });
 
     $('#show-events-btn').click((event) => {
-        // console.log(event.target.innerHTML);
         const date = $('.ui-state-active').html();
-        // console.log(date);
         let month = '';
 
         switch ($('.ui-datepicker-month').html()) {
@@ -81,18 +79,11 @@ const navigation = () => {
             default:
                 break;
         }
-        // console.log(month);
-
         const year = $('.ui-datepicker-year').html();
-
-        // console.log(year);
-
         const url = `${document.location.origin}/api/events-calendar/${year}-${month}-${date}`;
-        // console.log(url);
 
         requester.get(url)
                 .then((response) => {
-                    // console.log(response);
                     $('.row').remove();
                     $('#show-events-btn').after(response);
                 });

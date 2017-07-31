@@ -162,7 +162,11 @@ module.exports = (data) => {
             return res.render('calendar/calendar');
         },
         getAllEventsByDate: (req, res) => {
-            const date = req.params.date;
+            const input = req.params.date;
+            let date = input;
+            if (input.length === 9) {
+                date = input.substr(0, 8) + 0 + input.substr(8);
+            }
 
             return data.events.getByDate(date)
                 .then((events) => {
