@@ -45,6 +45,31 @@ describe('Profile: ', () => {
                 }
             });
         });
+
+        // it(`Show user's events`, () => {
+        //     return async()
+        //     .then(() => driver.navigate().to(`${url}users/${user.username}`))
+        //     .then(() => ui.click('#show-my-events-btn'))
+        //     .then(() => ui.waitSeconds(1))
+        //     .then(() => {
+        //         expect(driver.findElement(webdriver.By.css('#user-events > div.row'))).not.to.throw;
+        //     });
+        // });
+
+        // it(`Hide user's events`, () => {
+        //     return async()
+        //     .then(() => driver.navigate().to(`${url}users/${user.username}`))
+        //     .then(() => ui.click('#show-my-events-btn'))
+        //     .then(() => ui.click('#hide-my-events-btn'))
+        //     .then(() => ui.waitSeconds(2))
+        //     .then(() => {
+        //         try {
+        //             expect(driver.findElement(webdriver.By.css('#user-events > div.row'))).to.throw;
+        //         } catch (err) {
+        //             // expect(err).to.contain('no such element');
+        //         }
+        //     });
+        // });
     });
 
     describe('Own account: ', () => {
