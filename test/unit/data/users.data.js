@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
+const { ObjectID } = require('mongodb');
 
 const UsersData = require('../../../data/users.data');
 const User = require('../../../models/user');
@@ -38,8 +39,15 @@ describe('UsersData', () => {
     };
 
     const foundUser = { username: 'user', password: '123456', events: events };
-    const findOne = (user) => {
-        return Promise.resolve(foundUser);
+    let findOne = (username, password) => {
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].username === username &&
+                users[i].password === password) {
+                return Promise.resolve(users[i]);
+            }
+        }
+
+        return {};
     };
     const newEvent = { title: 'New event' };
     let update = (userObj) => {
@@ -92,11 +100,22 @@ describe('UsersData', () => {
     });
 
     describe('getUser()', () => {
+        before(() => {
+            findOne = (user) => {
+                for (let us of users) {
+                    if (user.username === us.username) {
+                        return us;
+                    }
+                }
+
+                return {};
+            };
+        });
+
         it('expect to return user if user was found', () => {
-            return data.getUser('user')
-                .then((user) => {
-                    expect(user).to.deep.equal(foundUser);
-                });
+            const found = data.getUser('user');
+            //console.log(found);
+            expect(found.username).to.deep.equal('user');
         });
 
         it('expect to return empty object if user was not found', () => {
@@ -106,11 +125,20 @@ describe('UsersData', () => {
     });
 
     describe('getUserById()', () => {
+        before(() => {
+            findOne = (user) => {
+                for (let us of users) {
+                    if (user._id.toString() === us._id) {
+                        return us;
+                    }
+                }
+
+                return {};
+            };
+        });
         it('expect to return user if user was found', () => {
-            return data.getUserById('596b1d2cfef2e82704d679e4')
-                .then((user) => {
-                    expect(user).to.deep.equal(foundUser);
-                });
+            const found = data.getUserById('596b1d2cfef2e82704d679e4');
+            expect(found._id).to.deep.equal('596b1d2cfef2e82704d679e4');
         });
 
         it('expect to return null if user was not found', () => {
@@ -120,11 +148,23 @@ describe('UsersData', () => {
     });
 
     describe('login()', () => {
+        before(() => {
+            findOne = (user) => {
+                console.log(user);
+                for (let i = 0; i < users.length; i++) {
+                    if (users[i].username === user.username &&
+                        users[i].password === user.password) {
+                        return users[i];
+                    }
+                }
+
+                return {};
+            };
+        });
         it('expect to return user if user was found', () => {
-            return data.login('user', '123456')
-                .then((user) => {
-                    expect(user).to.deep.equal(foundUser);
-                });
+            const found = data.login('user', '123456');
+            expect(found.username).to.deep.equal('user');
+            expect(found.password).to.deep.equal('123456');
         });
 
         it('expect to return empty object username does not match', () => {
@@ -133,7 +173,11 @@ describe('UsersData', () => {
         });
 
         it('expect to return empty object password does not match', () => {
+            findOne = () => {
+                return {};
+            };
             const found = data.login('user', '1521');
+            console.log(found);
             expect(found).to.be.empty;
         });
     });
@@ -166,8 +210,19 @@ describe('UsersData', () => {
     });
 
     describe('getEvents()', () => {
+        before(() => {
+            findOne = (user) => {
+                for (let i = 0; i < users.length; i++) {
+                    if (users[i].username === user.username) {
+                        return Promise.resolve(users[i]);
+                    }
+                }
+
+                return Promise.resolve({});
+            };
+        });
         it('expect to return user\'s events', () => {
-            data.getEvents('user1')
+            data.getEvents('user')
                 .then((foundEvents) => {
                     expect(foundEvents).to.be.deep.equal(events);
                 });

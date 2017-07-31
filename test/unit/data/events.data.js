@@ -35,7 +35,7 @@ describe('EventsData', () => {
         events.push(new Event(newEvent));
     };
 
-    const findOne = (pattern) => {
+    let findOne = (pattern) => {
         for (let i = 0; i < events.length; i++) {
             if (events[i].title.match(pattern)) {
                 return Promise.resolve(events[0]);
@@ -52,7 +52,7 @@ describe('EventsData', () => {
         events.pop();
     };
 
-    const categories = [{ name: 'Fun', events: [] }]
+    const categories = [{ name: 'Fun', events: [] }];
     beforeEach(() => {
         events = [{
             _id: '596b1d2cfef2e82704d679e4',
@@ -94,14 +94,24 @@ describe('EventsData', () => {
     });
 
     describe('getByTitle()', () => {
+        before(() => {
+            findOne = (event) => {
+                for (let ev of events) {
+                    if (ev.title === event.title) {
+                        return Promise.resolve(ev);
+                    }
+                }
+                return {};
+            };
+        });
         it('expect to return event if event was found', () => {
-            return data.getByTitle('event')
+            return data.getByTitle('Event')
                 .then((found) => {
                     expect(found).to.deep.equal(events[0]);
                 });
         });
 
-        it('expect to return null if event was not found', () => {
+        it('expect to return empty object if event was not found', () => {
             const found = data.getByTitle('test');
 
             expect(found).to.be.empty;
@@ -109,6 +119,16 @@ describe('EventsData', () => {
     });
 
     describe('getById()', () => {
+        before(() => {
+            findOne = (event) => {
+                for (let ev of events) {
+                    if (ev._id === event._id.toString()) {
+                        return Promise.resolve(ev);
+                    }
+                }
+                return {};
+            };
+        });
         it('expect to return event if user was found', () => {
             return data.getById('596b1d2cfef2e82704d679e4')
                 .then((found) => {
