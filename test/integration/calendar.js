@@ -17,7 +17,7 @@ describe('Calendar: ', () => {
         })
     );
 
-    it('- load calendar page', (done) => {
+    it('expect to load calendar page', (done) => {
         request(app)
             .get('/events-calendar')
             .expect(200)
@@ -29,7 +29,7 @@ describe('Calendar: ', () => {
             });
     });
 
-    it('- load events for a date', (done) => {
+    it('expect to load events for a date', (done) => {
         request(app)
             .get('/api/events-calendar/2017-08-01')
             .expect(200)
