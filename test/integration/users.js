@@ -4,43 +4,7 @@ const { cleanUp } = require('../shared/db.utils');
 
 const init = require('../../app/app');
 
-const signUpUser = (agent, user) => {
-    return new Promise((resolve, reject) => {
-        agent.post('/signup')
-            .type('form')
-            .send({
-                username: user.username,
-                password: user.password,
-                passwordConfirm: user.passwordConfirm,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                age: user.age,
-                avatar: user.avatar,
-             })
-            .end((err, res) => {
-                console.log('1');
-                resolve(res);
-            });
-    });
-};
-
-const signInUser = (agent, user) => {
-    return new Promise((resolve, reject) => {
-        agent.post('/signin')
-            .type('form')
-            .send({
-                username: user.username,
-                password: user.password,
-            })
-            .end((err, res) => {
-                console.log('2');
-                resolve(res);
-            });
-    });
-};
-
-describe('Events: ', () => {
+describe('Users routes: ', () => {
     const config = {
         connectionString: 'mongodb://localhost/Events-test',
         port: 3002,
@@ -57,8 +21,23 @@ describe('Events: ', () => {
         avatar: 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png',
     };
 
+    const event = {
+        title: 'test-event',
+        date: '2017-08-01',
+        time: '12:00:00',
+        place: 'Sofia',
+        details: 'some details',
+        categories: [],
+    };
+
     let app = null;
-    let agent = null;
+    let cookie = null;
+
+    after(() => {
+        return Promise.resolve()
+            .then(() => require('../../db').init(config.connectionString))
+            .then((db) => db.dropDatabase());
+    });
 
     beforeEach(() => Promise.resolve()
         .then(() => require('../../db').init(config.connectionString))
@@ -66,30 +45,16 @@ describe('Events: ', () => {
         .then((data) => require('../../app').init(data))
         .then((app_) => {
             app = app_;
-            agent = request.agent(app_);
         })
-        .then(() => signUpUser(agent, user))
     );
 
-    // afterEach(() => cleanUp(config.connectionString));
-
-    describe('GET: ', () => {
-        it('- load profile page', (done) => {
+    describe('POST /signup', () => {
+        it('expect to return 302 (OK)', (done) => {
             request(app)
-                .get(`/users/${user.username}`)
-                .expect(200)
-                .end((err, res) => {
-                    if (err) {
-                        return done(err);
-                    }
-                    return done();
-                });
-        });
-
-        it(`- get user's events`, (done) => {
-            request(app)
-                .get(`/api/users/${user.username}/events`)
-                .expect(200)
+                .post('/signup')
+                .send(user)
+                .expect(302)
+                .expect('Location', '/login')
                 .end((err, res) => {
                     if (err) {
                         return done(err);
@@ -99,25 +64,66 @@ describe('Events: ', () => {
         });
     });
 
-    describe('PUT: ', () => {
-        beforeEach(() => signInUser(agent, user));
-
-        it('- update user details', (done) => {
-            // request(app)
-                agent.put(`/users/${user.username}`)
-                .send({
-                    username: user.username,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    age: user.age,
-                })
+    describe('POST /login', () => {
+        it('expect to return 302 (Found)', (done) => {
+            request(app)
+                .post('/login')
+                .send({ username: user.username, password: user.password })
                 .expect(302)
+                .expect('Location', '/')
+                .end((error, res) => {
+                    if (error) {
+                        throw error;
+                    }
+                    cookie = res.headers['set-cookie'];
+                    return done();
+                });
+        });
+    });
+
+    describe('PUT /users/:username', () => {
+        it('expect to return 400 (Bad Request)', (done) => {
+            request(app)
+                .put(`/users/${user.username}`)
+                .send({
+                    username: 'test-user',
+                    password: '123456',
+                    passwordConfirm: '123456',
+                    firstName: 'First',
+                    lastName: 'Last',
+                    email: 'test-userfwfwabv.bg',
+                    age: '20',
+                    avatar: 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png',
+                })
+                .set('cookie', cookie)
+                .expect(400)
                 .end((err, res) => {
                     if (err) {
                         return done(err);
                     }
-                    // console.log(res);
+                    return done();
+                });
+        });
+
+        it('expect to return 201 (Created)', (done) => {
+            request(app)
+                .put(`/users/${user.username}`)
+                .send({
+                    username: 'test-user',
+                    password: '123456',
+                    passwordConfirm: '123456',
+                    firstName: 'First',
+                    lastName: 'Last',
+                    email: 'test-userfwfw@abv.bg',
+                    age: '20',
+                    avatar: 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png',
+                })
+                .set('cookie', cookie)
+                .expect(201)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
                     return done();
                 });
         });
