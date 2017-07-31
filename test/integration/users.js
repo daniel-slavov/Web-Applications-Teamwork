@@ -102,7 +102,7 @@ describe('Events: ', () => {
     describe('PUT: ', () => {
         beforeEach(() => signInUser(agent, user));
 
-        it('- update user details', () => {
+        it('- update user details', (done) => {
             // request(app)
                 agent.put(`/users/${user.username}`)
                 .send({
@@ -112,12 +112,12 @@ describe('Events: ', () => {
                     email: user.email,
                     age: user.age,
                 })
-                .expect(200)
+                .expect(302)
                 .end((err, res) => {
                     if (err) {
                         return done(err);
                     }
-                    console.log(res);
+                    // console.log(res);
                     return done();
                 });
         });

@@ -19,7 +19,7 @@ const signUpUser = (agent, user) => {
                 avatar: user.avatar,
              })
             .end((err, res) => {
-                console.log('1');
+                // console.log('1');
                 resolve(res);
             });
     });
@@ -34,7 +34,7 @@ const signInUser = (agent, user) => {
                 password: user.password,
             })
             .end((err, res) => {
-                console.log('2');
+                // console.log('2');
                 resolve(res);
             });
     });
@@ -50,7 +50,7 @@ const createCategory = (app, category) => {
                 event: category.event,
             })
             .end((err, res) => {
-                console.log('3');
+                // console.log('3');
                 // console.log(err);
                 resolve(res);
             });
@@ -58,7 +58,7 @@ const createCategory = (app, category) => {
 };
 
 const createEvent = (agent, event, user) => {
-    console.log('test method create event');
+    // console.log('test method create event');
     return new Promise((resolve, reject) => {
         agent.post('/events/create')
             .type('form')
@@ -148,22 +148,31 @@ describe('Events: ', () => {
         });
 
         it('- load create events page', (done) => {
-            agent.get('/events/create')
-                // .expect()
-                .end((err, res) => {
-                    if (err) {
-                        // console.log(err);
-                        return done(err);
-                    }
-                    // console.log(res);
-                    return done();
-                });
+            request(app).post('/signin')
+            .type('form')
+            .send({
+                username: user.username,
+                password: user.password,
+            })
+            .end((err, res) => {
+                // console.log('2');
+                return request(app).get('/events/create')
+                            .expect(200)
+                            .end((er, re) => {
+                                if (er) {
+                                    // console.log(err);
+                                    return done(er);
+                                }
+                                // console.log(res);
+                                return done();
+                            });
+            });
         });
 
         it('- load single event page', (done) => {
             request(app)
                 .get(`/events/${event.title}`)
-                .expect(302)
+                .expect(200)
                 .end((err, res) => {
                     if (err) {
                         return done(err);
@@ -173,4 +182,56 @@ describe('Events: ', () => {
                 });
         });
     });
+
+    // describe('POST: ', () => {
+    //     it('- create new event', (done) => {
+    //         agent.post('/events/create')
+    //         .type('form')
+    //         .send({
+    //             title: event.title,
+    //             date: event.date,
+    //             time: event.time,
+    //             place: event.place,
+    //             details: event.details,
+    //             categories: event.categories,
+    //             user: {
+    //                 username: user.username,
+    //                 password: user.password,
+    //             },
+    //         })
+    //         .end((err, res) => {
+    //             done(res);
+    //         });
+    //     });
+    // });
+
+    // describe('PUT: ', () => {
+    //     it('- create new event', (done) => {
+    //         request(app)
+    //             .post(`/api/events/${event.title}`)
+    //             .expect(200)
+    //             .end((err, res) => {
+    //                 if (err) {
+    //                     return done(err);
+    //                 }
+    //                 expect(res.header.location).to.contain('error');
+    //                 return done();
+    //             });
+    //     });
+    // });
+
+    // describe('DELETE: ', (done) => {
+    //     it('- delete an event', () => {
+    //         request(app)
+    //             .post(`/events/create`)
+    //             .expect(200)
+    //             .end((err, res) => {
+    //                 if (err) {
+    //                     return done(err);
+    //                 }
+    //                 expect(res.header.location).to.contain('error');
+    //                 return done();
+    //             });
+    //     });
+    // });
 });
