@@ -1,89 +1,8 @@
 const request = require('supertest');
-const { expect, should, assert } = require('chai');
+const { expect } = require('chai');
 const { cleanUp } = require('../shared/db.utils');
 
-const init = require('../../app/app');
-// const signUpUser = (agent, user) => {
-//     return new Promise((resolve, reject) => {
-//         agent.post('/signup')
-//             .type('form')
-//             .send({
-//                 username: user.username,
-//                 password: user.password,
-//                 passwordConfirm: user.passwordConfirm,
-//                 firstName: user.firstName,
-//                 lastName: user.lastName,
-//                 email: user.email,
-//                 age: user.age,
-//                 avatar: user.avatar,
-//             })
-//             .end((err, res) => {
-//                 // console.log('1');
-//                 resolve(res);
-//             });
-//     });
-// };
-
-// const signInUser = (agent, user) => {
-//     return new Promise((resolve, reject) => {
-//         agent.post('/login')
-//             .type('form')
-//             .send({
-//                 username: user.username,
-//                 password: user.password,
-//             })
-//             .end((err, res) => {
-//                 // console.log('2');
-//                 resolve(res);
-//             });
-//     });
-// };
-
-// const createCategory = (app, category) => {
-//     return new Promise((resolve, reject) => {
-//         request(app)
-//             .post('/categories/create')
-//             .type('form')
-//             .send({
-//                 name: category.name,
-//                 event: category.event,
-//             })
-//             .end((err, res) => {
-//                 // console.log('3');
-//                 // console.log(err);
-//                 resolve(res);
-//             });
-//     });
-// };
-
-// const createEvent = (agent, event, user) => {
-//     // console.log('test method create event');
-//     return new Promise((resolve, reject) => {
-//         agent.post('/events/create')
-//             .type('form')
-//             .set('user', {
-//                 username: user.username,
-//                 password: user.password,
-//             }) // not sure about this
-//             .send({
-//                 title: event.title,
-//                 date: event.date,
-//                 time: event.time,
-//                 place: event.place,
-//                 details: event.details,
-//                 categories: event.categories,
-//                 user: { // maybe wrong
-//                     username: user.username,
-//                     password: user.password,
-//                 },
-//             })
-//             .end((err, res) => {
-//                 resolve(res);
-//             });
-//     });
-// };
-
-describe('Events looooook hererererere: ', () => {
+describe('Events routes: ', () => {
     const config = {
         connectionString: 'mongodb://localhost/Events-test',
         port: 3002,
@@ -102,7 +21,7 @@ describe('Events looooook hererererere: ', () => {
 
     const category = {
         name: 'test-category',
-        event: [],
+        events: [],
     };
 
     const event = {
@@ -115,7 +34,6 @@ describe('Events looooook hererererere: ', () => {
     };
 
     let app = null;
-    let agent = null;
     let cookie = null;
 
     after(() => {
@@ -130,29 +48,14 @@ describe('Events looooook hererererere: ', () => {
         .then((data) => require('../../app').init(data))
         .then((app_) => {
             app = app_;
-            agent = request.agent(app_);
         })
-        // .then(() => signUpUser(agent, user))
-        // .then(() => signInUser(agent, user))
-        // .then(() => createCategory(app, category))
-        // .then(() => createEvent(agent, event, user))
     );
 
-    // afterEach(() => cleanUp(config.connectionString));
     describe('POST /signup', () => {
-        it('expect to return 302 (OK)', (done) => {
+        it('expect to return 302 (Found) with location /login', (done) => {
             request(app)
                 .post('/signup')
-                .send({
-                    username: 'test-user',
-                    password: '123456',
-                    passwordConfirm: '123456',
-                    firstName: 'First',
-                    lastName: 'Last',
-                    email: 'test-user@mail.com',
-                    age: '20',
-                    avatar: 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png',
-                })
+                .send(user)
                 .expect(302)
                 .expect('Location', '/login')
                 .end((err, res) => {
@@ -164,23 +67,10 @@ describe('Events looooook hererererere: ', () => {
         });
     });
 
-    describe('GET: ', () => {
-        // it('- load all events page', (done) => {
-        //     request(app)
-        //         .get('/events')
-        //         .expect(200)
-        //         .end((err, res) => {
-        //             if (err) {
-        //                 return done(err);
-        //             }
-        //             return done();
-        //         });
-        // });
-
-        it('expect to return 302 (Found)', (done) => {
+    describe('POST /login', () => {
+        it('should return 302 (Found) and location /', (done) => {
             request(app)
                 .post('/login')
-                // .set('Accept', 'application/json')
                 .send({ username: user.username, password: user.password })
                 .expect(302)
                 .expect('Location', '/')
@@ -189,16 +79,155 @@ describe('Events looooook hererererere: ', () => {
                         throw error;
                     }
                     cookie = res.headers['set-cookie'];
-                    console.log('sth');
+
+                    return done();
+                });
+        });
+    });
+
+    describe('POST /events/create', () => {
+        it('expect to return 302 (Found) and redirect to new event page', (done) => {
+            request(app)
+                .post('/events/create')
+                .send(event)
+                .set('cookie', cookie)
+                .expect(302)
+                .expect('Location', `/events/${event.title}`)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+
+                    return done();
+                });
+        });
+    });
+
+    describe('PUT /api/events/:title', () => {
+        it('expect to return 302 with location /error if event is not found', (done) => {
+            request(app)
+                .put(`/api/events/event`)
+                .send({
+                    title: 'event',
+                    date: '2017-08-01',
+                    time: '12:00:00',
+                    place: 'Varna',
+                    details: 'some details',
+                    categories: category.name,
+                })
+                .set('cookie', cookie)
+                .expect(302)
+                .expect('Location', '/error')
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
                     return done();
                 });
         });
 
-        it('- load create events page', (done) => {
+        it('expect to return 400 (Bad Request) if data is not valid', (done) => {
             request(app)
-                .get(`/events/create`)
+                .put(`/api/events/${event.title}`)
+                .send({
+                    title: 'test-event',
+                    date: '2017-08-01',
+                    time: '12:00:00',
+                    place: '',
+                    details: 'some details',
+                    categories: category.name,
+                })
+                .set('cookie', cookie)
+                .expect(400)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    return done();
+                });
+        });
+
+        it('expect to return 200 (OK) if data is valid', (done) => {
+            request(app)
+                .put(`/api/events/${event.title}`)
+                .send({
+                    title: 'test-event',
+                    date: '2017-08-01',
+                    time: '12:00:00',
+                    place: 'Varna',
+                    details: 'some details',
+                    categories: category.name,
+                })
                 .set('cookie', cookie)
                 .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    return done();
+                });
+        });
+    });
+
+    describe('PUT /api/events/:title/upvote', () => {
+        it('expect to return 302 with location /error if event is not found', (done) => {
+            request(app)
+                .put(`/api/events/${event.title}/upvote`)
+                .send({
+                    title: 'event',
+                    votes: 1,
+                })
+                .set('cookie', cookie)
+                .expect(302)
+                .expect('Location', '/error')
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    return done();
+                });
+        });
+
+        it('expect to return 200 (OK) if votes are updated', (done) => {
+            request(app)
+                .put(`/api/events/${event.title}/upvote`)
+                .send({
+                    title: 'test-event',
+                    votes: 1,
+                })
+                .set('cookie', cookie)
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    expect(res.body.votes).to.be.eq(2);
+
+                    return done();
+                });
+        });
+    });
+
+    describe('DELETE /api/events/:title', () => {
+        it('expect to return 200 (OK) if event is deleted', (done) => {
+            request(app)
+                .delete(`/api/events/${event.title}`)
+                .set('cookie', cookie)
+                .expect(200)
+                .end((err, res) => {
+                    if (err) {
+                        return done(err);
+                    }
+                    return done();
+                });
+        });
+
+        it('expect to return 302 with location /error if event is not found', (done) => {
+            request(app)
+                .delete(`/api/events/event`)
+                .set('cookie', cookie)
+                .expect(302)
+                .expect('Location', '/error')
                 .end((err, res) => {
                     if (err) {
                         return done(err);
