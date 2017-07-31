@@ -95,7 +95,7 @@ class UsersData {
     updateVotedEvents(username, eventTitle) {
         this.collection.update(
             { username: username },
-            { $push: { votedEvents: eventTitle } },
+            { $push: { votedEvents: eventTitle } }
         );
     }
 
