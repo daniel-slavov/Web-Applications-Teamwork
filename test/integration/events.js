@@ -3,86 +3,85 @@ const { expect, should, assert } = require('chai');
 const { cleanUp } = require('../shared/db.utils');
 
 const init = require('../../app/app');
+// const signUpUser = (agent, user) => {
+//     return new Promise((resolve, reject) => {
+//         agent.post('/signup')
+//             .type('form')
+//             .send({
+//                 username: user.username,
+//                 password: user.password,
+//                 passwordConfirm: user.passwordConfirm,
+//                 firstName: user.firstName,
+//                 lastName: user.lastName,
+//                 email: user.email,
+//                 age: user.age,
+//                 avatar: user.avatar,
+//             })
+//             .end((err, res) => {
+//                 // console.log('1');
+//                 resolve(res);
+//             });
+//     });
+// };
 
-const signUpUser = (agent, user) => {
-    return new Promise((resolve, reject) => {
-        agent.post('/signup')
-            .type('form')
-            .send({
-                username: user.username,
-                password: user.password,
-                passwordConfirm: user.passwordConfirm,
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                age: user.age,
-                avatar: user.avatar,
-             })
-            .end((err, res) => {
-                // console.log('1');
-                resolve(res);
-            });
-    });
-};
+// const signInUser = (agent, user) => {
+//     return new Promise((resolve, reject) => {
+//         agent.post('/login')
+//             .type('form')
+//             .send({
+//                 username: user.username,
+//                 password: user.password,
+//             })
+//             .end((err, res) => {
+//                 // console.log('2');
+//                 resolve(res);
+//             });
+//     });
+// };
 
-const signInUser = (agent, user) => {
-    return new Promise((resolve, reject) => {
-        agent.post('/signin')
-            .type('form')
-            .send({
-                username: user.username,
-                password: user.password,
-            })
-            .end((err, res) => {
-                // console.log('2');
-                resolve(res);
-            });
-    });
-};
+// const createCategory = (app, category) => {
+//     return new Promise((resolve, reject) => {
+//         request(app)
+//             .post('/categories/create')
+//             .type('form')
+//             .send({
+//                 name: category.name,
+//                 event: category.event,
+//             })
+//             .end((err, res) => {
+//                 // console.log('3');
+//                 // console.log(err);
+//                 resolve(res);
+//             });
+//     });
+// };
 
-const createCategory = (app, category) => {
-    return new Promise((resolve, reject) => {
-        request(app)
-            .post('/categories/create')
-            .type('form')
-            .send({
-                name: category.name,
-                event: category.event,
-            })
-            .end((err, res) => {
-                // console.log('3');
-                // console.log(err);
-                resolve(res);
-            });
-    });
-};
-
-const createEvent = (agent, event, user) => {
-    // console.log('test method create event');
-    return new Promise((resolve, reject) => {
-        agent.post('/events/create')
-            .type('form')
-            .set('user', {
-                username: user.username,
-                password: user.password,
-             }) // not sure about this
-            .send({
-                title: event.title,
-                date: event.date,
-                time: event.time,
-                place: event.place,
-                details: event.details,
-                categories: event.categories,
-                user: { // maybe wrong
-                    username: user.username,
-                    password: user.password,
-                },
-            })
-            .end((err, res) => {
-                resolve(res);
-            });
-    });
-};
+// const createEvent = (agent, event, user) => {
+//     // console.log('test method create event');
+//     return new Promise((resolve, reject) => {
+//         agent.post('/events/create')
+//             .type('form')
+//             .set('user', {
+//                 username: user.username,
+//                 password: user.password,
+//             }) // not sure about this
+//             .send({
+//                 title: event.title,
+//                 date: event.date,
+//                 time: event.time,
+//                 place: event.place,
+//                 details: event.details,
+//                 categories: event.categories,
+//                 user: { // maybe wrong
+//                     username: user.username,
+//                     password: user.password,
+//                 },
+//             })
+//             .end((err, res) => {
+//                 resolve(res);
+//             });
+//     });
+// };
 
 describe('Events: ', () => {
     const config = {
@@ -117,6 +116,7 @@ describe('Events: ', () => {
 
     let app = null;
     let agent = null;
+    let cookie = null;
 
     beforeEach(() => Promise.resolve()
         .then(() => require('../../db').init(config.connectionString))
@@ -126,10 +126,10 @@ describe('Events: ', () => {
             app = app_;
             agent = request.agent(app_);
         })
-        .then(() => signUpUser(agent, user))
-        .then(() => signInUser(agent, user))
-        .then(() => createCategory(app, category))
-        .then(() => createEvent(agent, event, user))
+        // .then(() => signUpUser(agent, user))
+        // .then(() => signInUser(agent, user))
+        // .then(() => createCategory(app, category))
+        // .then(() => createEvent(agent, event, user))
     );
 
     // afterEach(() => cleanUp(config.connectionString));
@@ -148,90 +148,29 @@ describe('Events: ', () => {
         });
 
         it('- load create events page', (done) => {
-            request(app).post('/signin')
-            .type('form')
-            .send({
-                username: user.username,
-                password: user.password,
-            })
-            .end((err, res) => {
-                // console.log('2');
-                return request(app).get('/events/create')
-                            .expect(200)
-                            .end((er, re) => {
-                                if (er) {
-                                    // console.log(err);
-                                    return done(er);
-                                }
-                                // console.log(res);
-                                return done();
-                            });
-            });
-        });
+            request.agent(app)
+                .post('/login')
+                .set('Accept', 'application/json')
+                .send({ username: user.username, password: user.password })
+                .expect(302)
+                .end((error, res) => {
+                    if (error) {
+                        throw error;
+                    }
+                    cookie = res.headers['set-cookie'];
+                    return done();
+                });
 
-        it('- load single event page', (done) => {
-            request(app)
-                .get(`/events/${event.title}`)
+            request.agent(app)
+                .get(`/events/create`)
+                .set('cookie', cookie)
                 .expect(200)
                 .end((err, res) => {
                     if (err) {
                         return done(err);
                     }
-                    expect(res.header.location).to.contain('error');
                     return done();
                 });
         });
     });
-
-    // describe('POST: ', () => {
-    //     it('- create new event', (done) => {
-    //         agent.post('/events/create')
-    //         .type('form')
-    //         .send({
-    //             title: event.title,
-    //             date: event.date,
-    //             time: event.time,
-    //             place: event.place,
-    //             details: event.details,
-    //             categories: event.categories,
-    //             user: {
-    //                 username: user.username,
-    //                 password: user.password,
-    //             },
-    //         })
-    //         .end((err, res) => {
-    //             done(res);
-    //         });
-    //     });
-    // });
-
-    // describe('PUT: ', () => {
-    //     it('- create new event', (done) => {
-    //         request(app)
-    //             .post(`/api/events/${event.title}`)
-    //             .expect(200)
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     return done(err);
-    //                 }
-    //                 expect(res.header.location).to.contain('error');
-    //                 return done();
-    //             });
-    //     });
-    // });
-
-    // describe('DELETE: ', (done) => {
-    //     it('- delete an event', () => {
-    //         request(app)
-    //             .post(`/events/create`)
-    //             .expect(200)
-    //             .end((err, res) => {
-    //                 if (err) {
-    //                     return done(err);
-    //                 }
-    //                 expect(res.header.location).to.contain('error');
-    //                 return done();
-    //             });
-    //     });
-    // });
 });
