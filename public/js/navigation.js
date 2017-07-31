@@ -22,8 +22,7 @@ const navigation = () => {
     });
 
     $('.category-btn').click((event) => {
-        const category = event.target.innerHTML;
-        // console.log(category);
+        const category = event.target.textContent;
         const url = `${document.location.origin}/api/categories/${category}`;
         // console.log(url);
 
