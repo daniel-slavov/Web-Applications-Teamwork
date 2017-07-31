@@ -42,15 +42,18 @@ const update = () => {
             time: $('.media:eq(3) > input').val(),
             details: $('.media:eq(5) > input').val(),
         };
-        requester.put(url, data)
-            .then((response) => {
-                //  console.log(`Response then`);
-                location.reload();
-            }, (err) => {
-                //  console.log($('#details-box').parent().prev());
-                $('.alert').remove();
-                $('div.row:eq(0)').before(err.responseText);
-            });
+
+        if (validateEventUpdate(data)) {
+            requester.put(url, data)
+                .then((response) => {
+                    //  console.log(`Response then`);
+                    location.reload();
+                }, (err) => {
+                    //  console.log($('#details-box').parent().prev());
+                    $('.alert').remove();
+                    $('div.row:eq(0)').before(err.responseText);
+                });
+        }
     });
 
     $('#change-avatar-btn').click((event) => {
@@ -79,7 +82,7 @@ const update = () => {
     });
 
     $('#edit-profile-btn').click(() => {
-        console.log('edit');
+        // console.log('edit');
 
         for (let index = 0; index < 4; index += 1) {
             const editField = document.createElement('input');
@@ -101,9 +104,9 @@ const update = () => {
 
     $('#confirm-profile-btn').click(() => {
         const username = $('#curent-user').text();
-        console.log(username);
+        // console.log(username);
         const url = `${document.location.origin}/users/${username}`;
-        console.log(url);
+        // console.log(url);
 
         const data = {
             firstName: $('.info:eq(0) > input').val(),
@@ -112,14 +115,16 @@ const update = () => {
             age: $('.info:eq(3) > input').val()
         };
 
-        requester.put(url, data)
-            .then((response) => {
-                //  console.log(`Response then`);
-                location.reload();
-            }, (err) => {
-                //  console.log($('#details-box').parent().prev());
-                $('.alert').remove();
-                $('div.row:eq(0)').before(err.responseText);
-            });
+        if (validateUserUpdate(data)) {
+            requester.put(url, data)
+                .then((response) => {
+                    //  console.log(`Response then`);
+                    location.reload();
+                }, (err) => {
+                    //  console.log($('#details-box').parent().prev());
+                    $('.alert').remove();
+                    $('div.row:eq(0)').before(err.responseText);
+                });
+        }
     });
 };

@@ -5,7 +5,7 @@ block content
         | Create event form
 
     div.create-event-form
-        form(action="/events/create", method="post")
+        form(name="createEvent", action="/events/create", method="post", onsubmit="return validateEventForm()")
             div
                 div
                     label Title
