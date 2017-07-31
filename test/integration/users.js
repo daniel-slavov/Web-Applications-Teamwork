@@ -21,15 +21,6 @@ describe('Users routes: ', () => {
         avatar: 'http://www.infozonelive.com/styles/FLATBOOTS/theme/images/user4.png',
     };
 
-    const event = {
-        title: 'test-event',
-        date: '2017-08-01',
-        time: '12:00:00',
-        place: 'Sofia',
-        details: 'some details',
-        categories: [],
-    };
-
     let app = null;
     let cookie = null;
 

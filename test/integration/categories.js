@@ -1,22 +1,7 @@
 const request = require('supertest');
 const { cleanUp } = require('../shared/db.utils');
 
-const createCategory = (app, category) => {
-    return new Promise((resolve, reject) => {
-        request(app)
-            .post('/categories/create')
-            .type('form')
-            .send({
-                name: category.name,
-                event: category.event,
-            })
-            .end((err, res) => {
-                resolve(res);
-            });
-    });
-};
-
-describe('Categories: ', () => {
+describe('Categories:', () => {
     const config = {
         connectionString: 'mongodb://localhost/Events-test',
         port: 3002,
@@ -27,23 +12,37 @@ describe('Categories: ', () => {
         event: [],
     };
 
+        const event = {
+        title: 'test-event',
+        date: '2017-08-01',
+        time: '12:00:00',
+        place: 'Sofia',
+        details: 'some details',
+        categories: [],
+    };
+
     let app = null;
-    let agent = null;
 
     beforeEach(() => Promise.resolve()
         .then(() => require('../../db').init(config.connectionString))
         .then((db) => require('../../data').init(db))
-        .then((data) => require('../../app').init(data))
+        .then((data) => {
+            data.categories.create({ name: 'test-category' });
+            data.categories.addEventToCategory('test-category', event);
+            return require('../../app').init(data);
+        })
         .then((app_) => {
             app = app_;
-            agent = request.agent(app_);
         })
-        .then(() => createCategory(app, category))
     );
 
-    afterEach(() => cleanUp(config.connectionString));
+    after(() => {
+        return Promise.resolve()
+            .then(() => require('../../db').init(config.connectionString))
+            .then((db) => db.dropDatabase());
+    });
 
-    it('- load categories page', (done) => {
+    it('expect to load categories page (200)', (done) => {
         request(app)
             .get('/categories')
             .expect(200)
@@ -55,27 +54,27 @@ describe('Categories: ', () => {
             });
     });
 
-    // it('- load single category page', (done) => {
-    //     agent.get(`/categories/${category.name}`)
-    //         .expect(200)
-    //         .end((err, res) => {
-    //             // console.log(res);
-    //             if (err) {
-    //                 return done(err);
-    //             }
-    //             return done();
-    //         });
-    // });
+    it('expect to load single category page (200)', (done) => {
+        request(app)
+            .get(`/categories/${category.name}`)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                return done();
+            });
+    });
 
-    // it('- load partial category page', (done) => {
-    //     request(app)
-    //         .get(`api/categories/${category.name}`)
-    //         .expect(200)
-    //         .end((err, res) => {
-    //             if (err) {
-    //                 return done(err);
-    //             }
-    //             return done();
-    //         });
-    // });
+    it('expect to load partial category page (200)', (done) => {
+        request(app)
+            .get(`/api/categories/${category.name}`)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    return done(err);
+                }
+                return done();
+            });
+    });
 });
