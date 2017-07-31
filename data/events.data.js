@@ -41,7 +41,7 @@ class EventsData {
 
     getUpcoming() {
         return this.collection.aggregate([
-            { $sort: { date: -1 } },
+            { $sort: { date: 1 } },
             { $limit: 4 },
         ]).toArray();
     }
