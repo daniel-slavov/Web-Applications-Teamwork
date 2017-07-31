@@ -1,8 +1,4 @@
 const request = require('supertest');
-const { expect, should, assert } = require('chai');
-const { cleanUp } = require('../shared/db.utils');
-
-const init = require('../../app/app');
 
 describe('Users routes: ', () => {
     const config = {

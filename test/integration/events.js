@@ -1,6 +1,5 @@
 const request = require('supertest');
 const { expect } = require('chai');
-const { cleanUp } = require('../shared/db.utils');
 
 describe('Events routes: ', () => {
     const config = {

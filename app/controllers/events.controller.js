@@ -383,7 +383,7 @@ module.exports = (data) => {
                         },
                     }).single('userFile');
 
-                    upload(req, res, (err) => {
+                    return upload(req, res, (err) => {
                         const filePath = '../' + req.file.destination
                             + req.file.filename;
                         event.photo = filePath;
