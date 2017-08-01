@@ -26,7 +26,11 @@ function validateUserForm() {
     }
 
     if (errors.length > 0) {
-        alert(errors.join("\n"));
+        const errorsText = errors.join('\n');
+        for (let i = 0; i < errors.length; i++) {
+            $('<p></p>').appendTo('#validation-errors').text(errors[i]);
+        }
+        $('#validation-errors').addClass('alert alert-danger');
         return false;
     } else {
         return true;
@@ -35,7 +39,7 @@ function validateUserForm() {
 
 function validateUserUpdate(data) {
     if (!data.email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-        alert('Email is not valid');
+        $('#validation-errors').addClass('alert alert-danger').text('Email is not valid');
         return false;
     } else {
         return true;
@@ -76,7 +80,11 @@ function validateEventForm() {
     }
 
     if (errors.length > 0) {
-        alert(errors.join("\n"));
+        const errorsText = errors.join('\n');
+        for (let i = 0; i < errors.length; i++) {
+            $('<p></p>').appendTo('#validation-errors').text(errors[i]);
+        }
+        $('#validation-errors').addClass('alert alert-danger');
         return false;
     } else {
         return true;
@@ -99,7 +107,11 @@ function validateEventUpdate(data) {
     }
 
     if (errors.length > 0) {
-        alert(errors.join("\n"));
+        const errorsText = errors.join('\n');
+        for (let i = 0; i < errors.length; i++) {
+            $('<p></p>').appendTo('#validation-errors').text(errors[i]);
+        }
+        $('#validation-errors').addClass('alert alert-danger');
         return false;
     } else {
         return true;

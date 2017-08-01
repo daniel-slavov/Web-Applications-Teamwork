@@ -36,8 +36,7 @@ block content
                 li#details.media 
                     <strong>Details:</strong> 
                     span.data #{event.details}
-            
-
+                li.media#validation-errors
         div#chat.col-md-5
             ul#messages
                 each message in chat
@@ -72,18 +71,16 @@ block content
                 span.button-text Confirm
         
         include ../partials/upload.pug
-
+        include ../errors/all
     script(src='/socket.io/socket.io.js')
     script(src='https://code.jquery.com/jquery-1.11.1.js')
     script.
-        console.log("in script");
         $(function () {
         if(!document.getElementById('username')) {
             $('#input').hide();
         }
         var socket = io();
         $('#send').click(function () {
-            console.log("send");
         socket.emit('chat message', {user: $('#username').text(), avatar: $(".user-avatar").attr("src"), content: $('#new-message').val(), time: (new Date).toLocaleTimeString(), room: $('#title').text()});
         $('#new-message').val('');
         return false;
