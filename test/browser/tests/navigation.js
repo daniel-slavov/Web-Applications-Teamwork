@@ -1,6 +1,5 @@
 const { expect } = require('chai');
 const { setupDriver } = require('../utils/setup-driver');
-// const webdriver = require('selenium-webdriver');
 const async = require('../../../utils/async');
 const ui = require('../shared/ui.utils');
 const authUtils = require('../shared/auth.utils');

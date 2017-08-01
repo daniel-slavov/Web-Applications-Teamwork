@@ -33,7 +33,6 @@ const requester = {
             url,
             method: 'PUT',
             data,
-            // data: `place=${data.place}&date=${data.date}&time=${data.time}&details=${data.details}`,
             success(response) {
                 resolve(response);
             },

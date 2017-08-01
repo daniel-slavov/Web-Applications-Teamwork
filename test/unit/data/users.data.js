@@ -114,7 +114,6 @@ describe('UsersData', () => {
 
         it('expect to return user if user was found', () => {
             const found = data.getUser('user');
-            //console.log(found);
             expect(found.username).to.deep.equal('user');
         });
 
@@ -150,7 +149,6 @@ describe('UsersData', () => {
     describe('login()', () => {
         before(() => {
             findOne = (user) => {
-                console.log(user);
                 for (let i = 0; i < users.length; i++) {
                     if (users[i].username === user.username &&
                         users[i].password === user.password) {
@@ -177,7 +175,6 @@ describe('UsersData', () => {
                 return {};
             };
             const found = data.login('user', '1521');
-            console.log(found);
             expect(found).to.be.empty;
         });
     });

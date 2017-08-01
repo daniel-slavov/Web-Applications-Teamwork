@@ -6,14 +6,12 @@ const search = () => {
 
         if (pattern.length > 0) {
             const url = `/search/${searchOption}?name=${pattern}&isPartial=true`;
-            // console.log(url);
 
-             requester.get(url)
-                 .then((response) => {
-                    //  console.log(response);
-                     $('.search-results').html(response);
-                     window.history.pushState('Search', 'Title', `/search/${searchOption}?name=${pattern}`);
-                 });
-         }
+            requester.get(url)
+                .then((response) => {
+                    $('.search-results').html(response);
+                    window.history.pushState('Search', 'Title', `/search/${searchOption}?name=${pattern}`);
+                });
+        }
     });
 };

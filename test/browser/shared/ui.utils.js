@@ -38,15 +38,6 @@ const waitForMany = (selector) => {
     }
 };
 
-// const elementExists = (selector) => {
-//     return async()
-//         .then(() => driver.findElements(
-//             webdriver.By.css(selector)))
-//         .then((elements) => {
-//             console.log(elements);
-//         });
-// };
-
 const getText = (selector) => {
     return async()
         .then(() => waitFor(selector))

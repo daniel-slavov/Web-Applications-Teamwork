@@ -1,18 +1,15 @@
 const navigation = () => {
     $('#show-my-events-btn').click(() => {
         const username = $('#curent-user').html();
-        // console.log(username);
         const url = `${document.location.origin}/api/users/${username}/events`;
-        // console.log(url);
 
         $('#hide-my-events-btn').show();
         $('#show-my-events-btn').hide();
 
         requester.get(url)
-                 .then((response) => {
-                    //  console.log(response);
-                     $('#user-events').html(response);
-                 });
+            .then((response) => {
+                $('#user-events').html(response);
+            });
     });
 
     $('#hide-my-events-btn').click(() => {
@@ -24,30 +21,29 @@ const navigation = () => {
     $('.category-btn').click((event) => {
         const category = event.target.textContent;
         const url = `${document.location.origin}/api/categories/${category}`;
-        // console.log(url);
 
         requester.get(url)
-                .then((response) => {
-                    $('.category-results').remove();
-                    const $results = $("<div/>", {
-                        class: 'category-results',
-                    });
-                    const $all = $("<a/>", {
-                        type: 'button',
-                        'data-toggle': 'tooltip',
-                        'data-placement': 'right',
-                        href: '/categories/' + category,
-                        title: 'See all events in this category',
-                        text: 'More from this category ...',
-                        css: {
-                            'font-size': '1.5em'
-                        }
-                    });
-                    $results.append(response);
-                    $results.append($all);
-                    $(event.target).after($results);
-                    
+            .then((response) => {
+                $('.category-results').remove();
+                const $results = $("<div/>", {
+                    class: 'category-results',
                 });
+                const $all = $("<a/>", {
+                    type: 'button',
+                    'data-toggle': 'tooltip',
+                    'data-placement': 'right',
+                    href: '/categories/' + category,
+                    title: 'See all events in this category',
+                    text: 'More from this category ...',
+                    css: {
+                        'font-size': '1.5em'
+                    }
+                });
+                $results.append(response);
+                $results.append($all);
+                $(event.target).after($results);
+
+            });
 
     });
 
@@ -99,9 +95,9 @@ const navigation = () => {
         const url = `${document.location.origin}/api/events-calendar/${year}-${month}-${date}`;
 
         requester.get(url)
-                .then((response) => {
-                    $('.row').remove();
-                    $('#show-events-btn').after(response);
-                });
+            .then((response) => {
+                $('.row').remove();
+                $('#show-events-btn').after(response);
+            });
     });
 };

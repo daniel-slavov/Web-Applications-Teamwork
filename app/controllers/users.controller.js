@@ -67,7 +67,6 @@ module.exports = (data) => {
                             user.password = crypto
                                 .SHA1(user.username + user.password)
                                 .toString();
-                            console.log(user.password);
                             data.users.create(user);
 
                             return res.redirect('/login');

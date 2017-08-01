@@ -33,9 +33,7 @@ const update = () => {
 
     $('#confirm-event-button').click(() => {
         const title = $('#title').text();
-        // console.log(title);
         const url = `${document.location.origin}/api/events/${title}`;
-        // console.log(url);
         const data = {
             place: $('.media:eq(1) > input').val(),
             date: $('.media:eq(2) > input').val(),
@@ -46,10 +44,8 @@ const update = () => {
         if (validateEventUpdate(data)) {
             requester.put(url, data)
                 .then((response) => {
-                    //  console.log(`Response then`);
                     location.reload();
                 }, (err) => {
-                    //  console.log($('#details-box').parent().prev());
                     $('.alert').remove();
                     $('div.row:eq(0)').before(err.responseText);
                 });
@@ -64,7 +60,6 @@ const update = () => {
 
         requester.get(url)
             .then((response) => {
-                // $('.upload-avatar').html(response);
                 $('#uploadForm').attr('action', postUrl);
             });
     });
@@ -76,14 +71,11 @@ const update = () => {
 
         requester.get(url)
             .then((response) => {
-                //$('.upload-event-photo').html(response);
                 $('#uploadForm').attr('action', postUrl);           
             });
     });
 
     $('#edit-profile-btn').click(() => {
-        // console.log('edit');
-
         for (let index = 0; index < 4; index += 1) {
             const editField = document.createElement('input');
             editField.setAttribute('type', 'text');
@@ -104,10 +96,7 @@ const update = () => {
 
     $('#confirm-profile-btn').click(() => {
         const username = $('#curent-user').text();
-        // console.log(username);
         const url = `${document.location.origin}/users/${username}`;
-        // console.log(url);
-
         const data = {
             firstName: $('.info:eq(0) > input').val(),
             lastName: $('.info:eq(1) > input').val(),
@@ -118,10 +107,8 @@ const update = () => {
         if (validateUserUpdate(data)) {
             requester.put(url, data)
                 .then((response) => {
-                    //  console.log(`Response then`);
                     location.reload();
                 }, (err) => {
-                    //  console.log($('#details-box').parent().prev());
                     $('.alert').remove();
                     $('div.row:eq(0)').before(err.responseText);
                 });
