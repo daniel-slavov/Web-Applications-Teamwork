@@ -1,6 +1,6 @@
 # Web-Applications-with-Node.js-Teamwork
 
-### ![alt text] E v e n t s B o x
+### E v e n t s B o x
 
 ## Summary
 
@@ -36,5 +36,5 @@ EventsBox is a web application for exploring different events, grouped by catego
 
 * Daniel Slavov - daniel.slavov
 
-###### [link to full project requirements] (https://github.com/TelerikAcademy/Web-Applications-with-Node.js/blob/master/Course%20Project/README.md)
+###### [link to full project requirements]: (https://github.com/TelerikAcademy/Web-Applications-with-Node.js/blob/master/Course%20Project/README.md)
 
